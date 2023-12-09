@@ -20,7 +20,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import FieldInput from "@/components/field-input"
 import FieldCheckbox from "@/components/field-checkbox"
 import dynamic from "next/dynamic"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import FieldSimpleCheckbox from "@/components/field-simple-checkbox"
 import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
@@ -98,6 +98,16 @@ function RestaurantComponent() {
         setSliderValue(value[0])
         form.setValue("width_logo", value[0])
     }
+
+    useEffect(() => {
+        const isNativeLanguage = languages?.find(i => i === window.navigator.language.split("-")[0])
+
+        if (isNativeLanguage) {
+            const tempLanguages = languages?.filter((l) => l !== window.navigator.language.split("-")[0]).sort()
+            tempLanguages?.unshift(window.navigator.language.split("-")[0])
+            setLanguages(tempLanguages)
+        }
+    }, [languages])
 
     return (
         <div className="flex justify-center p-10 gap-x-5">
@@ -207,7 +217,7 @@ function RestaurantComponent() {
                                         <PopoverContent className="w-fit p-0">
                                             <Command>
                                                 <CommandGroup>
-                                                    {languages?.sort().map((language) => (
+                                                    {languages?.map((language) => (
                                                         <CommandItem
                                                             key={language}
                                                             value={language}
