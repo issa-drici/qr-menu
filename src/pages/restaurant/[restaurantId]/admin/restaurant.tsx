@@ -187,7 +187,7 @@ function RestaurantComponent() {
                                 </div>
                             </div>
                         </CardContent>
-                        <CardFooter className="flex justify-between">
+                        <CardFooter className="flex justify-end">
                             <Button type="submit">Enregistrer</Button>
                         </CardFooter>
                     </form>

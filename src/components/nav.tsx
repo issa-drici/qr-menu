@@ -21,6 +21,10 @@ const Nav = () => {
                 <a className="ml-2">Restaurant</a>
             </Link>
 
+            <Link href={`/restaurant/${restaurantId}/admin/category`} legacyBehavior>
+                <a className="ml-2">Catégorie</a>
+            </Link>
+
             {/*  <Link href={`/restaurant/${restaurantId}/admin/menu`} legacyBehavior>
                 <a className="ml-2">Menu</a>
             </Link>
