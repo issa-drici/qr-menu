@@ -141,7 +141,6 @@ function CategoryComponent() {
                                 </CardHeader>
                             </div>
                         </Card>
-
                     </CardContent>
                     <CardFooter className="flex justify-end">
                         <Button type="submit" onClick={onSubmit}>Enregistrer</Button>
