@@ -16,7 +16,7 @@ const Nav = () => {
             <div className="container mx-auto flex flex-wrap items-center">
                 <div className="flex w-1/2 justify-start text-white font-extrabold">
                     <a href="#" className="text-white no-underline hover:text-white hover:no-underline">
-                        <span className="text-2xl pl-2"><i className="em em-grinning"></i>Qr Menu</span>
+                        <span className="text-2xl pl-2"><i className="em em-grinning"></i>Culinov</span>
                     </a>
                 </div>
                 <div className="flex w-1/2 justify-end content-center">
