@@ -93,8 +93,8 @@ function CategoryComponent() {
             <div className="flex justify-center p-10 gap-x-5">
                 <Card className="w-1/2">
                     <CardHeader>
-                        <CardTitle>Gérer les différentes catégories du menu</CardTitle>
-                        <CardDescription>Vous pouvez créer, modifier, réorganiser et supprimer les catégories de votre menu sur cette page.</CardDescription>
+                        <CardTitle>Gérer les différentes sections du menu</CardTitle>
+                        <CardDescription>Vous pouvez créer, modifier, réorganiser et supprimer les sections de votre menu sur cette page.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Droppable droppableId="droppable-categories">

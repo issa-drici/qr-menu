@@ -184,8 +184,8 @@ function ItemsComponent() {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
                         <CardHeader>
-                            <CardTitle>Gérer les informations du restaurant</CardTitle>
-                            <CardDescription>Vous pouvez modifier toutes les informations du restaurant à ce endroit.</CardDescription>
+                            <CardTitle>Gérer les articles du restaurant</CardTitle>
+                            <CardDescription>Vous pouvez ajouter / modifier / supprimer les articles de vos sections à cet endroit.</CardDescription>
                         </CardHeader>
                         <CardContent className="flex gap-x-2">
                             <div className="w-1/3 flex flex-col space-y-3">
@@ -248,7 +248,7 @@ function ItemsComponent() {
             <Card className="flex-1">
                 <CardHeader>
                     <CardTitle>Aperçu du menu</CardTitle>
-                    <CardDescription>Voici une prévisualisation de la présentation de votre entreprise sur le menu en ligne.</CardDescription>
+                    <CardDescription>Voici une prévisualisation de la présentation de votre menu en ligne.</CardDescription>
                 </CardHeader>
                 <CardContent className="flex justify-center">
                     <Phone>

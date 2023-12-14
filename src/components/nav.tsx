@@ -27,15 +27,15 @@ const Nav = () => {
                     )}
 
                     <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
-                        <a className={isActive(`/restaurant/[restaurantId]/admin/restaurant`) ? "text-white px-3 py-2 rounded-md text-sm font-medium": "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Restaurant</a>
+                        <a className={isActive(`/restaurant/[restaurantId]/admin/restaurant`) ? "text-white px-3 py-2 rounded-md text-sm font-medium": "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Informations du Restaurant</a>
                     </Link>
 
                     <Link href={`/restaurant/${restaurantId}/admin/category`} legacyBehavior>
-                        <a className={isActive(`/restaurant/[restaurantId]/admin/category`) ? "text-white px-3 py-2 rounded-md text-sm font-medium": "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Catégorie</a>
+                        <a className={isActive(`/restaurant/[restaurantId]/admin/category`) ? "text-white px-3 py-2 rounded-md text-sm font-medium": "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Sections du Menu</a>
                     </Link>
 
                     <Link href={`/restaurant/${restaurantId}/admin/items`} legacyBehavior>
-                        <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-white px-3 py-2 rounded-md text-sm font-medium": "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Items</a>
+                        <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-white px-3 py-2 rounded-md text-sm font-medium": "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Articles du Menu</a>
                     </Link>
                     <NavUser />
                 </div>
