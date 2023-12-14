@@ -270,7 +270,7 @@ function ItemsComponent() {
                                 {items?.length > 0 ? items?.map((item) => {
                                     return (
                                         <Card className="overflow-hidden p-0" key={item.idTemp ? item.idTemp : item.id}>
-                                            <img src={item.image ? item.image : "/assets/images/pates_saumon.png"} alt="imagePlat" className="w-full h-[70px] object-cover" />
+                                            <img src={item.image ? item.image : "/assets/images/sample_image_item.png"} alt="imagePlat" className="w-full h-[70px] object-cover" />
                                             <div className="px-2 py-1">
                                                 <div className="flex justify-between">
                                                     <p className="font-semibold text-[10px]">{item ? item?.name : "Élément brouillon"}</p>
