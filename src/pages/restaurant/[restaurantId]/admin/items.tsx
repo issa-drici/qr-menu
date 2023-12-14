@@ -26,6 +26,7 @@ import FieldTextarea from "@/components/field-textarea"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { TrashIcon } from "@radix-ui/react-icons"
+import Layout from "@/layout/layout"
 
 const categories = [
     {
@@ -179,16 +180,16 @@ function ItemsComponent() {
     }
 
     return (
-        <div className="flex justify-center p-10 gap-x-5">
-            <Card className="w-2/3">
+        <Layout>
+            <Card className="w-2/3 flex flex-col">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 flex flex-col h-full">
                         <CardHeader>
                             <CardTitle>Gérer les articles du restaurant</CardTitle>
                             <CardDescription>Vous pouvez ajouter / modifier / supprimer les articles de vos sections à cet endroit.</CardDescription>
                         </CardHeader>
-                        <CardContent className="flex gap-x-2">
-                            <div className="w-1/3 flex flex-col space-y-3">
+                        <CardContent className="flex gap-x-2 flex-grow h-full overflow-hidden">
+                            <div className="w-1/3 flex flex-col space-y-3 overflow-y-auto">
                                 {categories?.map((category) => {
                                     return (
                                         <Button key={category.id} variant={activeCategory === category.id ? "default" : "secondary"} onClick={() => handleChangeCategory(category.id)}>{category.title}</Button>
@@ -196,7 +197,7 @@ function ItemsComponent() {
                                 })}
                             </div>
                             <Separator orientation="vertical" />
-                            <div className="w-2/3 flex flex-col gap-y-3">
+                            <div className="w-2/3 flex flex-col gap-y-3 overflow-y-auto">
                                 {items?.map((item, index) => {
                                     return (
                                         <div className="border p-5" key={index}>
@@ -297,7 +298,7 @@ function ItemsComponent() {
 
             </Card>
 
-        </div>
+        </Layout>
     )
 }
 

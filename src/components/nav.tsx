@@ -12,7 +12,7 @@ const Nav = () => {
     const restaurantId = 'issddfsdf-2332432df-32dfgsdzdqds'
 
     return (
-        <nav className="bg-gray-800 p-2 mt-0 w-full">
+        <nav className="bg-gray-800 p-2 mt-0 w-full absolute top-0 z-10">
             <div className="container mx-auto flex flex-wrap items-center">
                 <div className="flex w-1/2 justify-start text-white font-extrabold">
                     <a href="#" className="text-white no-underline hover:text-white hover:no-underline">

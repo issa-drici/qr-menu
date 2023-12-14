@@ -29,6 +29,7 @@ import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, Me
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command"
 import { languagesDisplay } from "@/lib/languages"
+import Layout from "@/layout/layout"
 
 const FormSchema = z.object({
     name: z.string(),
@@ -110,15 +111,15 @@ function RestaurantComponent() {
     }, [languages])
 
     return (
-        <div className="flex justify-center p-10 gap-x-5">
-            <Card className="w-2/3">
+        <Layout>
+            <Card className="w-2/3 flex flex-col">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 flex flex-col h-full">
                         <CardHeader>
                             <CardTitle>Gérer les informations du restaurant</CardTitle>
                             <CardDescription>Vous pouvez modifier toutes les informations du restaurant à ce endroit.</CardDescription>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="flex-grow">
                             <div className="grid w-full items-center gap-4 grid-cols-2">
                                 <FieldInput form={form} name="name" label="Nom" placeholder="Mon restaurant" onChange={(e) => setRestaurantName(e.target.value)} />
                                 <FieldInput form={form} name="adress" label="Adresse" placeholder="Adresse du restaurant" />
@@ -269,8 +270,7 @@ function RestaurantComponent() {
                 </CardContent>
 
             </Card>
-
-        </div>
+        </Layout>
     )
 }
 

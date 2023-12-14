@@ -16,6 +16,7 @@ import { ChevronRightIcon, DragHandleHorizontalIcon, Pencil1Icon, TrashIcon } fr
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd"
 import { useRef, useState } from "react"
 import { Input } from "@/components/ui/input"
+import Layout from "@/layout/layout"
 
 function CategoryComponent() {
     const [categories, setCategories] = useState([]);
@@ -90,13 +91,13 @@ function CategoryComponent() {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <div className="flex justify-center p-10 gap-x-5">
-                <Card className="w-1/2">
+            <Layout>
+                <Card className="w-1/2 flex flex-col">
                     <CardHeader>
                         <CardTitle>Gérer les différentes sections du menu</CardTitle>
                         <CardDescription>Vous pouvez créer, modifier, réorganiser et supprimer les sections de votre menu sur cette page.</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-grow overflow-y-auto">
                         <Droppable droppableId="droppable-categories">
                             {(provided) => (
                                 <div {...provided.droppableProps} ref={provided.innerRef} >
@@ -146,7 +147,7 @@ function CategoryComponent() {
                         <Button type="submit" onClick={onSubmit}>Enregistrer</Button>
                     </CardFooter>
                 </Card>
-            </div>
+            </Layout>
         </DragDropContext >
     )
 }
