@@ -50,7 +50,8 @@ export const NavUser = () => {
           <DropdownMenuShortcut><ExternalLinkIcon /></DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => Logout()}>
+        {/* <DropdownMenuItem onClick={() => Logout()}> */}
+        <DropdownMenuItem>
           Se déconnecter
           <DropdownMenuShortcut><ExitIcon /></DropdownMenuShortcut>
         </DropdownMenuItem>
