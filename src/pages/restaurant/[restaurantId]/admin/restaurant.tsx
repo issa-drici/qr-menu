@@ -101,14 +101,28 @@ function RestaurantComponent() {
     }
 
     useEffect(() => {
-        const isNativeLanguage = languages?.find(i => i === window.navigator.language.split("-")[0])
+        const navigatorLanguage = window.navigator.language.split("-")[0];
+        const isNativeLanguage = languages?.includes(navigatorLanguage);
 
-        if (isNativeLanguage) {
-            const tempLanguages = languages?.filter((l) => l !== window.navigator.language.split("-")[0]).sort()
-            tempLanguages?.unshift(window.navigator.language.split("-")[0])
-            setLanguages(tempLanguages)
+        if (languages) {
+
+            if (isNativeLanguage) {
+                const tempLanguages = languages.filter((l) => l !== navigatorLanguage).sort();
+                tempLanguages.unshift(navigatorLanguage);
+
+                // Comparaison des tableaux
+                const areArraysDifferent = tempLanguages.length !== languages.length ||
+                    tempLanguages.some((val, index) => val !== languages[index]);
+
+                if (areArraysDifferent) {
+                    setLanguages(tempLanguages);
+                }
+            }
         }
-    }, [languages])
+    }, [languages]);
+
+    // const { user, isLoading } = useUserContext();
+    // console.log(user, isLoading)
 
     return (
         <Layout>

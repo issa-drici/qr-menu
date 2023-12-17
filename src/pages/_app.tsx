@@ -10,6 +10,7 @@ import { Inter } from '@next/font/google';
 import { Database } from '@/types/database.types'
 import { useRouter } from 'next/router';
 import { Toaster } from '@/components/ui/toaster';
+import { cn } from '@/lib/utils';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,15 +22,11 @@ export default function App({
   const [supabase] = useState(() => createBrowserSupabaseClient<Database>());
   const router = useRouter()
 
-  const isVisibleNav =
-    router.pathname !== '/auth'
-    && router.pathname !== '/'
-
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
       <UserProvider>
-        <main className={inter.className}>
-          {isVisibleNav ? <Nav /> : null}
+        <main className={cn(inter.className, "bg-gray-200")}>
+          <Nav />
           <Component {...pageProps} />
           <Toaster />
         </main>

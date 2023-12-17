@@ -10,21 +10,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUserContext } from "@/context/user";
-import Logout from "@/pages/logout";
 import { ExitIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/router";
 
 
 
 export const NavUser = () => {
-  const { logout } = useUserContext();
+  const router = useRouter()
 
-  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-8 w-8 rounded-full p-0 drop-shadow-lg ml-5" 
+          className="relative h-8 w-8 rounded-full p-0 drop-shadow-lg ml-5"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage
@@ -50,8 +49,7 @@ export const NavUser = () => {
           <DropdownMenuShortcut><ExternalLinkIcon /></DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {/* <DropdownMenuItem onClick={() => Logout()}> */}
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push('/logout')}>
           Se déconnecter
           <DropdownMenuShortcut><ExitIcon /></DropdownMenuShortcut>
         </DropdownMenuItem>
