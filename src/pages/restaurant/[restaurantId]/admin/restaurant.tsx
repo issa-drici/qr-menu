@@ -259,7 +259,7 @@ function RestaurantComponent() {
                     router.push('/')
                 }
             }
-        }, 1500);
+        }, 2000);
     }, [])
 
     useEffect(() => {
