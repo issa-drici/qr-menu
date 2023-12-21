@@ -13,14 +13,13 @@ const Provider = ({ children }: { children: ReactNode }) => {
     // const { session } = useSessionContext();
 
     const [user, setUser] = useState<any | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    
+    const [initializing, setInitializing] = useState<boolean | null>(true);
+
     useEffect(() => {
         async function getUserProfile() {
             const { data: { session } } = await supabaseClient.auth.getSession()
 
             if (session) {
-                setIsLoading(true);
 
                 const { data: profile } = await supabaseClient
                     .from("profile")
@@ -32,20 +31,22 @@ const Provider = ({ children }: { children: ReactNode }) => {
                     ...session?.user,
                     ...profile,
                 });
-
-                setIsLoading(false);
             }
+            setInitializing(false);
         };
 
         supabaseClient.auth.onAuthStateChange((event, session) => {
             if ("SIGNED_IN" === event && session) {
                 getUserProfile();
-                router.push('/restaurant/issddfsdf-2332432df-32dfgsdzdqds/admin/restaurant')
+                router.push(`/restaurant/${session?.user?.id}/admin/restaurant`)
 
             } else if ("SIGNED_OUT" === event) {
                 setUser(null);
+                setInitializing(true);
+
             }
         });
+
     }, []);
 
     useEffect(() => {
@@ -79,7 +80,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
         user,
         login,
         logout,
-        isLoading
+        initializing
     };
 
     return <Context.Provider value={exposed}>{children}</Context.Provider>;

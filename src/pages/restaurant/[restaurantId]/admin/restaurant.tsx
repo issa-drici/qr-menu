@@ -48,8 +48,9 @@ const FormSchema = z.object({
 })
 
 function RestaurantComponent() {
-    const { user, isLoading } = useUserContext();
-    const router = useRouter();
+    const { user, initializing } = useUserContext();
+
+console.log(user, initializing)
 
     const supabaseClient = useSupabaseClient<Database>();
 
@@ -75,7 +76,7 @@ function RestaurantComponent() {
 
     async function getProfileInfo() {
         setIsloadingGeneral(true)
-        const { data: profile, status, statusText } = await supabaseClient
+        const { data: profile } = await supabaseClient
                     .from("profile")
                     .select("*")
                     .eq("id", user?.id)
@@ -185,9 +186,6 @@ function RestaurantComponent() {
             toast({ title: 'Erreur', description: 'Un problème est survenu lors de la mise à jour des informations.', variant: "destructive" });
         }
     }
-   
-
-
 
     const onLogoChange = (event) => {
         if (event.target.files && event.target.files[0]) {
@@ -252,26 +250,17 @@ function RestaurantComponent() {
     );
 }
 
-    useEffect(() => {
-        setTimeout(() => {
-            if (!isLoading) {
-                if (!!!user) {
-                    router.push('/')
-                }
-            }
-        }, 2000);
-    }, [])
 
     useEffect(() => {
         form.reset(defaultValues)
     }, [profile])
 
     useEffect(() => {
-        if (!isLoading) {
+        // if (!isLoading) {
             if (!!user) {
                 getProfileInfo()
             }
-        }
+        // }
     }, [user])
 
 
@@ -295,14 +284,8 @@ function RestaurantComponent() {
         }
     }, [languages]);
 
-    if (!isLoading || !isLoadingGeneral) {
-        if (!!!user) {
-            return null
-        }
-    }
-
     return (
-        <Layout isLoading={isLoading || isLoadingGeneral}>
+        <Layout isLoading={isLoadingGeneral} withAuth>
             { user ? (
                 <>
                     <Card className="w-2/3 flex flex-col">

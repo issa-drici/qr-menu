@@ -31,12 +31,12 @@ const Nav = () => {
                     <div className="flex w-1/2 justify-end items-center">
                         {!!user ? (
                             <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
-                                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">Aller au Dashboard</a>
+                                <a className="text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium">Aller au Dashboard</a>
                             </Link>
                         ) : null}
                         {!!user ? (
                             <Link href={`/logout`} legacyBehavior>
-                                <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-white px-3 py-2 rounded-md text-md font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Se déconnecter</a>
+                                <a className="text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium" >Se déconnecter</a>
                             </Link>
                         ) : null}
                         {!!!user ? (
@@ -44,7 +44,7 @@ const Nav = () => {
                                 <a className="text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium">Se connecter</a>
                             </Link>
                         ) : null}
-                         {!!!user ? (
+                        {!!!user ? (
                             <Link href={`/register`} legacyBehavior>
                                 <a className="text-white px-3 py-3 rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150">Essai <span className="italic">GRATUIT</span></a>
                             </Link>
@@ -70,19 +70,19 @@ const Nav = () => {
 
                         {!!user && (
                             <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
-                                <a className={isActive(`/restaurant/[restaurantId]/admin/restaurant`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Informations du Restaurant</a>
+                                <a className={isActive(`/restaurant/[restaurantId]/admin/restaurant`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-slate-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Informations du Restaurant</a>
                             </Link>
                         )}
 
                         {!!user && (
                             <Link href={`/restaurant/${restaurantId}/admin/category`} legacyBehavior>
-                                <a className={isActive(`/restaurant/[restaurantId]/admin/category`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Sections du Menu</a>
+                                <a className={isActive(`/restaurant/[restaurantId]/admin/category`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-slate-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Sections du Menu</a>
                             </Link>
                         )}
 
                         {!!user && (
                             <Link href={`/restaurant/${restaurantId}/admin/items`} legacyBehavior>
-                                <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Articles du Menu</a>
+                                <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-slate-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Articles du Menu</a>
                             </Link>
                         )}
 
