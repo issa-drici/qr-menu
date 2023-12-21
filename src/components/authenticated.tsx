@@ -6,7 +6,7 @@ import { NavUser } from "./nav-user";
 export default function Authenticated({ children }) {
     const { initializing, user } = useUserContext()
     const router = useRouter()
-    
+    console.log(initializing, user)
     if (initializing) {
         return (
             <div className="w-screen h-screen flex flex-col justify-center items-center">

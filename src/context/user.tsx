@@ -16,11 +16,11 @@ const Provider = ({ children }: { children: ReactNode }) => {
     const [initializing, setInitializing] = useState<boolean | null>(true);
 
     useEffect(() => {
+
         async function getUserProfile() {
             const { data: { session } } = await supabaseClient.auth.getSession()
 
             if (session) {
-
                 const { data: profile } = await supabaseClient
                     .from("profile")
                     .select("*")
@@ -32,16 +32,16 @@ const Provider = ({ children }: { children: ReactNode }) => {
                     ...profile,
                 });
             }
-            setInitializing(false);
         };
-        setInitializing(false);
+
 
         supabaseClient.auth.onAuthStateChange((event, session) => {
-            if ("SIGNED_IN" === event && session) {
-                getUserProfile();
-                router.push(`/restaurant/${session?.user?.id}/admin/restaurant`)
+            if (("SIGNED_IN" === event || "INITIAL_SESSION" === event) && session) {
+                setTimeout(() => {
                 setInitializing(false);
-
+                }, 1000);
+                getUserProfile()
+                router.push(`/restaurant/${session?.user?.id}/admin/restaurant`)
             } else if ("SIGNED_OUT" === event) {
                 setUser(null);
                 setInitializing(true);
