@@ -293,9 +293,9 @@ function RestaurantComponent() {
         }
     }, [languages]);
 
-    if (!isLoading) {
+    if (!isLoading || !isLoadingGeneral) {
         if (!!!user) {
-            return null;
+            return null
         }
     }
 
