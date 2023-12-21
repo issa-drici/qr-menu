@@ -34,6 +34,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
             }
             setInitializing(false);
         };
+        setInitializing(false);
 
         supabaseClient.auth.onAuthStateChange((event, session) => {
             if ("SIGNED_IN" === event && session) {
@@ -43,7 +44,6 @@ const Provider = ({ children }: { children: ReactNode }) => {
             } else if ("SIGNED_OUT" === event) {
                 setUser(null);
                 setInitializing(true);
-
             }
         });
 
