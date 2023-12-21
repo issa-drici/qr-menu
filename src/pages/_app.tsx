@@ -25,7 +25,7 @@ export default function App({
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
       <UserProvider>
-        <main className={cn(inter.className, "bg-gray-200")}>
+        <main className={cn(inter.className, "bg-gray-100")}>
           <Nav />
           <Component {...pageProps} />
           <Toaster />

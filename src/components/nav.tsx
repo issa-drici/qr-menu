@@ -57,12 +57,12 @@ const Nav = () => {
 
     if (!!user) {
         return (
-            <nav className="bg-gray-800 p-2 mt-0 w-full absolute top-0 z-10">
+            <nav className="bg-white p-2 py-1 mt-0 w-full absolute top-0 z-10 shadow">
                 <div className="container mx-auto flex flex-wrap items-center">
                     <div className="flex w-1/2 justify-start text-white font-extrabold">
                         <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
                             <a className="text-white no-underline hover:text-white hover:no-underline">
-                                <img src="/assets/images/logo/logo_white.png" className="h-12 object-contain mb-2" />
+                                <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
                             </a>
                         </Link>
                     </div>
@@ -70,19 +70,19 @@ const Nav = () => {
 
                         {!!user && (
                             <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
-                                <a className={isActive(`/restaurant/[restaurantId]/admin/restaurant`) ? "text-white px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Informations du Restaurant</a>
+                                <a className={isActive(`/restaurant/[restaurantId]/admin/restaurant`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Informations du Restaurant</a>
                             </Link>
                         )}
 
                         {!!user && (
                             <Link href={`/restaurant/${restaurantId}/admin/category`} legacyBehavior>
-                                <a className={isActive(`/restaurant/[restaurantId]/admin/category`) ? "text-white px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Sections du Menu</a>
+                                <a className={isActive(`/restaurant/[restaurantId]/admin/category`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Sections du Menu</a>
                             </Link>
                         )}
 
                         {!!user && (
                             <Link href={`/restaurant/${restaurantId}/admin/items`} legacyBehavior>
-                                <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-white px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Articles du Menu</a>
+                                <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-slate-700 px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Articles du Menu</a>
                             </Link>
                         )}
 
