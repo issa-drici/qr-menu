@@ -14,7 +14,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
 
     const [user, setUser] = useState<any | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-
+    
     useEffect(() => {
         async function getUserProfile() {
             const { data: { session } } = await supabaseClient.auth.getSession()
@@ -27,8 +27,6 @@ const Provider = ({ children }: { children: ReactNode }) => {
                     .select("*")
                     .eq("id", session?.user?.id)
                     .single();
-
-                    console.log(profile)
 
                 setUser({
                     ...session?.user,

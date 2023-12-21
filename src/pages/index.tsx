@@ -1,25 +1,14 @@
-import Link from 'next/link';
 import { GetServerSidePropsContext } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/database.types'
-import { useUserContext } from "@/context/user";
 
-export type Lesson = {
-	id: string;
-	created_at: Date;
-	title: string;
-	description: string;
-}
 
-export default function Home({ lessons }: { lessons: Lesson[] }) {
-
-	const { user } = useUserContext();
-
+export default function Home() {
 	return (
-		<div className="w-full max-w-3xl mx-auto my-16 px-2">
-			{lessons && lessons.map((lesson: Lesson) => (
-				<Link key={lesson.id} href={`/${lesson.id}`} className="p-8 mb-4 rounded shadow text-xl flex">{lesson.title}</Link>
-			))}
+		<div className='bg-white w-full h-full min-h-screen'>
+			<div className="flex w-full h-full mt-36 justify-center items-center ">
+				<h2 className='text-3xl font-bold'>Bienvenue chez zynk !</h2>
+			</div>
 		</div>
 	);
 }

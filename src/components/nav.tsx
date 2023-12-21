@@ -9,16 +9,24 @@ const Nav = () => {
 
     const isActive = (pathname) => router.pathname === pathname;
 
-    const restaurantId = 'issddfsdf-2332432df-32dfgsdzdqds'
+    const restaurantId = user?.id
+
+    const hideNav = isActive('/register') || isActive('/login')
+
+    if (hideNav) {
+        return null
+    }
 
     if (!!user) {
         return (
             <nav className="bg-gray-800 p-2 mt-0 w-full absolute top-0 z-10">
                 <div className="container mx-auto flex flex-wrap items-center">
                     <div className="flex w-1/2 justify-start text-white font-extrabold">
-                        <a href="#" className="text-white no-underline hover:text-white hover:no-underline">
-                            <span className="text-2xl pl-2"><i className="em em-grinning"></i>Culinov</span>
-                        </a>
+                        <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
+                            <a className="text-white no-underline hover:text-white hover:no-underline">
+                                <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
+                            </a>
+                        </Link>
                     </div>
                     <div className="flex w-1/2 justify-end content-center">
 
@@ -52,15 +60,16 @@ const Nav = () => {
     }
 
     return (
-        <nav className="bg-gray-800 p-2 mt-0 w-full absolute top-0 z-10">
+        <nav className="p-2 mt-0 w-full absolute top-0 z-10 border-b-2">
             <div className="container mx-auto flex flex-wrap items-center">
                 <div className="flex w-1/2 justify-start text-white font-extrabold">
-                    <a href="#" className="text-white no-underline hover:text-white hover:no-underline">
-                        <span className="text-2xl pl-2"><i className="em em-grinning"></i>Culinov</span>
-                    </a>
+                    <Link href={`/`} legacyBehavior>
+                        <a className="text-white no-underline hover:text-white hover:no-underline">
+                            <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
+                        </a>
+                    </Link>
                 </div>
                 <div className="flex w-1/2 justify-end content-center">
-
                     <Link href={`/login`} legacyBehavior>
                         <a className={isActive(`/restaurant/[restaurantId]/admin/items`) ? "text-white px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Se connecter</a>
                     </Link>

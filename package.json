@@ -32,11 +32,13 @@
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.4.6",
     "@supabase/auth-ui-shared": "^0.1.8",
-    "@supabase/supabase-js": "^2.4.1",
+    "@supabase/supabase-js": "^2.39.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
+    "formidable": "^3.5.1",
     "micro": "^10.0.1",
+    "mime": "^4.0.1",
     "next": "13.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -48,6 +50,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/formidable": "^3.4.5",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
