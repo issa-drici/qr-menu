@@ -40,6 +40,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
             if ("SIGNED_IN" === event && session) {
                 getUserProfile();
                 router.push(`/restaurant/${session?.user?.id}/admin/restaurant`)
+                setInitializing(false);
 
             } else if ("SIGNED_OUT" === event) {
                 setUser(null);

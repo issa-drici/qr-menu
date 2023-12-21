@@ -50,8 +50,6 @@ const FormSchema = z.object({
 function RestaurantComponent() {
     const { user, initializing } = useUserContext();
 
-console.log(user, initializing)
-
     const supabaseClient = useSupabaseClient<Database>();
 
     const [profile, setProfile] = useState(null)
@@ -88,6 +86,8 @@ console.log(user, initializing)
                 setHideName(profile?.hide_name)
                 setSliderValue(profile?.width_logo)
                 setIsloadingGeneral(false)
+                setLogoUrl(profile?.logo_url ? `${profile?.logo_url}?v=${new Date()}` : null)
+                setBannerUrl(profile?.banner_url ? `${profile?.banner_url}?v=${new Date()}` : null)
                 }
 
     const defaultValues = {
@@ -139,7 +139,7 @@ console.log(user, initializing)
                     .upload(`images_${Date.now()}.png`, logo)
 
                     const path  = await getFileWithPath(fileUpdated?.path)
-
+console.log(path, fileUpdated?.path, 'totototototototo')
 
                     const { error } = await supabaseClient
                     .from('profile')
@@ -259,7 +259,7 @@ console.log(user, initializing)
         // if (!isLoading) {
             if (!!user) {
                 getProfileInfo()
-            }
+        }
         // }
     }, [user])
 

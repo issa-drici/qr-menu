@@ -14,8 +14,6 @@ export default function Authenticated({ children }) {
                 <p>Chargement en cours...</p>
             </div>)
     }
-    
-    console.log(initializing, user)
 
     if (user === null) {
         router.push('/')
