@@ -252,13 +252,15 @@ function RestaurantComponent() {
     );
 }
 
-    // useEffect(() => {
-    //     if (!isLoading) {
-    //         if (!!!user) {
-    //             router.push('/')
-    //         }
-    //     }
-    // }, [])
+    useEffect(() => {
+        setTimeout(() => {
+            if (!isLoading) {
+                if (!!!user) {
+                    router.push('/')
+                }
+            }
+        }, 1500);
+    }, [])
 
     useEffect(() => {
         form.reset(defaultValues)
