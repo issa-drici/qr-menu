@@ -175,9 +175,9 @@ function CategoryComponent() {
                                                                 <Button variant="default" size="icon" onClick={() => handleEditClick(index)}>
                                                                     <Pencil1Icon className="h-4 w-4" />
                                                                 </Button>
-                                                                <Button variant="destructive" size="icon" onClick={() => handleRemoveCategory(index)}>
+                                                                {/* <Button variant="destructive" size="icon" onClick={() => handleRemoveCategory(index)}>
                                                                     <TrashIcon className="h-4 w-4" />
-                                                                </Button>
+                                                                </Button> */}
                                                                 <Button variant="outline" size="icon" {...provided.dragHandleProps} className="cursor-grab">
                                                                     <DragHandleHorizontalIcon className="h-5 w-5" />
                                                                 </Button>

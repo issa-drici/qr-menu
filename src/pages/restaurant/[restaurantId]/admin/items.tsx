@@ -285,13 +285,13 @@ function ItemsComponent() {
                                 <img src="/assets/images/marketing_offer.png" alt="marketingOffer" className="w-full h-[80px] object-cover" />
                             </div>
                             <div className="flex px-3 py-3 gap-x-0.5">
-                                {isLoading ? (
+                                {!isLoading ? (
                                     categories.map((category) => <Button key={category.id} variant={activeCategory === category.id ? "default" : "outline"} className={cn("text-[8px] px-1 h-2 border", activeCategory === category.id && "border-primary")}>{category.name}</Button>)
                                 ) : (
                                     <div className="flex space-x-2">
                                         <Skeleton className="w-8 h-[10px] rounded" />
-                                        <Skeleton className="w-8 h-[40px] rounded" />
-                                        <Skeleton className="w-8 h-[40px] rounded" />
+                                        <Skeleton className="w-8 h-[10px] rounded" />
+                                        <Skeleton className="w-8 h-[10px] rounded" />
                                     </div>
                                 )}
                             </div>
