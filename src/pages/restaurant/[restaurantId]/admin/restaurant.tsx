@@ -48,7 +48,8 @@ const FormSchema = z.object({
 })
 
 function RestaurantComponent() {
-    const { user, initializing } = useUserContext();
+    const { user } = useUserContext();
+    const router = useRouter()
 
     const supabaseClient = useSupabaseClient<Database>();
 
@@ -77,7 +78,7 @@ function RestaurantComponent() {
         const { data: profile } = await supabaseClient
                     .from("profile")
                     .select("*")
-                    .eq("id", user?.id)
+                    .eq("id", router?.query?.restaurantId)
                     .single();
                     setProfile(profile)
 
@@ -88,6 +89,8 @@ function RestaurantComponent() {
                 setIsloadingGeneral(false)
                 setLogoUrl(profile?.logo_url ? `${profile?.logo_url}?v=${new Date()}` : null)
                 setBannerUrl(profile?.banner_url ? `${profile?.banner_url}?v=${new Date()}` : null)
+        setIsloadingGeneral(false)
+
                 }
 
     const defaultValues = {
@@ -111,7 +114,8 @@ function RestaurantComponent() {
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
-            const { data: dataUpdated, error } = await supabaseClient
+        setIsloadingGeneral(true)
+        const { data: dataUpdated, error } = await supabaseClient
             .from('profile')
             .update(data)
             .eq('id', user?.id)
@@ -139,7 +143,6 @@ function RestaurantComponent() {
                     .upload(`images_${Date.now()}.png`, logo)
 
                     const path  = await getFileWithPath(fileUpdated?.path)
-console.log(path, fileUpdated?.path, 'totototototototo')
 
                     const { error } = await supabaseClient
                     .from('profile')
@@ -185,6 +188,8 @@ console.log(path, fileUpdated?.path, 'totototototototo')
             console.error('Erreur:', error);
             toast({ title: 'Erreur', description: 'Un problème est survenu lors de la mise à jour des informations.', variant: "destructive" });
         }
+        setIsloadingGeneral(false)
+
     }
 
     const onLogoChange = (event) => {
@@ -372,7 +377,7 @@ console.log(path, fileUpdated?.path, 'totototototototo')
                                     </div>
                                 </CardContent>
                                 <CardFooter className="flex justify-end">
-                                    <Button type="submit">Enregistrer</Button>
+                                    <Button type="submit" disabled={isLoadingGeneral}>Enregistrer</Button>
                                 </CardFooter>
                             </form>
                         </Form>

@@ -6,7 +6,10 @@ import { NavUser } from "./nav-user";
 export default function Authenticated({ children }) {
     const { initializing, user } = useUserContext()
     const router = useRouter()
-    console.log(initializing, user)
+
+    console.log(router)
+
+
     if (initializing) {
         return (
             <div className="w-screen h-screen flex flex-col justify-center items-center">
@@ -15,7 +18,12 @@ export default function Authenticated({ children }) {
             </div>)
     }
 
+
     if (user === null) {
+        router.push('/')
+    }
+
+    if (router?.query?.restaurantId !== user?.id) {
         router.push('/')
     }
 

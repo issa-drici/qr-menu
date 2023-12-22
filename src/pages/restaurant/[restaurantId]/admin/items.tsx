@@ -18,7 +18,7 @@ import * as z from "zod"
 import { toast } from "@/components/ui/use-toast"
 import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import dynamic from "next/dynamic"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import FieldInput from "@/components/field-input"
@@ -27,33 +27,10 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { TrashIcon } from "@radix-ui/react-icons"
 import Layout from "@/layout/layout"
-
-const categories = [
-    {
-        "id": "0bb5836b-9836-4f68-a5c5-520365424349",
-        "order": "1",
-        "title": "Entrée",
-        "displayInput": false
-    },
-    {
-        "id": "ac46857e-8749-4cd7-881b-1ba48dc54605",
-        "order": "2",
-        "title": "Plat",
-        "displayInput": false
-    },
-    {
-        "id": "7383b6b7-51ad-41c9-a333-fdb13499c323",
-        "order": "3",
-        "title": "Dessert",
-        "displayInput": false
-    },
-    {
-        "id": "15f8ebc9-f9e2-442e-92a2-d9f5392dadd1",
-        "order": "4",
-        "title": "Boissons",
-        "displayInput": false
-    }
-]
+import { useUserContext } from "@/context/user"
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
+import { Database } from "@/types/database.types"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const restaurant = {
     name: "Restaurant Del Arte"
@@ -72,9 +49,15 @@ const FormSchema = z.object({
 })
 
 function ItemsComponent() {
-    const [activeCategory, setActiveCategory] = useState(categories[0]?.id)
     const [items, setItems] = useState([])
     const [isClear, setIsClear] = useState(true);
+    const [categories, setCategories] = useState([]);
+    const [activeCategory, setActiveCategory] = useState()
+    const [isLoading, setIsloading] = useState(false)
+
+    const { user } = useUserContext();
+
+    const supabaseClient = useSupabaseClient<Database>();
 
     const inputRef = useRef(null);
 
@@ -87,6 +70,19 @@ function ItemsComponent() {
         },
 
     })
+
+    async function getCategory() {
+        // setIsloading(true)
+
+        const { data: category } = await supabaseClient
+            .from("category")
+            .select("*")
+            .eq("profile_id", user?.id);
+
+        setCategories(category);
+
+        setIsloading(false)
+    }
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
         toast({
@@ -179,8 +175,25 @@ function ItemsComponent() {
         }
     }
 
+
+
+    useEffect(() => {
+        if (!isLoading) {
+            getCategory()
+            if (categories?.length > 0) {
+                setActiveCategory(categories[0]?.id)
+            }
+        }
+    }, [user])
+
+    useEffect(() => {
+        if (categories?.length > 0) {
+            setActiveCategory(categories[0]?.id)
+        }
+    }, [categories])
+
     return (
-        <Layout>
+        <Layout withAuth>
             <Card className="w-2/3 flex flex-col">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 flex flex-col h-full">
@@ -190,11 +203,18 @@ function ItemsComponent() {
                         </CardHeader>
                         <CardContent className="flex gap-x-2 flex-grow h-full overflow-hidden">
                             <div className="w-1/3 flex flex-col space-y-3 overflow-y-auto">
-                                {categories?.map((category) => {
+                                {!isLoading ? categories?.map((category) => {
                                     return (
-                                        <Button key={category.id} variant={activeCategory === category.id ? "default" : "secondary"} onClick={() => handleChangeCategory(category.id)}>{category.title}</Button>
+                                        <Button key={category.id} variant={activeCategory === category.id ? "default" : "secondary"} onClick={() => handleChangeCategory(category.id)}>{category.name}</Button>
                                     )
-                                })}
+                                })
+                                    : (
+                                        <div className="flex flex-col space-y-2">
+                                            <Skeleton className="w-full h-[40px] rounded" />
+                                            <Skeleton className="w-full h-[40px] rounded" />
+                                            <Skeleton className="w-full h-[40px] rounded" />
+                                        </div>
+                                    )}
                             </div>
                             <Separator orientation="vertical" />
                             <div className="w-2/3 flex flex-col gap-y-3 overflow-y-auto">
@@ -265,7 +285,15 @@ function ItemsComponent() {
                                 <img src="/assets/images/marketing_offer.png" alt="marketingOffer" className="w-full h-[80px] object-cover" />
                             </div>
                             <div className="flex px-3 py-3 gap-x-0.5">
-                                {categories.map((category) => <Button key={category.id} variant={activeCategory === category.id ? "default" : "outline"} className={cn("text-[8px] px-1 h-2 border", activeCategory === category.id && "border-primary")}>{category.title}</Button>)}
+                                {isLoading ? (
+                                    categories.map((category) => <Button key={category.id} variant={activeCategory === category.id ? "default" : "outline"} className={cn("text-[8px] px-1 h-2 border", activeCategory === category.id && "border-primary")}>{category.name}</Button>)
+                                ) : (
+                                    <div className="flex space-x-2">
+                                        <Skeleton className="w-8 h-[10px] rounded" />
+                                        <Skeleton className="w-8 h-[40px] rounded" />
+                                        <Skeleton className="w-8 h-[40px] rounded" />
+                                    </div>
+                                )}
                             </div>
                             <div className="flex flex-col px-3 gap-y-2">
                                 {items?.length > 0 ? items?.map((item) => {
