@@ -24,7 +24,7 @@ const Nav = () => {
                     <div className="flex w-1/2 justify-start text-white font-extrabold">
                         <Link href={`/`} legacyBehavior>
                             <a className="text-white no-underline hover:text-white hover:no-underline">
-                                <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
+                                <img src="/assets/images/logo/logo.png" className="h-12 object-contain mb-2" />
                             </a>
                         </Link>
                     </div>
@@ -62,7 +62,7 @@ const Nav = () => {
                     <div className="flex w-1/2 justify-start text-white font-extrabold">
                         <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
                             <a className="text-white no-underline hover:text-white hover:no-underline">
-                                <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
+                                <img src="/assets/images/logo/logo.png" className="h-12 object-contain mb-2" />
                             </a>
                         </Link>
                     </div>

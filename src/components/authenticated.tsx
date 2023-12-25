@@ -7,13 +7,10 @@ export default function Authenticated({ children }) {
     const { initializing, user } = useUserContext()
     const router = useRouter()
 
-    console.log(router)
-
-
     if (initializing) {
         return (
             <div className="w-screen h-screen flex flex-col justify-center items-center">
-                <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
+                <img src="/assets/images/logo/logo.png" className="h-12 object-contain mb-2" />
                 <p>Chargement en cours...</p>
             </div>)
     }

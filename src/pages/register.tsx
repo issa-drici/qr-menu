@@ -66,7 +66,7 @@ export default function RegisterPage() {
           <a className="text-slate-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium ml-auto mt-7 z-10">Se connecter</a>
         </Link>
         <div className="flex flex-col justify-center items-center h-full translate-y-[-4rem] px-20 max-w-lg m-auto" >
-          <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
+          <img src="/assets/images/logo/logo.png" className="h-12 object-contain mb-2" />
           <p className="text-center text-2xl font-semibold mb-3">Créer un compte</p>
           <p className="text-slate-400 text-sm mb-7 text-center">Entre ton adresse e-mail ci-dessous pour créer ton compte</p>
           <Form {...form}>

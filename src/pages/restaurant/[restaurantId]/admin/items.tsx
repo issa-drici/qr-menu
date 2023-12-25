@@ -32,10 +32,6 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { Database } from "@/types/database.types"
 import { Skeleton } from "@/components/ui/skeleton"
 
-const restaurant = {
-    name: "Restaurant Del Arte"
-}
-
 const FormSchema = z.object({
     name: z.string(),
     adress: z.string(),
@@ -175,6 +171,30 @@ function ItemsComponent() {
         }
     }
 
+    const PreviewBanner = () => {
+        let imageLink = "/assets/images/marketing_offer.png";
+
+            if (user?.banner_url) {
+                imageLink = `${user?.banner_url}?v=${new Date()}`
+            }
+
+        return (
+            <img src={imageLink} alt="marketingOffer" className="w-full h-[80px] object-cover" />
+        );
+    }
+
+    const PreviewLogo = () => {
+        let imageLink = "/assets/images/logo.png";
+
+        if (user?.logo_url) {
+            imageLink = `${user?.logo_url}?v=${new Date()}`
+        }
+
+        return (
+            <img src={imageLink} alt="language" className="object-cover w-5" style={{ width: `${user?.width_logo}%` }} />
+        );
+    }
+
 
 
     useEffect(() => {
@@ -193,7 +213,7 @@ function ItemsComponent() {
     }, [categories])
 
     return (
-        <Layout withAuth>
+        <Layout isLoading={isLoading} withAuth>
             <Card className="w-2/3 flex flex-col">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 flex flex-col h-full">
@@ -277,16 +297,16 @@ function ItemsComponent() {
                             <div>
                                 <div className="flex justify-between py-1 pl-2 pr-3">
                                     <div className="flex items-center gap-x-0.5">
-                                        <img src="/assets/images/logo.png" alt="language" className="object-cover w-5" style={{ width: `15%` }} />
-                                        <p className="text-[10px] font-bold">{restaurant.name}</p>
+                                        <PreviewLogo />
+                                        {!user?.hide_name ? <p className="text-[10px] font-bold">{user?.name ? user?.name : "Mon restaurant"}</p> : null}
                                     </div>
                                 </div>
                                 {/* Image Marketing Restaurant */}
-                                <img src="/assets/images/marketing_offer.png" alt="marketingOffer" className="w-full h-[80px] object-cover" />
+                                <PreviewBanner />
                             </div>
                             <div className="flex px-3 py-3 gap-x-0.5">
                                 {!isLoading ? (
-                                    categories.map((category) => <Button key={category.id} variant={activeCategory === category.id ? "default" : "outline"} className={cn("text-[8px] px-1 h-2 border", activeCategory === category.id && "border-primary")}>{category.name}</Button>)
+                                    categories?.map((category) => <Button key={category.id} variant={activeCategory === category.id ? "default" : "outline"} className={cn("text-[8px] px-1 h-2 border", activeCategory === category.id && "border-primary")}>{category.name}</Button>)
                                 ) : (
                                     <div className="flex space-x-2">
                                         <Skeleton className="w-8 h-[10px] rounded" />

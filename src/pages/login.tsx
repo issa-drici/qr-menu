@@ -70,7 +70,7 @@ export default function RegisterPage() {
             <div className="flex flex-col w-full">
                 <a onClick={() => router.back()} className="text-slate-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium mt-7 w-fit cursor-pointer flex items-center"><ChevronLeftIcon className="mr-1 h-4 w-4" />Retour</a>
                 <div className="flex flex-col justify-center items-center h-full translate-y-[-4rem] px-20 max-w-lg m-auto" >
-                    <img src="/assets/images/logo/logo_full.png" className="h-12 object-contain mb-2" />
+                    <img src="/assets/images/logo/logo.png" className="h-12 object-contain mb-2" />
                     <p className="text-center text-2xl font-semibold mb-3">Content de te revoir</p>
                     <p className="text-slate-400 text-sm mb-7 text-center">Entre ton adresse e-mail ci-dessous pour te connecter à ton compte</p>
                     <Form {...form}>
