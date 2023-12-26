@@ -58,14 +58,14 @@ export default function RegisterPage() {
 
   return (
     <div className="flex w-screen h-screen bg-white p-5 gap-x-5">
-      <div className="w-full max-w-[50%] p-3 bg-gradient-to-br from-yellow-100 via-yellow-300 to-yellow-500 text-white rounded-xl flex flex-col justify-center items-center">
-        <p className="text-3xl font-bold">Boostez votre Chiffre d&apos;Affaire avec votre menu en ligne. Nous sommes là pour vous aider à le faire.</p>
+      <div className="hidden md:flex w-full md:max-w-[50%] p-3 bg-gradient-to-br from-yellow-100 via-yellow-300 to-yellow-500 text-white rounded-xl flex flex-col justify-center items-center">
+        <p className="text-lg md:text-3xl font-bold">Boostez votre Chiffre d&apos;Affaire avec votre menu en ligne. Nous sommes là pour vous aider à le faire.</p>
       </div>
-      <div className="flex flex-col w-full max-w-[50%]">
+      <div className="flex flex-col w-full md:max-w-[50%]">
         <Link href={`/login`} legacyBehavior>
           <a className="text-slate-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium ml-auto mt-7 z-10">Se connecter</a>
         </Link>
-        <div className="flex flex-col justify-center items-center h-full translate-y-[-4rem] px-20 max-w-lg m-auto" >
+        <div className="flex flex-col justify-center items-center h-full translate-y-[-4rem] md:px-20 max-w-lg m-auto" >
           <img src="/assets/images/logo/logo.png" className="h-12 object-contain mb-2" />
           <p className="text-center text-2xl font-semibold mb-3">Créer un compte</p>
           <p className="text-slate-400 text-sm mb-7 text-center">Entre ton adresse e-mail ci-dessous pour créer ton compte</p>
