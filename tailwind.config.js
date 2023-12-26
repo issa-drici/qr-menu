@@ -84,6 +84,10 @@ module.exports = {
         '1.5screen': '150vh', // 200% de la largeur de l'écran
         '2screen': '200vh', // 200% de la largeur de l'écran
       },
+      screens: {
+        'ipromax': '375px',
+        // => @media (min-width: 640px) { ... }
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

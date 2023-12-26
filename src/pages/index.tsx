@@ -13,27 +13,27 @@ export default function Home() {
 		  ✨ Traductions par Intelligence Artificielle 🤖
           </p>
         </div>
-        <h2 className="text-2xl md:text-6xl font-black max-w-3xl text-center mt-3">
+        <h2 className="text-2xl ipromax:text-3xl md:text-6xl font-black max-w-3xl text-center mt-3">
           Augmentez vos ventes
         </h2>
-        <h2 className="text-2xl md:text-6xl -mt-2 md:mt-0 font-black max-w-3xl text-center bg-custom-gradient bg-clip-text text-transparent">
-          un seul scan
+        <h2 className="text-2xl ipromax:text-3xl md:text-6xl -mt-2 md:mt-0 font-black max-w-3xl text-center ">
+          en <span className="bg-custom-gradient bg-clip-text text-transparent">un seul scan</span>
         </h2>
-        <p className="text-slate-500 container md:max-w-2xl text-center font-semibold mt-1 md:mt-3 text-xs md:text-base">
+        <p className="text-slate-500 container md:max-w-2xl text-center font-semibold mt-1 md:mt-3 text-xs ipromax:text-sm md:text-base">
           Avec Eatsup : gagnez du temps en salle, offrez un accès continu au
           menu pour stimuler les ventes, et partagez l'excellence de votre
           établissement.
         </p>
-        <p className="text-slate-500 container md:max-w-2xl text-center font-semibold mt-1 text-xs md:text-base">
+        <p className="text-slate-500 container md:max-w-2xl text-center font-semibold mt-1 text-xs ipromax:text-sm md:text-base">
           Propulsez vos avis Google et distinguez-vous dans le marché le plus
           compétitif.
         </p>
         <Link href={`/register`} legacyBehavior>
-          <a className="text-white p-2 md:p-3 rounded-lg md:rounded-xl text-xs md:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-3 md:mt-6">
+          <a className="text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-3 md:mt-6">
             Essai <span className="italic">GRATUIT</span>
           </a>
         </Link>
-        <p className="text-slate-500 max-w-2xl text-center font-semibold mt-1 text-xs md:text-sm">
+        <p className="text-slate-500 max-w-2xl text-center font-semibold mt-1 text-xs ipromax:text-sm">
           Sans engagement.
         </p>
         <img src="/assets/images/google_five_stars.png" className="w-32 mt-1 md:mt-3" />
