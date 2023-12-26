@@ -2,11 +2,11 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -51,6 +51,12 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      backgroundImage: {
+        "custom-gradient":
+          "linear-gradient(93deg, rgba(80, 80, 234, 0.64) 29.87%, rgba(80, 80, 234, 0.93) 67.49%, #5050EA 82.47%)",
+        "circle-gradient":
+          "radial-gradient(53.07% 53.07% at 50% 48.07%, #FFF 0%, #FFF 47.4%, rgba(80, 80, 234, 0.34) 86.46%, rgba(255, 255, 255, 0.00) 100%)",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -70,7 +76,15 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      width: {
+        '1.5screen': '150vw', // 200% de la largeur de l'écran
+        '2screen': '200vw', // 200% de la largeur de l'écran
+      },
+      height: {
+        '1.5screen': '150vh', // 200% de la largeur de l'écran
+        '2screen': '200vh', // 200% de la largeur de l'écran
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

@@ -17,11 +17,11 @@ export default function Authenticated({ children }) {
 
 
     if (user === null) {
-        router.push('/')
+        router.push('/login')
     }
 
     if (router?.query?.restaurantId !== user?.id) {
-        router.push('/')
+        router.push('/login')
     }
 
     return (
