@@ -4,6 +4,7 @@ import { Database } from "@/types/database.types";
 import Link from "next/link";
 import { PricingCard } from "@/components/pricing-card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function Home() {
   return (
@@ -55,7 +56,6 @@ export default function Home() {
         <h2 className="text-2xl ipromax:text-3xl md:text-5xl font-black max-w-3xl text-center mt-14 leading-6">
           Comment ça fonctionne ?
         </h2>
-
         <div className="mt-5 flex overflow-x-scroll space-x-1 whitespace-nowrap max-w-full px-4 py-4 items-center no-scrollbar">
           <div className="flex flex-col max-w-[250px] items-center justify-center bg-primary text-white rounded-2xl px-10 py-3 space-y-2 shadow-lg">
             <p className="text-3xl font-bold text-center">1</p>
@@ -65,7 +65,7 @@ export default function Home() {
             </div>
             <p className="text-sm text-center whitespace-normal">Entre votre menu sur le site et modifiez le quand vous voulez</p>
           </div>
-          <img src="/assets/images/arrow_process.png" className="w-16 h-16"/>
+          <img src="/assets/images/arrow_process.png" className="w-16 h-16" />
           <div className="flex flex-col max-w-[250px] items-center justify-center bg-primary text-white rounded-2xl px-10 py-3 space-y-2 shadow-lg">
             <p className="text-3xl font-bold text-center">2</p>
             <div>
@@ -74,7 +74,7 @@ export default function Home() {
             </div>
             <p className="text-sm text-center whitespace-normal">Choisissez parmi les différents formats de QRcodes disponibles</p>
           </div>
-          <img src="/assets/images/arrow_process.png" className="w-16 h-16"/>
+          <img src="/assets/images/arrow_process.png" className="w-16 h-16" />
           <div className="flex flex-col max-w-[250px] items-center justify-center bg-primary text-white rounded-2xl px-10 py-3 space-y-2 shadow-lg">
             <p className="text-3xl font-bold text-center">3</p>
             <div>
@@ -85,7 +85,7 @@ export default function Home() {
           </div>
         </div>
         <h2 className="text-2xl ipromax:text-3xl md:text-5xl font-black max-w-3xl text-center mt-14 leading-6">
-          Le seul abonnement 
+          Le seul abonnement
         </h2>
         <h2 className="text-2xl ipromax:text-3xl md:text-5xl font-black max-w-3xl text-center leading-6">
           dont vous aurez besoin
@@ -95,6 +95,30 @@ export default function Home() {
           <PricingCard type="cuisinier" />
           <PricingCard type="chef" />
         </div>
+        <h2 className="text-2xl ipromax:text-3xl md:text-5xl font-black max-w-3xl text-center mt-14 leading-6">
+          Questions fréquentes
+        </h2>
+        <Accordion type="multiple" className="w-full px-4 mt-10 mb-20 space-y-2">
+          <AccordionItem value="item-1" className="border rounded-xl shadow overflow-hidden">
+            <AccordionTrigger className="px-4 font-bold hover:no-underline text-base md:text-lg text-left">💁‍♀️&nbsp;&nbsp;À quoi sert Eatsup ?</AccordionTrigger>
+            <AccordionContent className="px-4 text-base md:text-lg">
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2" className="border rounded-xl shadow overflow-hidden">
+            <AccordionTrigger className="px-4 font-bold hover:no-underline text-base md:text-lg text-left">🤝&nbsp;&nbsp;L&apos;abonnement est-il sans engagement ?</AccordionTrigger>
+            <AccordionContent className="px-4 text-base md:text-lg">
+              Yes. It comes with default styles that matches the other
+              components&apos; aesthetic.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3" className="border rounded-xl shadow overflow-hidden">
+            <AccordionTrigger className="px-4 font-bold hover:no-underline text-base md:text-lg text-left">🥲&nbsp;&nbsp;Comment annuler mon abonnement ?</AccordionTrigger>
+            <AccordionContent className="px-4 text-base md:text-lg">
+              Yes. It's animated by default, but you can disable it if you prefer.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   );

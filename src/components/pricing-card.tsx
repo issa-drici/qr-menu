@@ -144,14 +144,14 @@ export const PricingCard = ({ type }) => {
                 src="/assets/images/pricing/check_white.png"
                 className="w-[18px] h-[15px] ipromax:w-[22px] ipromax:h-[18px]"
               />
-              <p className="text-white text-sm ipromax:text-lg ml-2">3 catégories maximum</p>
+              <p className="text-white text-sm ipromax:text-lg ml-2">Catégories illimités</p>
             </div>
             <div className="flex items-center">
               <img
                 src="/assets/images/pricing/check_white.png"
                 className="w-[18px] h-[15px] ipromax:w-[22px] ipromax:h-[18px]"
               />
-              <p className="text-white text-sm ipromax:text-lg ml-2">5 élements maximum</p>
+              <p className="text-white text-sm ipromax:text-lg ml-2">Élements illimités</p>
             </div>
             <div className="flex items-center">
               <img
@@ -159,7 +159,7 @@ export const PricingCard = ({ type }) => {
                 className="w-[18px] h-[15px] ipromax:w-[22px] ipromax:h-[18px]"
               />
               <p className="text-white text-sm ipromax:text-lg ml-2">
-                Traduction uniquement en anglais
+                Traduction dans + de 5 langues
               </p>
             </div>
             <div className="flex items-center">
@@ -249,14 +249,14 @@ export const PricingCard = ({ type }) => {
                 src="/assets/images/pricing/check.png"
                 className="w-[18px] h-[15px] ipromax:w-[22px] ipromax:h-[18px]"
               />
-              <p className="text-primary text-sm ipromax:text-lg ml-2">3 catégories maximum</p>
+              <p className="text-primary text-sm ipromax:text-lg ml-2">Catégories illimités</p>
             </div>
             <div className="flex items-center">
               <img
                 src="/assets/images/pricing/check.png"
                 className="w-[18px] h-[15px] ipromax:w-[22px] ipromax:h-[18px]"
               />
-              <p className="text-primary text-sm ipromax:text-lg ml-2">5 élements maximum</p>
+              <p className="text-primary text-sm ipromax:text-lg ml-2">Élements illimités</p>
             </div>
             <div className="flex items-center">
               <img
@@ -264,7 +264,7 @@ export const PricingCard = ({ type }) => {
                 className="w-[18px] h-[15px] ipromax:w-[22px] ipromax:h-[18px]"
               />
               <p className="text-primary text-sm ipromax:text-lg ml-2">
-                Traduction uniquement en anglais
+                Traduction dans + de 5 langues
               </p>
             </div>
             <div className="flex items-center">
