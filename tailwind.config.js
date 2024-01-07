@@ -56,6 +56,11 @@ module.exports = {
           "linear-gradient(93deg, rgba(80, 80, 234, 0.64) 29.87%, rgba(80, 80, 234, 0.93) 67.49%, #5050EA 82.47%)",
         "circle-gradient":
           "radial-gradient(53.07% 53.07% at 50% 48.07%, #FFF 0%, #FFF 47.4%, rgba(80, 80, 234, 0.34) 86.46%, rgba(255, 255, 255, 0.00) 100%)",
+        "card-pricing":
+          "linear-gradient(85deg, rgba(80, 80, 234, 0.64) 0.72%, rgba(80, 80, 234, 0.93) 73.08%, #5050EA 101.88%)",
+        "card-gold": "linear-gradient(180deg, #FFFFE2 0%, #FFF 100%)",
+        "overlay-background":
+          "linear-gradient(180deg, rgba(80, 80, 234, 0.65) 0%, rgba(80, 80, 234, 0.17) 56.5%, rgba(80, 80, 234, 0.40) 100%)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -77,15 +82,15 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       width: {
-        '1.5screen': '150vw', // 200% de la largeur de l'écran
-        '2screen': '200vw', // 200% de la largeur de l'écran
+        "1.5screen": "150vw", // 200% de la largeur de l'écran
+        "2screen": "200vw", // 200% de la largeur de l'écran
       },
       height: {
-        '1.5screen': '150vh', // 200% de la largeur de l'écran
-        '2screen': '200vh', // 200% de la largeur de l'écran
+        "1.5screen": "150vh", // 200% de la largeur de l'écran
+        "2screen": "200vh", // 200% de la largeur de l'écran
       },
       screens: {
-        'ipromax': '375px',
+        ipromax: "375px",
         // => @media (min-width: 640px) { ... }
       },
     },

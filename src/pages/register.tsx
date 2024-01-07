@@ -1,43 +1,50 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { useSupabaseClient } from "@supabase/auth-helpers-react"
-import { Database } from "@/types/database.types"
-import { Form } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { toast } from "@/components/ui/use-toast"
-import FieldInput from "@/components/field-input"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/router"
-
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Database } from "@/types/database.types";
+import { Form } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "@/components/ui/use-toast";
+import FieldInput from "@/components/field-input";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/router";
+import { useUserContext } from "@/context/user";
 
 const FormSchema = z.object({
   email: z.string(),
   password: z.string().min(6, "Message"),
-  name: z.string({required_error: "Le nom du restaurant est requis pour s'inscrire."}),
-})
+  name: z.string({
+    required_error: "Le nom du restaurant est requis pour s'inscrire.",
+  }),
+});
 
 export default function RegisterPage() {
   const supabaseClient = useSupabaseClient<Database>();
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-  })
+  });
 
+  const { user } = useUserContext();
+
+  if (!!user) {
+    router.push(`/restaurant/${user?.id}/admin/restaurant`);
+  }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      const { email, password, name } = data
+      const { email, password, name } = data;
 
       const { data: dataSignup, error } = await supabaseClient.auth.signUp({
         email: email,
         password: password,
         options: {
-          emailRedirectTo: 'https://qr-menu-tan.vercel.app/'
-        }
-      })
+          emailRedirectTo: "https://qr-menu-tan.vercel.app/",
+        },
+      });
 
       const { data: dataUpdatedWithName } = await supabaseClient
         .from("profile")
@@ -47,40 +54,76 @@ export default function RegisterPage() {
         .eq("id", dataSignup?.user?.id);
 
       if (dataSignup?.user) {
-        router.push(`/restaurant/${dataSignup?.user?.id}/admin/restaurant`)
+        router.push(`/restaurant/${dataSignup?.user?.id}/admin/restaurant`);
       }
-
     } catch (error) {
-      console.error('Erreur:', error);
-      toast({ title: 'Erreur', description: "Un problème est survenu lors de l'inscription.", variant: "destructive" });
+      console.error("Erreur:", error);
+      toast({
+        title: "Erreur",
+        description: "Un problème est survenu lors de l'inscription.",
+        variant: "destructive",
+      });
     }
   }
 
   return (
     <div className="flex w-screen h-screen bg-white p-5 gap-x-5">
       <div className="hidden md:flex w-full md:max-w-[50%] p-3 bg-gradient-to-br from-yellow-100 via-yellow-300 to-yellow-500 text-white rounded-xl flex flex-col justify-center items-center">
-        <p className="text-lg md:text-3xl font-bold">Boostez votre Chiffre d&apos;Affaire avec votre menu en ligne. Nous sommes là pour vous aider à le faire.</p>
+        <p className="text-lg md:text-3xl font-bold">
+          Boostez votre Chiffre d&apos;Affaire avec votre menu en ligne. Nous
+          sommes là pour vous aider à le faire.
+        </p>
       </div>
       <div className="flex flex-col w-full md:max-w-[50%]">
         <Link href={`/login`} legacyBehavior>
-          <a className="text-slate-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium ml-auto mt-7 z-10">Se connecter</a>
+          <a className="text-slate-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium ml-auto mt-7 z-10">
+            Se connecter
+          </a>
         </Link>
-        <div className="flex flex-col justify-center items-center h-full translate-y-[-4rem] md:px-20 max-w-lg m-auto" >
-          <img src="/assets/images/logo/logo.png" className="h-12 object-contain mb-2" />
-          <p className="text-center text-2xl font-semibold mb-3">Créer un compte</p>
-          <p className="text-slate-400 text-sm mb-7 text-center">Entre ton adresse e-mail ci-dessous pour créer ton compte</p>
+        <div className="flex flex-col justify-center items-center h-full translate-y-[-4rem] md:px-20 max-w-lg m-auto">
+          <Link href={`/`} legacyBehavior>
+            <img
+              src="/assets/images/logo/logo.png"
+              className="h-12 object-contain mb-2 cursor-pointer"
+            />
+          </Link>
+          <p className="text-center text-2xl font-semibold mb-3">
+            Créer un compte
+          </p>
+          <p className="text-slate-400 text-sm mb-7 text-center">
+            Entre ton adresse e-mail ci-dessous pour créer ton compte
+          </p>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-2 flex flex-col">
-              <FieldInput form={form} name="email" placeholder="hello@gmail.com" />
-              <FieldInput form={form} name="password" placeholder="Mot de passe" type="password" />
-              <FieldInput form={form} name="name" placeholder="Nom du restaurant" />
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full space-y-2 flex flex-col"
+            >
+              <FieldInput
+                form={form}
+                name="email"
+                placeholder="hello@gmail.com"
+              />
+              <FieldInput
+                form={form}
+                name="password"
+                placeholder="Mot de passe"
+                type="password"
+              />
+              <FieldInput
+                form={form}
+                name="name"
+                placeholder="Nom du restaurant"
+              />
               <Button type="submit">Créer un compte</Button>
             </form>
           </Form>
-          <p className="mt-5 text-center text-slate-400 text-sm">En cliquant sur Continuer, tu acceptes nos <span className="underline">Conditions d&apos;utilisation</span> et <span className="underline">Politique de confidentialité</span>.</p>
+          <p className="mt-5 text-center text-slate-400 text-sm">
+            En cliquant sur Continuer, tu acceptes nos{" "}
+            <span className="underline">Conditions d&apos;utilisation</span> et{" "}
+            <span className="underline">Politique de confidentialité</span>.
+          </p>
         </div>
       </div>
-
 
       {/* <div className="md:hidden">
         <Image
@@ -226,5 +269,5 @@ export default function RegisterPage() {
         </div>
       </div> */}
     </div>
-  )
+  );
 }

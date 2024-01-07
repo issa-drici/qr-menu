@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/database.types";
 import Link from "next/link";
+import { PricingCard } from "@/components/pricing-card";
 
 export default function Home() {
   return (
@@ -10,14 +11,17 @@ export default function Home() {
       <div className="absolute flex flex-col w-full h-full mt-20 md:mt-32 items-center">
         <div className="bg-custom-gradient rounded-md px-2 md:rounded-lg md:px-3 py-0.5">
           <p className="text-white font-bold text-xs md:text-base">
-		  ✨ Traductions par Intelligence Artificielle 🤖
+            ✨ Traductions par Intelligence Artificielle 🤖
           </p>
         </div>
         <h2 className="text-2xl ipromax:text-3xl md:text-6xl font-black max-w-3xl text-center mt-3">
           Augmentez vos ventes
         </h2>
         <h2 className="text-2xl ipromax:text-3xl md:text-6xl -mt-2 md:mt-0 font-black max-w-3xl text-center ">
-          en <span className="bg-custom-gradient bg-clip-text text-transparent">un seul scan</span>
+          en{" "}
+          <span className="bg-custom-gradient bg-clip-text text-transparent">
+            un seul scan
+          </span>
         </h2>
         <p className="text-slate-500 container md:max-w-2xl text-center font-semibold mt-1 md:mt-3 text-xs ipromax:text-sm md:text-base">
           Avec Eatsup : gagnez du temps en salle, offrez un accès continu au
@@ -36,13 +40,24 @@ export default function Home() {
         <p className="text-slate-500 max-w-2xl text-center font-semibold mt-1 text-xs ipromax:text-sm">
           Sans engagement.
         </p>
-        <img src="/assets/images/google_five_stars.png" className="w-32 mt-1 md:mt-3" />
+        <img
+          src="/assets/images/google_five_stars.png"
+          className="w-32 mt-1 md:mt-3"
+        />
         <div className="md:p-1.5 p-1 mt-1 md:mt-5 bg-slate-400 bg-opacity-20 rounded-md md:rounded-2xl">
           <img
             src="/assets/images/preview_website.png"
             className="w-[90vw] md:w-[80vw]"
             id="previewImg"
           />
+        </div>
+        <h2 className="text-2xl ipromax:text-3xl md:text-6xl font-black max-w-3xl text-center mt-14 leading-6">
+          Le seul abonnement dont vous aurez besoin
+        </h2>
+        <div className="container flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-10 pt-10">
+          <PricingCard type="commis" />
+          <PricingCard type="cuisinier" />
+          <PricingCard type="chef" />
         </div>
 
         <p className="text-slate-800 text-2xl text-center font-semibold pt-24 pb-24 text-sm">
