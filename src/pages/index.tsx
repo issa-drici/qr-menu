@@ -3,12 +3,13 @@ import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/database.types";
 import Link from "next/link";
 import { PricingCard } from "@/components/pricing-card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function Home() {
   return (
     <div className="relative bg-white w-full h-full min-h-screen tracking-tighter max-w-screen overflow-x-hidden">
-      <div className="absolute bg-circle-gradient w-1.5screen h-[110vh] md:h-1.5screen -translate-x-[27vw] -translate-y-1/4"></div>
-      <div className="absolute flex flex-col w-full h-full mt-20 md:mt-32 items-center">
+      <div className="absolute bg-circle-gradient w-1.5screen h-[110vh] md:h-1.5screen -translate-x-[27vw] -translate-y-1/4 z-0"></div>
+      <div className="relative flex flex-col w-full h-full mt-20 md:mt-32 items-center z-10">
         <div className="bg-custom-gradient rounded-md px-2 md:rounded-lg md:px-3 py-0.5">
           <p className="text-white font-bold text-xs md:text-base">
             ✨ Traductions par Intelligence Artificielle 🤖
@@ -51,18 +52,49 @@ export default function Home() {
             id="previewImg"
           />
         </div>
-        <h2 className="text-2xl ipromax:text-3xl md:text-6xl font-black max-w-3xl text-center mt-14 leading-6">
-          Le seul abonnement dont vous aurez besoin
+        <h2 className="text-2xl ipromax:text-3xl md:text-5xl font-black max-w-3xl text-center mt-14 leading-6">
+          Comment ça fonctionne ?
+        </h2>
+
+        <div className="mt-5 flex overflow-x-scroll space-x-1 whitespace-nowrap max-w-full px-4 py-4 items-center no-scrollbar">
+          <div className="flex flex-col max-w-[250px] items-center justify-center bg-primary text-white rounded-2xl px-10 py-3 space-y-2 shadow-lg">
+            <p className="text-3xl font-bold text-center">1</p>
+            <div>
+              <p className="text-3xl font-semibold text-center">Saisissez</p>
+              <p className="text-3xl font-semibold text-center">votre menu 📝</p>
+            </div>
+            <p className="text-sm text-center whitespace-normal">Entre votre menu sur le site et modifiez le quand vous voulez</p>
+          </div>
+          <img src="/assets/images/arrow_process.png" className="w-16 h-16"/>
+          <div className="flex flex-col max-w-[250px] items-center justify-center bg-primary text-white rounded-2xl px-10 py-3 space-y-2 shadow-lg">
+            <p className="text-3xl font-bold text-center">2</p>
+            <div>
+              <p className="text-3xl font-semibold text-center">Commandez</p>
+              <p className="text-3xl font-semibold text-center">vos QRcodes 📦</p>
+            </div>
+            <p className="text-sm text-center whitespace-normal">Choisissez parmi les différents formats de QRcodes disponibles</p>
+          </div>
+          <img src="/assets/images/arrow_process.png" className="w-16 h-16"/>
+          <div className="flex flex-col max-w-[250px] items-center justify-center bg-primary text-white rounded-2xl px-10 py-3 space-y-2 shadow-lg">
+            <p className="text-3xl font-bold text-center">3</p>
+            <div>
+              <p className="text-3xl font-semibold text-center">Contemplez</p>
+              <p className="text-3xl font-semibold text-center">les profits 💰</p>
+            </div>
+            <p className="text-sm text-center whitespace-normal">Vous n’avez plus qu’a installer vos QR et observer le résultat ! </p>
+          </div>
+        </div>
+        <h2 className="text-2xl ipromax:text-3xl md:text-5xl font-black max-w-3xl text-center mt-14 leading-6">
+          Le seul abonnement 
+        </h2>
+        <h2 className="text-2xl ipromax:text-3xl md:text-5xl font-black max-w-3xl text-center leading-6">
+          dont vous aurez besoin
         </h2>
         <div className="container flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-10 pt-10">
           <PricingCard type="commis" />
           <PricingCard type="cuisinier" />
           <PricingCard type="chef" />
         </div>
-
-        <p className="text-slate-800 text-2xl text-center font-semibold pt-24 pb-24 text-sm">
-          La suite.
-        </p>
       </div>
     </div>
   );

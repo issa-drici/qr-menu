@@ -19,7 +19,7 @@ const Nav = () => {
 
     if (isActive('/')) {
         return (
-            <nav className="bg-white p-2 mt-0 w-full absolute top-0 z-10 shadow">
+            <nav className="bg-white p-2 mt-0 w-full fixed z-30 top-0 shadow">
                 <div className="md:container mx-auto flex flex-wrap items-center">
                     <div className="flex w-1/2 justify-start text-white font-extrabold">
                         <Link href={`/`} legacyBehavior>
@@ -57,7 +57,7 @@ const Nav = () => {
 
     if (!!user) {
         return (
-            <nav className="bg-white p-2 mt-0 w-full absolute top-0 z-10 shadow">
+            <nav className="bg-white p-2 mt-0 w-full fixed z-30 top-0 shadow">
                 <div className="md:container mx-auto flex flex-wrap items-center">
                     <div className="flex w-1/2 justify-start text-white font-extrabold">
                         <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
