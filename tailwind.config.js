@@ -61,6 +61,10 @@ module.exports = {
         "card-gold": "linear-gradient(180deg, #FFFFE2 0%, #FFF 100%)",
         "overlay-background":
           "linear-gradient(180deg, rgba(80, 80, 234, 0.65) 0%, rgba(80, 80, 234, 0.17) 56.5%, rgba(80, 80, 234, 0.40) 100%)",
+        "card-feature":
+          "linear-gradient(103deg, #5050EA 5.12%, rgba(80, 80, 234, 0.93) 58.82%, #5050EA 101.02%)",
+        "text-light-card-primary":
+          "linear-gradient(93deg, rgba(255, 255, 255, 0.64) 1.88%, rgba(255, 255, 255, 0.93) 71.35%, #FFF 98.99%)",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -32,7 +32,7 @@ export const PricingCard = ({ type }) => {
                 src="/assets/images/pricing/check.png"
                 className="w-[18px] h-[15px] ipromax:w-[22px] ipromax:h-[18px]"
               />
-              <p className="text-primary text-sm ipromax:text-lg ml-2">5 élements maximum</p>
+              <p className="text-primary text-sm ipromax:text-lg ml-2">15 élements maximum</p>
             </div>
             <div className="flex items-center">
               <img

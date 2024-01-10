@@ -21,10 +21,15 @@ const Nav = () => {
         return (
             <nav className="bg-white p-2 mt-0 w-full fixed z-30 top-0 shadow">
                 <div className="md:container mx-auto flex flex-wrap items-center">
-                    <div className="flex w-1/2 justify-start text-white font-extrabold">
+                    <div className="flex w-full justify-between items-center text-white font-extrabold">
                         <Link href={`/`} legacyBehavior>
                             <a className="text-white no-underline hover:text-white hover:no-underline">
                                 <img src="/assets/images/logo/logo.png" className=" h-8 md:h-12 object-contain" />
+                            </a>
+                        </Link>
+                        <Link href={`/register`} legacyBehavior>
+                            <a className="text-white p-2 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150">
+                            ✨&nbsp;Essai <span className="italic">GRATUIT</span>
                             </a>
                         </Link>
                     </div>
