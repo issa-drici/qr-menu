@@ -11,7 +11,7 @@ const Nav = () => {
 
     const restaurantId = user?.id
 
-    const hideNav = isActive('/register') || isActive('/login')
+    const hideNav = isActive('/register') || isActive('/login') || isActive('/restaurant/[restaurantId]/menu')
 
     if (hideNav) {
         return null
@@ -21,37 +21,34 @@ const Nav = () => {
         return (
             <nav className="bg-white p-2 mt-0 w-full fixed z-30 top-0 shadow">
                 <div className="md:container mx-auto flex flex-wrap items-center">
-                    <div className="flex w-full justify-between items-center text-white font-extrabold">
+                    <div className="flex w-1/2 justify-start text-white font-extrabold">
                         <Link href={`/`} legacyBehavior>
                             <a className="text-white no-underline hover:text-white hover:no-underline">
                                 <img src="/assets/images/logo/logo.png" className=" h-8 md:h-12 object-contain" />
                             </a>
                         </Link>
-                        <Link href={`/register`} legacyBehavior>
-                            <a className="text-white p-2 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150">
-                            ✨&nbsp;Essai <span className="italic">GRATUIT</span>
-                            </a>
-                        </Link>
                     </div>
-                    <div className="hidden md:flex w-1/2 justify-end items-center">
+                    <div className="flex w-1/2 justify-end items-center">
                         {!!user ? (
                             <Link href={`/restaurant/${restaurantId}/admin/restaurant`} legacyBehavior>
-                                <a className="text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium">Aller au Dashboard</a>
+                                <a className="hidden md:block text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium">Aller au Dashboard</a>
                             </Link>
                         ) : null}
                         {!!user ? (
                             <Link href={`/logout`} legacyBehavior>
-                                <a className="text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium" >Se déconnecter</a>
+                                <a className="hidden md:block text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium" >Se déconnecter</a>
                             </Link>
                         ) : null}
                         {!!!user ? (
                             <Link href={`/login`} legacyBehavior>
-                                <a className="text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium">Se connecter</a>
+                                <a className="hidden md:block text-slate-700 hover:text-yellow-500 px-3 py-2 rounded-md text-md font-medium">Se connecter</a>
                             </Link>
                         ) : null}
                         {!!!user ? (
                             <Link href={`/register`} legacyBehavior>
-                                <a className="text-white px-3 py-3 rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150">Essai <span className="italic">GRATUIT</span></a>
+                                <a className="text-white p-2 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150">
+                                    ✨&nbsp;Essai <span className="italic">GRATUIT</span>
+                                </a>
                             </Link>
                         ) : null}
                     </div>
