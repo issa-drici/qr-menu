@@ -11,7 +11,10 @@ const Nav = () => {
 
     const restaurantId = user?.id
 
-    const hideNav = isActive('/register') || isActive('/login') || isActive('/restaurant/[restaurantId]/menu')
+    const hideNav = isActive('/register')
+    || isActive('/login')
+    || isActive('/restaurant/[restaurantId]/menu')
+    || isActive('/site/[typeRestaurant]/[cityName]/[restaurantName]')
 
     if (hideNav) {
         return null
