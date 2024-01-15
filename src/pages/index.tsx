@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PricingCard } from "@/components/pricing-card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Fade from 'react-reveal/Fade'
+import TrialLandingPage from "@/components/trial-landing-page";
 
 export default function Home() {
   return (
@@ -49,9 +50,10 @@ export default function Home() {
         <div className="md:p-1.5 p-1 mt-1 md:mt-5 bg-slate-400 bg-opacity-20 rounded-md md:rounded-2xl">
           <img
             src="/assets/images/preview_website.png"
-            className="w-[90vw] md:w-[80vw]"
+            className="hidden md:block w-[90vw] md:w-[80vw]"
             id="previewImg"
           />
+          {/* <TrialLandingPage /> */}
         </div>
         <Fade bottom>
           <div className="flex bg-blue-200 rounded-lg mx-4 p-2 space-x-10 ipromax:space-x-5 shadow-md items-center my-5">
