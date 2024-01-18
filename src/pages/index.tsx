@@ -218,8 +218,8 @@ export default function Home() {
           <h2 className="text-2xl ipromax:text-3xl md:text-4xl font-black max-w-3xl text-center mt-14 leading-6">
             Le seul abonnement
           </h2>
-          <h2 className="text-2xl ipromax:text-3xl md:text-4xl font-black max-w-3xl text-center leading-6">
-            dont vous aurez besoin
+          <h2 className="text-2xl ipromax:text-3xl md:text-4xl font-black max-w-3xl text-center leading-6 ">
+            dont <span className="bg-custom-gradient bg-clip-text text-transparent">vous aurez besoin</span>
           </h2>
         </Fade>
         <div className="container flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-10 pt-10">

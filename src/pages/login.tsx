@@ -43,7 +43,8 @@ export default function RegisterPage() {
   const { user } = useUserContext();
 
   if (!!user) {
-    router.push(`/restaurant/${user?.id}/admin/restaurant`);
+    router.push(`/admin/restaurant`);
+    // router.push(`/restaurant/${user?.id}/admin/restaurant`);
   }
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -61,7 +62,8 @@ export default function RegisterPage() {
         });
 
       if (dataSignin?.user) {
-        router.push(`/restaurant/${dataSignin?.user?.id}/admin/restaurant`);
+        router.push(`/admin/restaurant`);
+        // router.push(`/restaurant/${dataSignin?.user?.id}/admin/restaurant`);
       }
     } catch (error) {
       console.error("Erreur:", error);

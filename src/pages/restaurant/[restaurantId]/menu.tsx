@@ -12,7 +12,7 @@ import { createRef, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
-import { Share2Icon } from "@radix-ui/react-icons";
+import { Pencil1Icon, Share2Icon } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
 
 const labels = {
@@ -145,10 +145,14 @@ function MenuComponent({ profile, categoriesWithItems }) {
     }
 
     useEffect(() => {
+        const editionBar = document.querySelector('#editionBar'); // Remplacer par le sélecteur de votre première barre
         const firstBar = document.querySelector('#titleBar'); // Remplacer par le sélecteur de votre première barre
         const secondBar = document.querySelector('#categoryBar'); // Remplacer par le sélecteur de votre deuxième barre
 
-        if (firstBar && secondBar) {
+        if (editionBar && firstBar && secondBar) {
+            firstBar.style.top = `${editionBar.offsetHeight}px`;
+            secondBar.style.top = `${editionBar.offsetHeight + firstBar.offsetHeight}px`;
+        } else if (firstBar && secondBar) {
             const height = firstBar.offsetHeight;
             secondBar.style.top = `${height}px`;
         }
@@ -176,7 +180,20 @@ function MenuComponent({ profile, categoriesWithItems }) {
 
     return (
         <div className="bg-white">
-            <div className="text-xs">
+            {router?.query?.edition === '1' ? (
+                <div className="flex justify-between items-center p-2 sticky top-0 bg-white" id="editionBar">
+                    <Link href={`/admin/restaurant`} legacyBehavior>
+                        <a className="text-white no-underline hover:text-white hover:no-underline">
+                            <img src="/assets/images/logo/logo.png" className=" h-8 md:h-12 object-contain" />
+                        </a>
+                    </Link>
+                    <Button variant="default" onClick={() => router.back()}>
+                            <Pencil1Icon className="h-4 w-4 mr-2" /> Retour à l&apos;édition
+                        </Button>
+                </div>
+            )
+                : null}
+            <div className={cn("text-xs", router?.query?.edition === '1' ? "bg-gray-100 pt-2 px-2" : null)}>
                 <div className="flex justify-between items-center py-1 pl-2 pr-3 sticky top-0 z-50 bg-white" id="titleBar">
                     <div className="flex items-center gap-x-0.5">
                         <PreviewLogo />
@@ -274,7 +291,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
                     </a>
                 </Link>
             </div>
-        </div>
+        </div >
     );
 }
 

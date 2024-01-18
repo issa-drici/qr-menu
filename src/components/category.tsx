@@ -163,105 +163,104 @@ function CategoryComponent() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Layout withAuth>
-        <Card className="w-1/2 flex flex-col">
-          <CardHeader>
-            <CardTitle>Gérer les différentes sections du menu</CardTitle>
-            <CardDescription>
-              Vous pouvez créer, modifier, réorganiser et supprimer les sections
-              de votre menu sur cette page.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex-grow overflow-y-auto">
-            {!isLoading ? (
-              <Droppable droppableId="droppable-categories">
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {categories?.map((category, index) => (
-                      <Draggable
-                        key={category.id}
-                        draggableId={category.id}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <Card
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            className="shadow-none mb-2"
-                          >
-                            <div className="flex items-center max-h-14">
-                              <CardHeader className="w-full">
-                                {category.displayInput ? (
-                                  <Input
-                                    ref={inputRef}
-                                    value={category.name}
-                                    onChange={(e) =>
-                                      handleChangeInput(index, e.target.value)
-                                    }
-                                    onBlur={() => handleEditBlur(index)}
-                                  />
-                                ) : (
-                                  <CardTitle className="text-left">
-                                    {category.name}
-                                  </CardTitle>
-                                )}
-                              </CardHeader>
-                              <div className="flex space-x-1 mr-3">
-                                <Button
-                                  variant="default"
-                                  size="icon"
-                                  onClick={() => handleEditClick(index)}
-                                >
-                                  <Pencil1Icon className="h-4 w-4" />
-                                </Button>
-                                {/* <Button variant="destructive" size="icon" onClick={() => handleRemoveCategory(index)}>
+
+      <Card className="w-full md:w-1/2 flex flex-col">
+        <CardHeader>
+          <CardTitle>Gérer les différentes sections du menu</CardTitle>
+          <CardDescription>
+            Vous pouvez créer, modifier, réorganiser et supprimer les sections
+            de votre menu sur cette page.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex-grow overflow-y-auto">
+          {!isLoading ? (
+            <Droppable droppableId="droppable-categories">
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {categories?.map((category, index) => (
+                    <Draggable
+                      key={category.id}
+                      draggableId={category.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <Card
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className="shadow-none mb-2"
+                        >
+                          <div className="flex items-center max-h-14">
+                            <CardHeader className="w-full">
+                              {category.displayInput ? (
+                                <Input
+                                  ref={inputRef}
+                                  value={category.name}
+                                  onChange={(e) =>
+                                    handleChangeInput(index, e.target.value)
+                                  }
+                                  onBlur={() => handleEditBlur(index)}
+                                />
+                              ) : (
+                                <CardTitle className="text-left">
+                                  {category.name.fr}
+                                </CardTitle>
+                              )}
+                            </CardHeader>
+                            <div className="flex space-x-1 mr-3">
+                              <Button
+                                variant="default"
+                                size="icon"
+                                onClick={() => handleEditClick(index)}
+                              >
+                                <Pencil1Icon className="h-4 w-4" />
+                              </Button>
+                              {/* <Button variant="destructive" size="icon" onClick={() => handleRemoveCategory(index)}>
                                                                     <TrashIcon className="h-4 w-4" />
                                                                 </Button> */}
-                                <Button
-                                  variant="outline"
-                                  size="icon"
-                                  {...provided.dragHandleProps}
-                                  className="cursor-grab"
-                                >
-                                  <DragHandleHorizontalIcon className="h-5 w-5" />
-                                </Button>
-                              </div>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                {...provided.dragHandleProps}
+                                className="cursor-grab"
+                              >
+                                <DragHandleHorizontalIcon className="h-5 w-5" />
+                              </Button>
                             </div>
-                          </Card>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            ) : (
-              <div className="flex flex-col space-y-2">
-                <Skeleton className="w-full h-[40px] rounded" />
-                <Skeleton className="w-full h-[40px] rounded" />
-                <Skeleton className="w-full h-[40px] rounded" />
-              </div>
-            )}
-            <Card
-              className="group border-dashed shadow-none border-gray-300 opacity-90 hover:border-gray-400 hover:cursor-pointer"
-              onClick={handleAddCategory}
-            >
-              <div className="flex items-center">
-                <CardHeader className="w-full ">
-                  <CardTitle className="text-center font-normal text-gray-400 opacity-90 group-hover:text-gray-700">
-                    Ajouter une nouvelle catégorie +
-                  </CardTitle>
-                </CardHeader>
-              </div>
-            </Card>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button type="submit" onClick={onSubmit}>
-              Enregistrer
-            </Button>
-          </CardFooter>
-        </Card>
-      </Layout>
+                          </div>
+                        </Card>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ) : (
+            <div className="flex flex-col space-y-2">
+              <Skeleton className="w-full h-[40px] rounded" />
+              <Skeleton className="w-full h-[40px] rounded" />
+              <Skeleton className="w-full h-[40px] rounded" />
+            </div>
+          )}
+          <Card
+            className="group border-dashed shadow-none border-gray-300 opacity-90 hover:border-gray-400 hover:cursor-pointer"
+            onClick={handleAddCategory}
+          >
+            <div className="flex items-center">
+              <CardHeader className="w-full ">
+                <CardTitle className="text-center font-normal text-gray-400 opacity-90 group-hover:text-gray-700">
+                  Ajouter une nouvelle catégorie +
+                </CardTitle>
+              </CardHeader>
+            </div>
+          </Card>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button type="submit" onClick={onSubmit}>
+            Enregistrer
+          </Button>
+        </CardFooter>
+      </Card>
     </DragDropContext>
   );
 }

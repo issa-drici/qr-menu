@@ -20,10 +20,6 @@ export default function Authenticated({ children }) {
         router.push('/login')
     }
 
-    if (router?.query?.restaurantId !== user?.id) {
-        router.push('/login')
-    }
-
     return (
         <>
             {user !== null ? (

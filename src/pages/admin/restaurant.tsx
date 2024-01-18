@@ -78,7 +78,7 @@ function RestaurantComponent() {
         const { data: profile } = await supabaseClient
                     .from("profile")
                     .select("*")
-                    .eq("id", router?.query?.restaurantId)
+                    .eq("id", user?.id)
                     .single();
                     setProfile(profile)
 
@@ -293,7 +293,7 @@ function RestaurantComponent() {
         <Layout isLoading={isLoadingGeneral} withAuth>
             { user ? (
                 <>
-                    <Card className="w-2/3 flex flex-col">
+                    <Card className="w-full md:w-2/3 md:flex flex-col">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 flex flex-col h-full">
                                 <CardHeader>
@@ -382,7 +382,7 @@ function RestaurantComponent() {
                             </form>
                         </Form>
                     </Card>
-                    <Card className="flex-1">
+                    <Card className="hidden md:flex flex-1 h-fit md:h-full">
                         <CardHeader>
                             <CardTitle>Aperçu du menu</CardTitle>
                             <CardDescription>Voici une prévisualisation de la présentation de votre entreprise sur le menu en ligne.</CardDescription>
@@ -403,7 +403,7 @@ function RestaurantComponent() {
                                                         <img src={languagesDisplay(languages ? languages[0] : "fr")?.imageUrl} className="w-5 h-2 ml-0.5" />
                                                     </div>
                                                 </PopoverTrigger>
-                                                <PopoverContent className="w-fit p-0">
+                                                <PopoverContent className="hidden md:block w-fit p-0">
                                                     <Command>
                                                         <CommandGroup>
                                                             {languages?.map((language) => (

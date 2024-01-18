@@ -27,7 +27,7 @@ export default function FieldCheckbox({ form, name, label, description, onChange
       render={() => (
         <FormItem>
           <div className="mb-4">
-            <FormLabel className="text-base">{label}</FormLabel>
+            <FormLabel>{label}</FormLabel>
             {description ? <FormDescription>
               {description}
             </FormDescription> : null}

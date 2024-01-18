@@ -1,7 +1,8 @@
 import Authenticated from "@/components/authenticated";
+import { cn } from "@/lib/utils";
 
-export default function Layout({ isLoading, children, withAuth }) {
-    return <div className="flex justify-center container pb-10 gap-x-5 h-screen pt-20">
+export default function Layout({ isLoading, children, withAuth, fullHeight }) {
+    return <div className={cn("flex justify-center container pb-10 gap-x-5 pt-20", fullHeight ? "min-h-screen" : "h-screen")}>
         {withAuth ? (
             <Authenticated>
                 {isLoading ? (

@@ -6,16 +6,15 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUserContext } from "@/context/user";
-import { ExitIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
+import { ExitIcon, ExternalLinkIcon, PersonIcon, QuestionMarkCircledIcon, StarIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
 
 
 
-export const NavUser = () => {
+export const NavUser = ({ onClickItem }) => {
   const router = useRouter()
 
   const { user } = useUserContext()
@@ -35,7 +34,7 @@ export const NavUser = () => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-56 z-[60]" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.name}</p>
@@ -46,14 +45,38 @@ export const NavUser = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => {
+          router.push('/admin/account/info')
+          onClickItem()
+        }}>
+          <PersonIcon className="mr-2" />
+          Mon compte
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => {
+          router.push("/admin/account/subscription")
+          onClickItem()
+        }}>
+          <StarIcon className="mr-2" />
+          Passer Cuisinier
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => {
+          router.push(`mailto:contact@eatsup.com?body=%0A%0A%0A%0A${user?.name}%20-%20${user?.email}`)
+          onClickItem()
+        }}>
+          <QuestionMarkCircledIcon className="mr-2" />
+          Support
+        </DropdownMenuItem>
+        {/* <DropdownMenuItem>
           Gérer mon abonnement
           <DropdownMenuShortcut><ExternalLinkIcon /></DropdownMenuShortcut>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => router.push('/logout')}>
+        <DropdownMenuItem onClick={() => {
+          router.push('/logout')
+          onClickItem()
+        }}>
+          <ExitIcon className="mr-2" />
           Se déconnecter
-          <DropdownMenuShortcut><ExitIcon /></DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
