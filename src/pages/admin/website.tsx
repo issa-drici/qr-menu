@@ -28,7 +28,7 @@ import { useRouter } from "next/router"
 import Dropzone from "@/components/dropzone"
 
 
-function WebsiteComponent() {
+export default function Website() {
     const { user } = useUserContext();
     const router = useRouter()
 
@@ -39,11 +39,5 @@ function WebsiteComponent() {
         </Layout>
     )
 }
-
-const Website = dynamic(() => Promise.resolve(WebsiteComponent), {
-    ssr: false,
-});
-
-export default Website;
 
 

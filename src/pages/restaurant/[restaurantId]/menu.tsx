@@ -328,7 +328,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
             ...cat,
             items: getItemsForCategory(cat.id)
         }));
-
+        
     return {
         props: {
             profile,
