@@ -1,7 +1,3 @@
-// @ts-ignore
-"use client";
-
-import dynamic from "next/dynamic";
 import Layout from "@/layout/layout";
 import { Button } from "@/components/ui/button"
 import {
@@ -21,52 +17,73 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import Category from "@/components/category";
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/database.types";
+import { GetServerSidePropsContext } from "next";
+import Items from "@/components/items";
+import { useRouter } from "next/router";
 
 
-function ManageMenuComponent() {
-
+export default function ManageMenuComponent({ category, item }) {
+  const router = useRouter()
 
   return (
-    <Layout withAuth>
-      <Tabs defaultValue="category">
+    <Layout withAuth fullHeight>
+      <Tabs defaultValue={router?.query?.active ? router?.query?.active : "category"} className="md:w-5/6">
         <TabsList className="grid w-full grid-cols-2 bg-gray-200">
-          <TabsTrigger value="category">Catégorie</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="category" onClick={() => router.push('/admin/manage-menu?active=category')}>Catégorie</TabsTrigger>
+          <TabsTrigger value="item" onClick={() => router.push('/admin/manage-menu?active=item')}>Éléments</TabsTrigger>
         </TabsList>
-        <TabsContent value="category">
-          <Category />
 
+        <TabsContent value="category" >
+          <Category category={category} />
         </TabsContent>
-        <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
-          </Card>
+
+        <TabsContent value="item">
+          <Items category={category} item={item} />
         </TabsContent>
+
       </Tabs>
     </Layout>
   );
 }
 
-const ManageMenu = dynamic(() => Promise.resolve(ManageMenuComponent), {
-  ssr: false,
-});
 
-export default ManageMenu;
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+
+  // Create authenticated Supabase Client
+  const supabaseServerClient = createServerSupabaseClient<Database>(ctx);
+
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabaseServerClient.auth.getSession();
+
+  const { data: category } = await supabaseServerClient
+    .from("category")
+    .select("*")
+    .eq("profile_id", session?.user?.id);
+
+  const { data: item } = await supabaseServerClient
+    .from("items")
+    .select("*")
+    .eq("profile_id", session?.user?.id);
+
+  if (!session) {
+    return {
+      props: {
+        category: [],
+        item: []
+      },
+    }
+  }
+
+  return {
+    props: {
+      category,
+      item,
+      initialSession: session,
+      user: session.user,
+    },
+  };
+};

@@ -24,8 +24,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { v4 } from "uuid";
 
-function CategoryComponent() {
-  const [categories, setCategories] = useState([]);
+function CategoryComponent({ category }) {
+  const [categories, setCategories] = useState(category);
   const [isLoading, setIsloading] = useState(false);
 
   const { user } = useUserContext();
@@ -33,19 +33,6 @@ function CategoryComponent() {
   const supabaseClient = useSupabaseClient<Database>();
 
   const inputRef = useRef(null);
-
-  async function getCategory() {
-    setIsloading(true);
-
-    const { data: category } = await supabaseClient
-      .from("category")
-      .select("*")
-      .eq("profile_id", user?.id);
-
-    setCategories(category);
-
-    setIsloading(false);
-  }
 
   async function translate(categories) {
     const newCategories = categories;
@@ -182,21 +169,9 @@ function CategoryComponent() {
     setCategories(newCategories);
   };
 
-  useEffect(() => {
-    const abortController = new AbortController()
-    
-    if (user) {
-      getCategory();
-    }
-
-    return () => {
-      abortController.abort()
-    }
-  }, [user]);
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Card className="w-full md:w-1/2 flex flex-col">
+      <Card className="w-full flex flex-col">
         <CardHeader>
           <CardTitle>Gérer les différentes sections du menu</CardTitle>
           <CardDescription>
