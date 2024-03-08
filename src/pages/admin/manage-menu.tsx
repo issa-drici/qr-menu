@@ -42,7 +42,6 @@ export default function ManageMenuComponent({ category, item }) {
         <TabsContent value="item">
           <Items category={category} item={item} />
         </TabsContent>
-
       </Tabs>
     </Layout>
   );

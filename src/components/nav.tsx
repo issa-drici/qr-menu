@@ -136,7 +136,7 @@ const Nav = () => {
                                         )}
 
                                         {!!user && (
-                                            <Link href={`/admin/qr-code`} legacyBehavior>
+                                            <Link href={`/admin/qr-code?selectedMethod=order`} legacyBehavior>
                                                 <Button variant={isActive(`/admin/qr-code`) ? "default" : "ghost"} onClick={() => setIsOpenDrawer(false)}>Mes QR Code</Button>
                                             </Link>
                                         )}
@@ -167,7 +167,7 @@ const Nav = () => {
                             )}
 
                             {!!user && (
-                                <Link href={`/admin/qr-code`} legacyBehavior>
+                                <Link href={`/admin/qr-code?selectedMethod=order`} legacyBehavior>
                                     <Button variant={isActive(`/admin/qr-code`) ? "default" : "ghost"}>Mes QR Code</Button>
                                 </Link>
                             )}
