@@ -1,4 +1,4 @@
-export const PricingCard = ({ type, noTrial }) => {
+export const PricingCard = ({ type, noTrial, setDialogSubscribe, setButtonId }) => {
   switch (type) {
     // case "commis":
     //   return (
@@ -207,7 +207,13 @@ export const PricingCard = ({ type, noTrial }) => {
             </div>
             {noTrial ? (
               <>
-                <p className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4">
+                <p
+                  className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4"
+                  onClick={() => {
+                    setDialogSubscribe(true)
+                    setButtonId('subscribeCommis')
+                  }}
+                >
                   ✨ Sélectionner l&apos;abonnement
                 </p>
                 <p className="text-[9px] ipromax:text-xs text-center mt-1 mb-3 text-slate-400">
@@ -216,7 +222,13 @@ export const PricingCard = ({ type, noTrial }) => {
               </>
             ) : (
               <>
-                <p className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4">
+                <p
+                  className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4 cursor-pointer"
+                  onClick={() => {
+                    setDialogSubscribe(true)
+                    setButtonId('trialCommis')
+                  }}
+                >
                   Démarrer gratuitement pendant 1 mois
                 </p>
                 <p className="text-[9px] ipromax:text-xs text-center mt-1 mb-3 text-slate-400">
@@ -311,7 +323,13 @@ export const PricingCard = ({ type, noTrial }) => {
             </div>
             {noTrial ? (
               <>
-                <p className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4">
+                <p
+                  className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4"
+                  onClick={() => {
+                    setDialogSubscribe(true)
+                    setButtonId('subscribeCuisto')
+                  }}
+                >
                   ✨ Sélectionner l&apos;abonnement
                 </p>
                 <p className="text-[9px] ipromax:text-xs text-center mt-1 mb-3 text-white">
@@ -320,7 +338,14 @@ export const PricingCard = ({ type, noTrial }) => {
               </>
             ) : (
               <>
-                <p className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4">
+                <p
+                  className="text-white text-[10px] ipromax:text-base tracking-tight text-center p-1 ipromax:p-3 rounded-lg ipromax:rounded-xl text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-4 cursor-pointer"
+                  onClick={() => {
+                    setDialogSubscribe(true)
+                    setButtonId('trialCuisto')
+                  }}
+
+                >
                   Démarrer gratuitement pendant 1 mois
                 </p>
                 <p className="text-[9px] ipromax:text-xs text-center mt-1 mb-3 text-white">

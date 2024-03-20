@@ -22,11 +22,13 @@ export default function App({
   const [supabase] = useState(() => createBrowserSupabaseClient<Database>());
   const router = useRouter()
 
+  const isActive = (pathname) => router.pathname === pathname;
+
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
       <UserProvider>
         <main className={cn(inter.className, "bg-gray-100")}>
-          <Nav />
+          {!isActive('/') ? <Nav /> : null}
           <Component {...pageProps} />
           <Toaster />
         </main>
