@@ -11,6 +11,8 @@ import FieldInput from "@/components/field-input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 import { useUserContext } from "@/context/user";
+import { useLoadingContext } from "@/context/loading";
+import { useState } from "react";
 
 const FormSchema = z.object({
   email: z.string(),
@@ -24,17 +26,21 @@ export default function RegisterPage() {
   const supabaseClient = useSupabaseClient<Database>();
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   const { user } = useUserContext();
+  const { pushWithLoading } = useLoadingContext();
 
   if (!!user) {
-    router.push(`/restaurant/${user?.id}/admin/restaurant`);
+    pushWithLoading('/admin')
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true)
     try {
       const { email, password, name } = data;
 
@@ -42,7 +48,7 @@ export default function RegisterPage() {
         email: email,
         password: password,
         options: {
-          emailRedirectTo: "https://qr-menu-tan.vercel.app/",
+          emailRedirectTo: "https://eatsup.vercel.app/",
         },
       });
 
@@ -54,16 +60,16 @@ export default function RegisterPage() {
         .eq("id", dataSignup?.user?.id);
 
       if (dataSignup?.user) {
-        router.push(`/restaurant/${dataSignup?.user?.id}/admin/restaurant`);
+        pushWithLoading('/admin')
       }
     } catch (error) {
-      console.error("Erreur:", error);
       toast({
         title: "Erreur",
         description: "Un problème est survenu lors de l'inscription.",
         variant: "destructive",
       });
     }
+    setIsLoading(false)
   }
 
   return (
@@ -114,7 +120,7 @@ export default function RegisterPage() {
                 name="name"
                 placeholder="Nom du restaurant"
               />
-              <Button type="submit">Créer un compte</Button>
+              <Button loading={isLoading} type="submit">Créer un compte</Button>
             </form>
           </Form>
           <p className="mt-5 text-center text-slate-400 text-sm">

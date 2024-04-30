@@ -1,17 +1,20 @@
 import Authenticated from "@/components/authenticated";
+import { useLoadingContext } from "@/context/loading";
 import { cn } from "@/lib/utils";
 
-export default function Layout({ isLoading, children, withAuth, fullHeight }) {
-    return <div className={cn("flex justify-center container pb-10 gap-x-5 pt-20", fullHeight ? "min-h-screen" : "h-screen")}>
+export default function Layout({ children, withAuth, fullHeight, className }) {
+    const { isLoadingApp } = useLoadingContext()
+
+    return <div className={cn("flex flex-col justify-center px-4 py-5 gap-x-5", className, fullHeight ? "min-h-[calc(screen_-_56px)]" : "h-[calc(screen_-_56px)]")}>
         {withAuth ? (
             <Authenticated>
-                {isLoading ? (
-                    <div className="w-full h-full flex justify-center items-center">
-                        <p>Chargement en cours</p>
+                {isLoadingApp ? (
+                    <div className="absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-[#fffafc]">
+                        <img src="/assets/images/loader.gif" className="h-30 object-contain mb-2" />
                     </div>
                 ) : children}
             </Authenticated>
         ) : null}
-        {(!withAuth && !isLoading) ? children : null}
+        {(!withAuth && !isLoadingApp) ? children : null}
     </div>;
 }

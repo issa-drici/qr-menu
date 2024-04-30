@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 import { Pencil1Icon, Share2Icon } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
+import { useLoadingContext } from "@/context/loading";
 
 const labels = {
     share: {
@@ -56,7 +57,9 @@ function MenuComponent({ profile, categoriesWithItems }) {
     const [activeLanguage, setActiveLanguage] = useState(router?.query?.l ? router?.query?.l : window.navigator.language.split("-")[0])
     const [isOpenLanguageSelect, setIsOpenLanguageSelect] = useState(false)
 
-    const labelsWithValues = {
+    const { pushWithLoading } = useLoadingContext()
+
+    const labelsWithValues = profile?.type_restaurant && profile?.city ? {
         sms: {
             fr: `sms:&body=J'ai trop aimé le restaurant ${profile?.name}, hésites surtout pas à venir.%0a%0aJe te donne le lien avec toutes les infos pour y aller : https://eatsup.vercel.app/site/${profile.type_restaurant.replace(/\s+/g, '-').toLowerCase()}/${profile.city.replace(/\s+/g, '-').toLowerCase()}/${profile.name.replace(/\s+/g, '-').toLowerCase()}?l=${activeLanguage}`,
             en: `sms:&body=I loved the ${profile?.name} restaurant too much, don't hesitate to come.%0a%0aI'm giving you the link with all the information to get there: https://eatsup.vercel.app/site/${profile.type_restaurant.replace(/\s+/g, '-').toLowerCase()}/${profile.city.replace(/\s+/g, '-').toLowerCase()}/${profile.name.replace(/\s+/g, '-').toLowerCase()}?l=${activeLanguage}`,
@@ -66,9 +69,8 @@ function MenuComponent({ profile, categoriesWithItems }) {
             it: `sms:&body=Ho amato troppo il ristorante ${profile?.name}, non esitare a venire.%0a%0aTi sto dando il link con tutte le informazioni per arrivarci: https://eatsup.vercel.app/site/${profile.type_restaurant.replace(/\s+/g, '-').toLowerCase()}/${profile.city.replace(/\s+/g, '-').toLowerCase()}/${profile.name.replace(/\s+/g, '-').toLowerCase()}?l=${activeLanguage}`,
             pt: `sms:&body=Amei demais o restaurante ${profile?.name}, não hesite em vir.%0a%0aEstou te dando o link com todas as informações para chegar lá: https://eatsup.vercel.app/site/${profile.type_restaurant.replace(/\s+/g, '-').toLowerCase()}/${profile.city.replace(/\s+/g, '-').toLowerCase()}/${profile.name.replace(/\s+/g, '-').toLowerCase()}?l=${activeLanguage}`,
             ru: `sms:&body=Мне слишком понравился ресторан ${profile?.name}, не стесняйтесь приходить.%0a%0aЯ даю вам ссылку со всей информацией, чтобы добраться туда https://eatsup.vercel.app/site/${profile.type_restaurant.replace(/\s+/g, '-').toLowerCase()}/${profile.city.replace(/\s+/g, '-').toLowerCase()}/${profile.name.replace(/\s+/g, '-').toLowerCase()}?l=${activeLanguage}`
-
         }
-    }
+    } : null
 
     const sectionRefs = useRef(categoriesWithItems.map(() => createRef()))
 
@@ -76,24 +78,45 @@ function MenuComponent({ profile, categoriesWithItems }) {
         let imageLink = "/assets/images/marketing_offer.png";
 
         if (profile?.banner_url) {
-            imageLink = profile?.banner_url
+            return (
+                <img src={profile?.banner_url} alt="marketingOffer" className="w-full h-[30vh] object-cover" />
+            );
         }
 
-        return (
-            <img src={imageLink} alt="marketingOffer" className="w-full h-[30vh] object-cover" />
-        );
+        return null
+
+        // let imageLink = "/assets/images/marketing_offer.png";
+
+        // if (profile?.banner_url) {
+        //     imageLink = profile?.banner_url
+        // }
+
+        // return (
+        //     <img src={imageLink} alt="marketingOffer" className="w-full h-[30vh] object-cover" />
+        // );
     }
 
     const PreviewLogo = () => {
         let imageLink = "/assets/images/logo.png";
 
         if (profile?.logo_url) {
-            imageLink = profile?.logo_url
+            return (
+                <img src={profile?.logo_url} alt="language" className="object-cover w-10" style={{ width: `${profile?.sliderValue}%` }} />
+            );
         }
 
-        return (
-            <img src={imageLink} alt="language" className="object-cover w-10" style={{ width: `${profile?.sliderValue}%` }} />
-        );
+        return null
+
+
+        // let imageLink = "/assets/images/logo.png";
+
+        // if (profile?.logo_url) {
+        //     imageLink = profile?.logo_url
+        // }
+
+        // return (
+        //     <img src={imageLink} alt="language" className="object-cover w-10" style={{ width: `${profile?.sliderValue}%` }} />
+        // );
     }
 
     const TriggerLanguages = () => {
@@ -179,32 +202,33 @@ function MenuComponent({ profile, categoriesWithItems }) {
     }, []);
 
     return (
-        <div className="bg-white">
+        <div className="bg-slate-100 h-full">
             {router?.query?.edition === '1' ? (
-                <div className="flex justify-between items-center p-2 sticky top-0 bg-white" id="editionBar">
+                <div className="flex justify-between items-center p-2 sticky top-0 bg-slate-100" id="editionBar">
                     <Link href={`/admin/restaurant`} legacyBehavior>
                         <a className="text-white no-underline hover:text-white hover:no-underline">
                             <img src="/assets/images/logo/logo.png" className=" h-8 md:h-12 object-contain" />
                         </a>
                     </Link>
                     <Button variant="default" onClick={() => router.back()}>
-                            <Pencil1Icon className="h-4 w-4 mr-2" /> Retour à l&apos;édition
-                        </Button>
+                        <Pencil1Icon className="h-4 w-4 mr-2" /> Retour à l&apos;édition
+                    </Button>
                 </div>
-            )
-                : null}
-            <div className={cn("text-xs", router?.query?.edition === '1' ? "bg-gray-100 pt-2 px-2" : null)}>
+            ) : null}
+            <div className={cn("text-xs h-full", router?.query?.edition === '1' ? "bg-gray-100 pt-2 px-2" : null)}>
                 <div className="flex justify-between items-center py-1 pl-2 pr-3 sticky top-0 z-50 bg-white" id="titleBar">
                     <div className="flex items-center gap-x-0.5">
                         <PreviewLogo />
                         {!profile?.hideName ? <p className="text-lg font-semibold">{profile?.name ? profile?.name : "Mon restaurant"}</p> : null}
                     </div>
                     <div className="flex items-center">
-                        <a href={labelsWithValues.sms[activeLanguage]}>
-                            <Button variant="ghost" className="text-xs">
-                                {labels?.share[activeLanguage]} <Share2Icon className="ml-1 h-3 w-3" />
-                            </Button>
-                        </a>
+                        {labelsWithValues ? (
+                            <a href={labelsWithValues.sms[activeLanguage]}>
+                                <Button variant="ghost" className="text-xs">
+                                    {labels?.share[activeLanguage]} <Share2Icon className="ml-1 h-3 w-3" />
+                                </Button>
+                            </a>
+                        ) : null}
                         <Popover open={isOpenLanguageSelect} onOpenChange={(isOp) => {
                             if (isOp === true) return;
                             setIsOpenLanguageSelect(false);
@@ -227,61 +251,69 @@ function MenuComponent({ profile, categoriesWithItems }) {
                 </div>
                 {/* Image Marketing Restaurant */}
                 <PreviewBanner />
-                <div className="flex px-3 py-3 gap-x-1 sticky top-56 z-40 bg-white shadow-md mb-3 overflow-x-scroll" id="categoryBar">
-                    {categoriesWithItems?.map((cat) => (
-                        <Button className="px-2 py-1 h-fit" variant={activeSection === cat.id ? "default" : "outline"} onClick={() => scrollToSection(cat?.id)}>{cat?.name[activeLanguage]}</Button>
-                    ))}
-                </div>
-                <div className="flex flex-col px-3">
-                    {categoriesWithItems?.map((category, index) => {
-                        return (
-                            <div key={index}>
-                                <div id={category?.id} ref={sectionRefs?.current[index]} >
-                                    <p className="text-lg font-bold mb-3">{category.name[activeLanguage]}</p>
-                                    <div className="flex flex-col gap-y-3">
-                                        {category.items?.map((item) => {
-                                            return (
-                                                <Card className="overflow-hidden p-0" key={item?.id}>
-                                                    {item?.image_url ? (
-                                                        <img src={item?.image_url} alt="imagePlat" className="w-full h-[20vh] object-cover" />
-                                                    ) : null}
-                                                    <div className="px-5 pt-3 pb-5 space-y-2">
-                                                        <div className="flex justify-between">
-                                                            <div>
-                                                                <p className="text-lg font-semibold">{item?.name[activeLanguage]}</p>
-                                                                {activeLanguage !== 'fr' ? <p className="text-xs font-light italic text-gray-400">{item?.name['fr']}</p> : null}
+                {categoriesWithItems?.length > 0 ? (
+                    <>
+                        <div className="flex px-3 py-3 gap-x-1 sticky top-56 z-40 bg-slate-100 shadow-md mb-3 overflow-x-scroll" id="categoryBar">
+                            {categoriesWithItems?.map((cat) => (
+                                <Button className="px-2 py-1 h-fit" variant={activeSection === cat.id ? "default" : "white"} onClick={() => scrollToSection(cat?.id)}>{cat?.name[activeLanguage]}</Button>
+                            ))}
+                        </div>
+                        <div className="flex flex-col px-3">
+                            {categoriesWithItems?.map((category, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div id={category?.id} ref={sectionRefs?.current[index]} >
+                                            <p className="text-lg font-bold mb-3">{category.name[activeLanguage]}</p>
+                                            <div className="flex flex-col gap-y-3">
+                                                {category.items?.map((item) => {
+                                                    return (
+                                                        <Card className="overflow-hidden flex p-0" key={item?.id}>
+                                                            {item?.image_url ? (
+                                                                <img src={item?.image_url} alt="imagePlat" className="w-2/5 object-cover" />
+                                                            ) : null}
+                                                            <div className="flex flex-col p-4 gap-1">
+                                                                <div>
+                                                                    <p className="text-sm font-medium text-slate-900">{item?.name[activeLanguage]}</p>
+                                                                    {activeLanguage !== 'fr' ? <p className="text-xs font-light italic text-gray-400">{item?.name['fr']}</p> : null}
+                                                                </div>
+                                                                <p className="text-sm text-[#64748B]">{item?.description[activeLanguage]}</p>
+                                                                <p className="text-sm text-[#64748B]">{item?.price} €</p>
                                                             </div>
-                                                            <p className="text-lg font-semibold">{item?.price} €</p>
+                                                        </Card>
+                                                    )
+                                                })}
+                                            </div>
+                                            <div className="w-full h-px bg-slate-200 my-5"></div>
+                                        </div>
+                                        {index === 0 && (
+                                            <div>
+                                                <a href="http://search.google.com/local/writereview?placeid=ChIJeTi_d79v5kcR594Dps69mFw" target="_blank">
+                                                    <Card className="px-5 py-2 flex justify-between items-center animate-smallBounce">
+                                                        <div>
+                                                            <p className="text-sm font-bold">{labels?.discount[activeLanguage]}</p>
+                                                            <p className="text-xs text-gray-500">{labels?.googleReview[activeLanguage]}</p>
                                                         </div>
-                                                        <p className="leading-3 text-gray-500">{item?.description[activeLanguage]}</p>
-                                                    </div>
-                                                </Card>
-                                            )
-                                        })}
+                                                        <img
+                                                            src="/assets/images/google_five_stars.png"
+                                                            className="w-32"
+                                                        />
+                                                    </Card>
+                                                </a>
+                                                <div className="w-full h-px bg-slate-200 my-5"></div>
+                                            </div>
+                                        )}
                                     </div>
-                                    <div className="w-full h-px bg-slate-200 my-5"></div>
-                                </div>
-                                {index === 0 && (
-                                    <div>
-                                        <a href="http://search.google.com/local/writereview?placeid=ChIJeTi_d79v5kcR594Dps69mFw" target="_blank">
-                                            <Card className="px-5 py-2 flex justify-between items-center animate-smallBounce">
-                                                <div>
-                                                    <p className="text-sm font-bold">{labels?.discount[activeLanguage]}</p>
-                                                    <p className="text-xs text-gray-500">{labels?.googleReview[activeLanguage]}</p>
-                                                </div>
-                                                <img
-                                                    src="/assets/images/google_five_stars.png"
-                                                    className="w-32"
-                                                />
-                                            </Card>
-                                        </a>
-                                        <div className="w-full h-px bg-slate-200 my-5"></div>
-                                    </div>
-                                )}
-                            </div>
-                        )
-                    })}
-                </div>
+                                )
+                            })}
+                        </div>
+                    </>
+                ) : (
+                    <div className="flex flex-col h-[calc(100vh_-_88px)] justify-center items-center text-base">
+                        <p>Ce restaurant n'a pas encore configuré son menu</p>
+                        <p>Vous êtes le propriétaire ? <span className="text-violet-500 hover:text-violet-600 underline cursor-pointer" onClick={() => pushWithLoading('/login')}>Je remplis mon menu dès maintenant !</span></p>
+                    </div>
+                )}
+
             </div>
             <div className="w-full bg-custom-gradient py-1 -space-x-1 flex items-center justify-center mt-5">
                 <p className="text-white text-xs">Menu propulsé par</p>
@@ -304,7 +336,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         .from("profile")
         .select("*")
         .eq("id", ctx?.query?.restaurantId)
-        .single();;
+        .single();
 
     const { data: category } = await supabaseServerClient
         .from("category")
@@ -315,7 +347,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const { data: items } = await supabaseServerClient
         .from("items")
         .select("*")
-        .eq("profile_id", ctx?.query?.restaurantId);
+        .eq("profile_id", ctx?.query?.restaurantId)
+        .order("order", { ascending: true });
+
 
     // Création d'une fonction pour obtenir les éléments correspondants d'une catégorie
     function getItemsForCategory(categoryId) {
@@ -328,7 +362,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
             ...cat,
             items: getItemsForCategory(cat.id)
         }));
-        
+
     return {
         props: {
             profile,

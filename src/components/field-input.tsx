@@ -15,6 +15,7 @@ interface FieldInputProps {
     name: string
     label?: string
     placeholder?: string
+    accept?: string
     type?: string
     description?: string
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,7 +23,7 @@ interface FieldInputProps {
 }
 
 
-export default function FieldInput({ form, name, label, placeholder, type = "text", description, defaultValue, onChange }: FieldInputProps) {
+export default function FieldInput({ form, accept, name, label, placeholder, type = "text", description, defaultValue, onChange }: FieldInputProps) {
     return (
         <FormField
             control={form.control}
@@ -33,7 +34,7 @@ export default function FieldInput({ form, name, label, placeholder, type = "tex
                         <FormLabel>{label}</FormLabel>
                     ) : null}
                     <FormControl onChange={onChange}>
-                        <Input placeholder={placeholder ? placeholder : null} type={type} className={type === 'file' ? "file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 hidden" : null} {...field} />
+                        <Input accept={accept} placeholder={placeholder ? placeholder : null} type={type} className={type === 'file' ? "file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 hidden" : null} {...field} />
                     </FormControl>
                     {description ? (
                         <FormDescription>

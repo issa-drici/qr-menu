@@ -1,0 +1,111 @@
+import { Database } from "@/types/database.types";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form } from "@/components/ui/form";
+import FieldInput from "@/components/field-input";
+import * as z from "zod";
+import { toast } from "@/components/ui/use-toast";
+import { useLoadingContext } from "@/context/loading";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useEffect, useState } from "react";
+
+const FormSchema = z.object({
+  name: z.string().min(2, {
+    message: "Le nom doit contenir minimum 2 caractères.",
+  })
+});
+
+export default function DialogAddCategory({ user, isOpen, setIsOpen, nbCategories, handleNewCategory }) {
+  const { setIsLoadingApp } = useLoadingContext()
+
+  const [formKey, setFormKey] = useState(0);
+
+  const supabaseClient = useSupabaseClient<Database>();
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+
+  async function translate(stringToTranslate: string) {
+    const result = await fetch('/api/gpt-prompt', {
+      method: 'POST',
+      body: JSON.stringify({ prompt: JSON.stringify({ fr: stringToTranslate }) }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const json = await result.json();
+
+    return JSON.parse(json.response);
+  }
+
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      setIsLoadingApp(true);
+
+      let category = {
+        ...data,
+        profile_id: user?.id,
+        is_active: true,
+        order: `${nbCategories + 1}`
+      }
+
+      category.name = await translate(data?.name)
+
+
+      const { data: createdCategory, error } = await supabaseClient
+        .from("category")
+        .insert(category)
+        .select()
+        .single();
+
+      setIsOpen(false)
+      handleNewCategory(createdCategory)
+      setIsLoadingApp(false);
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description:
+          "Un problème est survenu lors de la mise à jour des informations.",
+        variant: "destructive",
+      });
+    }
+  }
+
+  return (
+    <Dialog open={!!isOpen} onOpenChange={(isOp) => {
+      if (isOp === true) return;
+      setIsOpen(false);
+    }}>
+      <DialogContent withoutButtonClose className="max-w-[328px] rounded-lg" >
+
+        <DialogTitle>Créer une nouvelle catégorie</DialogTitle>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full gap-4 flex flex-col h-full"
+            key={formKey}
+          >
+            <FieldInput
+              form={form}
+              name="name"
+              label="Nom"
+              placeholder="ex: Dessert..."
+            />
+            <div className="flex flex-col justify-center items-center w-full gap-2">
+              <Button type="submit" variant="default" className="w-full">Créer</Button>
+              <Button variant="outline" className="w-full" onClick={() => {
+                setFormKey(prevKey => prevKey + 1)
+                setIsOpen(false)
+              }}>Annuler</Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}

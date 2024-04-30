@@ -4,35 +4,35 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import dynamic from "next/dynamic";
+import { DragHandleHorizontalIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useEffect, useRef, useState } from "react";
+import { Input } from "@/components/ui/input";
+import Layout from "@/layout/layout";
 import { useUserContext } from "@/context/user";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Database } from "@/types/database.types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Ellipsis, Equal } from 'lucide-react';
-import { v4 } from "uuid";
-import { useRouter } from "next/router";
-import { useLoadingContext } from "@/context/loading";
 
-function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMoving }) {
+import { v4 } from "uuid";
+
+function CategoryComponent({ category }) {
   const [categories, setCategories] = useState(category);
   const [isLoading, setIsloading] = useState(false);
 
   const { user } = useUserContext();
-  const { pushWithLoading } = useLoadingContext();
-  
 
   const supabaseClient = useSupabaseClient<Database>();
 
   const inputRef = useRef(null);
-  const router = useRouter()
-
 
   async function translate(categories) {
     const newCategories = categories;
@@ -64,7 +64,7 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
 
   async function onSubmit() {
     try {
-      // setIsloading(true);
+      setIsloading(true);
 
       const newCategories = Array.from(categories);
 
@@ -102,7 +102,7 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
         variant: "destructive",
       });
     }
-    // setIsloading(false);
+    setIsloading(false);
   }
 
   const onDragEnd = (result) => {
@@ -119,8 +119,6 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
     }
 
     setCategories(newCategories);
-
-    onSubmit()
   };
 
   const handleEditClick = (index) => {
@@ -171,84 +169,105 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
     setCategories(newCategories);
   };
 
-  const handleCardClick = (e, category) => {
-    if (!e.defaultPrevented && !isMoving) {
-      
-      pushWithLoading(`/admin/category/${category?.id}/items`);
-    }
-  };
-
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        <h1 className="text-xl font-semibold">Créez votre menu</h1>
-
-        <p className="text-xs mt-1 mb-4 text-slate-400">Vous pouvez créer, modifier, réorganiser et supprimer les sections
-          de votre menu sur cette page.</p>
-
-        {(!isLoading && category?.length > 0) ? (
-          <Droppable droppableId="droppable-categories">
-            {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
-                {categories?.map((category, index) => (
-                  <Draggable
-                    key={category.id}
-                    draggableId={category.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <Card
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...(isMoving ? provided.dragHandleProps : {})}
-                        className="shadow-none mb-2 border-slate-200 px-4 py-2 cursor-pointer"
-                        onClick={(e) => handleCardClick(e, category)}
-                      >
-                        <div className="flex items-center max-h-14 gap-2 ">
-                          {isMoving ? (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="cursor-grab text-slate-400 hover:bg-transparent w-fit h-fit"
-                            >
-                              <Equal size={16} />
-                            </Button>
-                          ) : null}
-                          <CardHeader className="w-full p-0">
-                            <CardTitle className="text-left text-sm font-normal leading-6">
-                              {category?.name?.fr}
-                            </CardTitle>
-                          </CardHeader>
-
-                          {!isMoving ? (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setIsOpenDialogMore(category);
-                              }}
-                              className="text-slate-400 hover:bg-transparent w-fit h-fit"
-                            >
-                              <Ellipsis size={16} />
-                            </Button>
-                          ) : null}
-                        </div>
-                      </Card>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ) : (
-          <img src="/assets/images/background-menu.png" className="w-full object-contain mb-2" />
-        )}
-      </div>
-    </DragDropContext >
+      <Card className="w-full flex flex-col">
+        <CardHeader>
+          <CardTitle>Gérer les différentes sections du menu</CardTitle>
+          <CardDescription>
+            Vous pouvez créer, modifier, réorganiser et supprimer les sections
+            de votre menu sur cette page.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex-grow overflow-y-auto">
+          {!isLoading ? (
+            <Droppable droppableId="droppable-categories">
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {categories?.map((category, index) => (
+                    <Draggable
+                      key={category.id}
+                      draggableId={category.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <Card
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className="shadow-none mb-2"
+                        >
+                          <div className="flex items-center max-h-14">
+                          <div className="flex space-x-1 ml-3">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                {...provided.dragHandleProps}
+                                className="cursor-grab"
+                              >
+                                <DragHandleHorizontalIcon className="h-5 w-5" />
+                              </Button>
+                            </div>
+                            <CardHeader className="w-full">
+                              {category.displayInput ? (
+                                <Input
+                                  ref={inputRef}
+                                  value={category?.name?.fr}
+                                  onChange={(e) =>
+                                    handleChangeInput(index, e.target.value)
+                                  }
+                                  onBlur={() => handleEditBlur(index)}
+                                />
+                              ) : (
+                                <CardTitle className="text-left">
+                                  {category?.name?.fr}
+                                </CardTitle>
+                              )}
+                            </CardHeader>
+                            <div className="flex space-x-1 mr-3">
+                              <Button
+                                variant="default"
+                                size="icon"
+                                onClick={() => handleEditClick(index)}
+                              >
+                                <Pencil1Icon className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ) : (
+            <div className="flex flex-col space-y-2">
+              <Skeleton className="w-full h-[40px] rounded" />
+              <Skeleton className="w-full h-[40px] rounded" />
+              <Skeleton className="w-full h-[40px] rounded" />
+            </div>
+          )}
+          <Card
+            className="group border-dashed shadow-none border-gray-300 opacity-90 hover:border-gray-400 hover:cursor-pointer"
+            onClick={handleAddCategory}
+          >
+            <div className="flex items-center">
+              <CardHeader className="w-full ">
+                <CardTitle className="text-center font-normal text-gray-400 opacity-90 group-hover:text-gray-700">
+                  Ajouter une nouvelle catégorie +
+                </CardTitle>
+              </CardHeader>
+            </div>
+          </Card>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button type="submit" onClick={onSubmit}>
+            Enregistrer
+          </Button>
+        </CardFooter>
+      </Card>
+    </DragDropContext>
   );
 }
 

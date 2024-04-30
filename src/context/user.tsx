@@ -16,7 +16,6 @@ const Provider = ({ children }: { children: ReactNode }) => {
     const [initializing, setInitializing] = useState<boolean | null>(true);
 
     useEffect(() => {
-
         async function getUserProfile() {
             const { data: { session } } = await supabaseClient.auth.getSession()
 
@@ -42,6 +41,9 @@ const Provider = ({ children }: { children: ReactNode }) => {
                 }, 1000);
                 getUserProfile()
                 // router.push(`/restaurant/${session?.user?.id}/admin/restaurant`)
+            } else if ("INITIAL_SESSION" === event) {
+                setUser(null);
+                setInitializing(false);
             } else if ("SIGNED_OUT" === event) {
                 setUser(null);
                 setInitializing(true);

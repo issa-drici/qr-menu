@@ -29,6 +29,8 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { useUserContext } from "@/context/user";
+import { useState } from "react";
+import { useLoadingContext } from "@/context/loading";
 
 const FormSchema = z.object({
   email: z.string(),
@@ -39,12 +41,15 @@ export default function RegisterPage() {
   const supabaseClient = useSupabaseClient<Database>();
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false)
+
 
   const { user } = useUserContext();
+  const { pushWithLoading } = useLoadingContext();
 
   if (!!user) {
-    router.push(`/admin/restaurant`);
-    // router.push(`/restaurant/${user?.id}/admin/restaurant`);
+    pushWithLoading('/admin')
+    // router.push(`/restaurant/${user?.id}/admin`);
   }
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -52,6 +57,7 @@ export default function RegisterPage() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true)
     try {
       const { email, password } = data;
 
@@ -62,17 +68,17 @@ export default function RegisterPage() {
         });
 
       if (dataSignin?.user) {
-        router.push(`/admin/restaurant`);
-        // router.push(`/restaurant/${dataSignin?.user?.id}/admin/restaurant`);
+        pushWithLoading('/admin')
+        // router.push(`/restaurant/${dataSignin?.user?.id}/admin`);
       }
     } catch (error) {
-      console.error("Erreur:", error);
       toast({
         title: "Erreur",
         description: "Un problème est survenu lors de l'inscription.",
         variant: "destructive",
       });
     }
+    setIsLoading(false)
   }
 
   return (
@@ -114,7 +120,7 @@ export default function RegisterPage() {
                 placeholder="Mot de passe"
                 type="password"
               />
-              <Button type="submit">Se connecter</Button>
+              <Button loading={isLoading} type="submit">Se connecter</Button>
             </form>
           </Form>
           <Link href={`/register`} legacyBehavior>

@@ -5,6 +5,7 @@ import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 import UserProvider from "@/context/user";
+import LoadingProvider from "@/context/loading";
 import Nav from "@/components/nav";
 import { Inter } from '@next/font/google';
 import { Database } from '@/types/database.types'
@@ -26,13 +27,15 @@ export default function App({
 
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-      <UserProvider>
-        <main className={cn(inter.className, "bg-gray-100")}>
-          {!isActive('/') ? <Nav /> : null}
-          <Component {...pageProps} />
-          <Toaster />
-        </main>
-      </UserProvider>
+      <LoadingProvider>
+        <UserProvider>
+          <main className={cn(inter.className)}>
+            {!isActive('/') ? <Nav /> : null}
+            <Component {...pageProps} />
+            <Toaster />
+          </main>
+        </UserProvider>
+      </LoadingProvider>
     </SessionContextProvider>
   )
 }

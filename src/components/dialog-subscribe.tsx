@@ -68,6 +68,9 @@ const DialogSubscribe = ({ open = false, setOpen, buttonId, setButtonId }) => {
         form.reset()
     }
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! RETIRER LE FOCUS SUR LE CHAMP DANS LA DIALOG EN MOBILE
+
+
     return (
         <Dialog open={open} onOpenChange={(isOp) => {
             if (isOp === true) return;
