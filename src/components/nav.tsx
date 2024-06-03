@@ -152,7 +152,12 @@ const Nav = () => {
                             <Home size={16} />
                             <p>Dashboard</p>
                         </div>
-                        <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50">
+                        <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50"
+                            onClick={() => {
+                                router.push(`/admin/profile`)
+                                setIsOpenMenu(false)
+                            }}
+                        >
                             <User size={16} />
                             <p>Mon profil</p>
                         </div>
@@ -192,10 +197,14 @@ const Nav = () => {
 
 
                         <Separator />
-                        <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50">
+                        {/* <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50"
+                            onClick={() => {
+                                router.push(`/admin/settings`)
+                                setIsOpenMenu(false)
+                            }}>
                             <Settings size={16} />
                             <p>Paramètres</p>
-                        </div>
+                        </div> */}
                         <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50"
                             onClick={() => {
                                 router.push(`mailto:contact@eatsup.com?body=%0A%0A%0A%0A${user?.name}%20-%20${user?.email}`)

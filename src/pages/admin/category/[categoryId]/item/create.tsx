@@ -3,33 +3,22 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  Card
 } from "@/components/ui/card";
 
 import { useForm } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
 import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { TrashIcon } from "@radix-ui/react-icons";
 import { useUserContext } from "@/context/user";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Database } from "@/types/database.types";
-import { Skeleton } from "@/components/ui/skeleton";
-import { v4 } from "uuid";
 import { useRouter } from "next/router";
 import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import Layout from "@/layout/layout";
 import { useLoadingContext } from "@/context/loading";
-import { Ellipsis } from "lucide-react";
 import FieldInput from "@/components/field-input";
 import { GetServerSidePropsContext } from "next";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";

@@ -25,23 +25,27 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex w-full justify-end items-center space-x-2">
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setDialogSubscribe(true)
-                setButtonId('loginButton')
-              }}
-            >Se connecter</Button>
+            <Link href={`/login`} legacyBehavior>
+              <Button
+                variant="ghost"
+              // onClick={() => {
+              //   setDialogSubscribe(true)
+              //   setButtonId('loginButton')
+              // }}
+              >Se connecter</Button>
+            </Link>
 
-            <a
-              className="text-white p-3 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
-              onClick={() => {
-                setDialogSubscribe(true)
-                setButtonId('trialNavbar')
-              }}
-            >
-              ✨&nbsp;Essai <span className="italic">GRATUIT</span>
-            </a>
+            <Link href={`/register`} legacyBehavior>
+              <a
+                className="text-white p-3 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
+              // onClick={() => {
+              //   setDialogSubscribe(true)
+              //   setButtonId('trialNavbar')
+              // }}
+              >
+                ✨&nbsp;Essai <span className="italic">GRATUIT</span>
+              </a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -86,17 +90,17 @@ export default function Home() {
             <span className="text-slate-500">Propulsez vos avis Google</span> et <span className="text-slate-500">distinguez-vous</span> dans le marché le plus
             compétitif.
           </p>
-          {/* <Link href={`/register`} legacyBehavior> */}
-          <a
-            className="text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-3 md:mt-6 cursor-pointer"
-            onClick={() => {
-              setDialogSubscribe(true)
-              setButtonId('trialHero')
-            }}
-          >
-            Essai <span className="italic">GRATUIT</span>
-          </a>
-          {/* </Link> */}
+          <Link href={`/register`} legacyBehavior>
+            <a
+              className="text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-3 md:mt-6 cursor-pointer"
+            // onClick={() => {
+            //   setDialogSubscribe(true)
+            //   setButtonId('trialHero')
+            // }}
+            >
+              Essai <span className="italic">GRATUIT</span>
+            </a>
+          </Link>
           <p className="text-slate-500 max-w-2xl text-center font-semibold mt-1 text-xs ipromax:text-sm">
             Sans engagement.
           </p>
@@ -203,17 +207,17 @@ export default function Home() {
               </div> */}
                 </div>
 
-                {/* <Link href={`/register`} legacyBehavior> */}
-                <a
-                  className="hidden md:block text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
-                  onClick={() => {
-                    setDialogSubscribe(true)
-                    setButtonId('trialVisibility')
-                  }}
-                >
-                  Essai <span className="italic">GRATUIT</span>
-                </a>
-                {/* </Link> */}
+                <Link href={`/register`} legacyBehavior>
+                  <a
+                    className="hidden md:block text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
+                  // onClick={() => {
+                  //   setDialogSubscribe(true)
+                  //   setButtonId('trialVisibility')
+                  // }}
+                  >
+                    Essai <span className="italic">GRATUIT</span>
+                  </a>
+                </Link>
               </div>
 
               <div className="w-full space-y-4">
