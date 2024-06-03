@@ -94,7 +94,11 @@ export default function CategoriesComponent({ profile }) {
         {/* BUTTON PROFIL */}
         <Popover open={currentStepOnboarding === 1} >
           <PopoverTrigger className={cn(currentStepOnboarding === 1 ? 'z-20' : null)} asChild>
-            <div className="h-fit bg-violet-100 rounded-md p-3 flex flex-col gap-3 cursor-pointer">
+            <div className="h-fit bg-violet-100 rounded-md p-3 flex flex-col gap-3 cursor-pointer" onClick={() => {
+              if (currentStepOnboarding !== 1) {
+                pushWithLoading('/admin/profile')
+              }
+            }}>
               <User size={16} className="text-slate-900" />
               <div className="flex flex-col">
                 <p className="text-sm text-slate-900 font-semibold">Profil</p>

@@ -6,9 +6,9 @@ import {
   Card
 } from "@/components/ui/card";
 
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,7 +24,7 @@ import { GetServerSidePropsContext } from "next";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import Dropzone from "@/components/dropzone";
 
-export default function CreateItem({ category, nbItems }) {
+export default function EditItem({ category, item }) {
   const router = useRouter()
   const { pushWithLoading, setIsLoadingApp } = useLoadingContext()
 
@@ -53,30 +53,34 @@ export default function CreateItem({ category, nbItems }) {
 
 
   async function translate(item) {
-    let newItem = item;
+    let newItem = { ...item };
 
-    const resultName = await fetch('/api/gpt-prompt', {
-      method: 'POST',
-      body: JSON.stringify({ prompt: JSON.stringify({ fr: name }) }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    if (newItem?.need_name_translation) {
+      const resultName = await fetch('/api/gpt-prompt', {
+        method: 'POST',
+        body: JSON.stringify({ prompt: JSON.stringify({ fr: name }) }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    const jsonName = await resultName.json();
-    newItem.name = JSON.parse(jsonName.response);
+      const jsonName = await resultName.json();
+      newItem.name = JSON.parse(jsonName.response);
+    }
 
 
-    const resultDescription = await fetch('/api/gpt-prompt', {
-      method: 'POST',
-      body: JSON.stringify({ prompt: JSON.stringify({ fr: description }) }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    if (newItem?.need_description_translation) {
+      const resultDescription = await fetch('/api/gpt-prompt', {
+        method: 'POST',
+        body: JSON.stringify({ prompt: JSON.stringify({ fr: description }) }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    const jsonDescription = await resultDescription.json();
-    newItem.description = JSON.parse(jsonDescription.response);
+      const jsonDescription = await resultDescription.json();
+      newItem.description = JSON.parse(jsonDescription.response);
+    }
 
     return newItem;
   }
@@ -84,36 +88,37 @@ export default function CreateItem({ category, nbItems }) {
   async function onSubmit() {
     try {
       setIsLoadingApp(true);
+      let newItem = { ...item };
 
-      let item = {
-        profile_id: user?.id,
-        category_id: router?.query?.categoryId,
-        price,
-        order: `${nbItems + 1}`,
+      if (newItem && newItem.name) {
+        if (item?.name?.fr !== name) {
+          newItem.name = name;
+          newItem.need_name_translation = true;
+        }
       }
 
-      let newItem = await translate(item);
-
-      if (image) {
-        const fileName = `images_${Date.now()}.png`;
-        const { data: fileUpdated, error: fileError } = await supabaseClient.storage
-          .from("images")
-          .upload(fileName, image, {
-            upsert: false,
-          });
-
-        if (fileError) {
-          throw fileError;
+      if (newItem && newItem.description) {
+        if (item?.description?.fr !== description) {
+          newItem.description = description;
+          newItem.need_description_translation = true;
         }
+      }
 
-        const path = await getFileWithPath(fileUpdated?.path);
-        newItem = { ...newItem, image_url: path, image_path: fileUpdated?.path };
+
+      let translatedItem = await translate(newItem);
+
+      if (translatedItem.hasOwnProperty("need_name_translation")) {
+        delete translatedItem.need_name_translation;
+      }
+      if (translatedItem.hasOwnProperty("need_description_translation")) {
+        delete translatedItem.need_description_translation;
       }
 
       // Update database
       const { data: dataUpdated, error } = await supabaseClient
         .from("items")
-        .insert(newItem)
+        .update(translatedItem)
+        .eq('id', item?.id)
         .select();
 
       if (error) {
@@ -122,7 +127,7 @@ export default function CreateItem({ category, nbItems }) {
 
 
       toast({
-        title: "Enregistrement réussi",
+        title: "Modification réussie",
         description: "Les informations ont été mises à jour.",
         className: "bg-green-500 border-green-500 text-white",
       });
@@ -139,27 +144,6 @@ export default function CreateItem({ category, nbItems }) {
       });
     }
   }
-
-  // const handleAddItem = () => {
-  //   const newItems = [...items];
-  //   newItems.push({
-  //     id: v4(),
-  //     profile_id: user?.id,
-  //     category_id: activeCategory,
-  //     order: `${items.length + 1}`,
-  //     name: { fr: "Nouvel élément" },
-  //     description: { fr: "Description de l'élément" },
-  //     price: 0.0,
-  //     created_at: new Date(),
-  //   });
-
-  //   setItems(newItems);
-
-  //   setTimeout(() => {
-  //     inputRef.current?.focus();
-  //   }, 0);
-  // };
-
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -183,6 +167,14 @@ export default function CreateItem({ category, nbItems }) {
     return null
   }
 
+  useEffect(() => {
+    if (item?.id) {
+      setName(item?.name?.fr)
+      setDescription(item?.description?.fr)
+      setPrice(item?.price)
+      setImageUrl(item?.image_url)
+    }
+  }, [])
 
   return (
     <Layout withAuth fullHeight>
@@ -203,7 +195,7 @@ export default function CreateItem({ category, nbItems }) {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Création</BreadcrumbPage>
+              <BreadcrumbPage>Modification</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -234,7 +226,29 @@ export default function CreateItem({ category, nbItems }) {
           // onSubmit={form.handleSubmit(onSubmit)}
           className="w-full gap-2 flex flex-col h-full"
         >
-          <FormItem className="w-full">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nom</FormLabel>
+                <FormControl
+                  onChange={(e) => {
+                    setName(e?.target?.value)
+                  }
+                  }
+                >
+                  <Input
+                    value={name?.fr}
+                    defaultValue={item?.name?.fr}
+                    placeholder="Nom de votre élément"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* <FormItem className="w-full">
             <FormLabel>Nom</FormLabel>
             <FormControl
               onChange={(e) => {
@@ -244,10 +258,11 @@ export default function CreateItem({ category, nbItems }) {
             >
               <Input
                 value={name?.fr}
+                defaultValue={item?.name?.fr}
                 placeholder="Nom de votre élément"
               />
             </FormControl>
-          </FormItem>
+          </FormItem> */}
           <FormItem className="w-full">
             <FormLabel>Description</FormLabel>
             <FormControl
@@ -257,6 +272,7 @@ export default function CreateItem({ category, nbItems }) {
             >
               <Textarea
                 value={description?.fr}
+                defaultValue={item?.description?.fr}
                 placeholder="Description de votre élément"
               />
             </FormControl>
@@ -297,6 +313,7 @@ export default function CreateItem({ category, nbItems }) {
             >
               <Input
                 value={price}
+                defaultValue={item?.price}
                 type="number"
                 placeholder="0.00€"
                 step="0.01"
@@ -305,7 +322,7 @@ export default function CreateItem({ category, nbItems }) {
               />
             </FormControl>
           </FormItem>
-          <FormItem className="w-full mb-20">
+          {/* <FormItem className="w-full mb-20">
             <FormLabel>Télécharger une image</FormLabel>
             <FormControl>
               <FieldInput
@@ -321,7 +338,7 @@ export default function CreateItem({ category, nbItems }) {
                 onChange={(e) => onImageChange(e)}
               />
             </FormControl>
-          </FormItem>
+          </FormItem> */}
 
         </form>
       </Form>
@@ -333,8 +350,9 @@ export default function CreateItem({ category, nbItems }) {
           variant="ghost"
           size="icon"
           className="text-white hover:text-white bg-violet-600 hover:bg-violet-700 active:bg-violet-700 focus:bg-violet-700 w-full h-fit p-2 text-sm leading-6 font-medium"
+          disabled={!((item?.name?.fr !== name) || (item?.description?.fr !== description) || (item?.price !== price))}
         >
-          Enregistrer
+          Modifier
         </Button>
       </div>
     </Layout >
@@ -357,16 +375,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     .eq("id", ctx?.query?.categoryId)
     .single();
 
-  const { count: nbItems } = await supabaseServerClient
+  const { data: item } = await supabaseServerClient
     .from("items")
-    .select("*", { count: "exact", head: true })
-    .eq("category_id", ctx?.query?.categoryId)
+    .select("*")
+    .eq("id", ctx?.query?.itemId)
+    .single();
+
 
   if (!session) {
     return {
       props: {
         category: {},
-        nbItems: 0
+        item: {}
       },
     }
   }
@@ -374,7 +394,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       category,
-      nbItems,
+      item,
       initialSession: session,
       user: session.user,
     },

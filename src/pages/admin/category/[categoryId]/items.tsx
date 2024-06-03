@@ -3,7 +3,6 @@ import Category from "@/components/category";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/database.types";
 import { GetServerSidePropsContext } from "next";
-import Items from "@/components/items";
 import { useRouter } from "next/router";
 import { Ellipsis, Plus, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,8 @@ import { toast } from "@/components/ui/use-toast";
 import { Card } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { useLoadingContext } from "@/context/loading";
+import Items from "@/components/items";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const FormSchema = z.object({
   name: z.string()
@@ -27,7 +28,8 @@ const FormSchema = z.object({
 
 export default function CategoriesComponent({ category, items }) {
   const router = useRouter()
-  const { pushWithLoading } = useLoadingContext()
+  const { pushWithLoading, setIsLoadingApp } = useLoadingContext()
+  const supabaseClient = useSupabaseClient<Database>();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -60,6 +62,26 @@ export default function CategoriesComponent({ category, items }) {
     // setIsloadingGeneral(false);
   }
 
+  async function onDelete(item) {
+    try {
+      setIsLoadingApp(true);
+      const response = await supabaseClient
+        .from("items")
+        .delete()
+        .eq("id", item?.id);
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description:
+          "Un problème est survenu lors de la mise à jour des informations.",
+        variant: "destructive",
+      });
+    }
+    setIsOpenDialogDelete(false)
+    pushWithLoading(`/admin/category/${router?.query?.categoryId}/items`)
+  }
+
+
   return (
     <Layout withAuth fullHeight>
       <div className="pb-3 flex items-center">
@@ -87,45 +109,8 @@ export default function CategoriesComponent({ category, items }) {
           de votre menu sur cette page.</p>
       </div>
 
+      <Items isMoving={isMoving} setIsMoving={setIsMoving} items={items} setIsOpenDialogMore={setIsOpenDialogMore} />
 
-
-      {items?.length === 0 ? <img src="/assets/images/background-menu.png" className="w-full object-contain mb-2" /> : (
-        <div className="flex flex-col gap-3 mb-14">
-          {items?.map((item) => {
-            return (
-              <Card className="overflow-hidden flex p-0" key={item?.id}>
-                {item?.image_url ? (
-                  <img src={item?.image_url} alt="imagePlat" className="w-2/5 object-cover" />
-                ) : null}
-                <div className="flex flex-1 p-4">
-                  <div className="flex flex-col flex-1 gap-1">
-                    <div>
-                      <p className="text-sm font-medium text-slate-900">{item?.name?.fr}</p>
-                    </div>
-                    <p className="text-sm text-[#64748B]">{item?.description?.fr.slice(0, item?.image_url ? 30 : 75) + '...'}</p>
-                    <p className="text-sm text-[#64748B]">{item?.price} €</p>
-                  </div>
-                  {!false ? (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsOpenDialogMore(item);
-                      }}
-                      className="text-slate-400 self-end hover:bg-transparent ml-2 w-fit h-fit"
-                    >
-                      <Ellipsis size={16} />
-                    </Button>
-                  ) : null}
-                </div>
-
-              </Card>
-            )
-          })}
-        </div>)
-      }
 
       {!isMoving ? (
         <Button
@@ -162,22 +147,25 @@ export default function CategoriesComponent({ category, items }) {
 
           <DialogTitle>Modifier</DialogTitle>
           <DialogDescription>Modifier “{isOpenDialogMore?.name?.fr}”</DialogDescription>
-          {/* <Separator className="m-0" />
-          <Button variant="ghost" className="justify-start"><Pencil className="mr-2 h-4 w-4" /> Renommer</Button>
-          <Separator /> 
+          <Separator className="m-0" />
+          <Button variant="ghost" className="justify-start"
+            onClick={() => {
+              pushWithLoading(`/admin/category/${category?.id}/item/${isOpenDialogMore?.id}/edit`)
+            }}><Pencil className="mr-2 h-4 w-4" /> Modifier</Button>
+          <Separator />
           <Button variant="ghost" className="justify-start"
             onClick={() => {
               setIsOpenDialogMore(false)
               setIsMoving(true)
             }}
           ><RefreshCcw className="mr-2 h-4 w-4" /> Déplacer</Button>
-           <Separator />
+          <Separator />
           <Button variant="ghost" className="justify-start"
             onClick={() => {
               setIsOpenDialogDelete(isOpenDialogMore);
               setIsOpenDialogMore(false);
             }}
-          ><XIcon className="mr-2 h-4 w-4" /> Supprimer</Button> */}
+          ><XIcon className="mr-2 h-4 w-4" /> Supprimer</Button>
         </DialogContent>
       </Dialog>
 
@@ -212,12 +200,12 @@ export default function CategoriesComponent({ category, items }) {
         if (isOp === true) return;
         setIsOpenDialogDelete(false);
       }}>
-        <DialogContent onOpenAutoFocus={false} withoutButtonClose className="max-w-[328px] rounded-lg" >
+        <DialogContent withoutButtonClose className="max-w-[328px] rounded-lg" >
 
           <DialogTitle>Supprimer</DialogTitle>
           <DialogDescription>Êtes-vous certain de vouloir supprimer “{isOpenDialogDelete?.name?.fr}” ?</DialogDescription>
           <div className="flex flex-col justify-center items-center w-full gap-2">
-            <Button variant="destructive" className="w-full">Supprimer</Button>
+            <Button variant="destructive" className="w-full" onClick={() => onDelete(isOpenDialogDelete)}>Supprimer</Button>
             <Button variant="outline" className="w-full" onClick={() => setIsOpenDialogDelete(false)}>Annuler</Button>
           </div>
         </DialogContent>

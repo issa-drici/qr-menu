@@ -9,6 +9,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils";
 
 interface FieldInputProps {
     form: any
@@ -34,7 +35,7 @@ export default function FieldInput({ form, accept, name, label, placeholder, typ
                         <FormLabel>{label}</FormLabel>
                     ) : null}
                     <FormControl onChange={onChange}>
-                        <Input accept={accept} placeholder={placeholder ? placeholder : null} type={type} className={type === 'file' ? "file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 hidden" : null} {...field} />
+                        <Input accept={accept} placeholder={placeholder ? placeholder : null} type={type} className={cn(type === 'file' ? "file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 hidden" : null)} {...field} />
                     </FormControl>
                     {description ? (
                         <FormDescription>

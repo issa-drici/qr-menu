@@ -257,13 +257,13 @@ export const PricingCard = ({ type, noTrial, setDialogSubscribe, setButtonId }) 
       return (
         <div className="relative bg-card-pricing shadow-lg rounded-2xl text-white w-full border">
           <div className="absolute transform -translate-x-1/2 -translate-y-1/2 left-1/2 bg-white text-black px-2 py-0.5 text-[10px] ipromax:text-xs font-black border rounded-md">
-            <p className="tracking-tight">💛&nbsp;&nbsp;&nbsp;Populaire - 1.5€<span className="font-normal text-[7px] ipromax:text-[10px]"> / jour</span></p>
+            <p className="tracking-tight">💛&nbsp;&nbsp;&nbsp;Seulement 1€<span className="font-normal text-[7px] ipromax:text-[10px]"> / jour</span></p>
           </div>
           <div className="flex items-end justify-between pr-3">
             <img src="/assets/images/pricing/cuisinier.png" className="w-[75px] ipromax:w-[90px]" />
             <div>
               <p className="text-4xl ipromax:text-5xl font-black text-right">
-                45€
+                30€
                 <span className="text-sm ipromax:text-lg font-normal text-[rgba(255, 255, 255, 0.70)]">
                   /mois
                 </span>
@@ -346,7 +346,7 @@ export const PricingCard = ({ type, noTrial, setDialogSubscribe, setButtonId }) 
                   }}
 
                 >
-                  Démarrer gratuitement pendant 1 mois
+                  Démarrer gratuitement pendant 7 jours
                 </p>
                 <p className="text-[9px] ipromax:text-xs text-center mt-1 mb-3 text-white">
                   Aucune carte de crédit nécessaire - Sans engagement
@@ -359,13 +359,16 @@ export const PricingCard = ({ type, noTrial, setDialogSubscribe, setButtonId }) 
                 Bonus
               </p>
               <p className="text-black text-sm ipromax:text-lg mt-1">
-                Site web <span className="font-bold">offert</span> <span className="text-sm">(valeur 1500€)</span>
+                Site web  / Fiche  <span className="font-bold">offert</span> <span className="text-sm">(valeur 500€)</span>
               </p>
-              <p className="text-black text-sm ipromax:text-lg">
+              <p className="text-black text-sm ipromax:text-lg mt-1">
+                QR code <span className="font-bold">offert</span> <span className="text-sm">(20 autocollants)</span>
+              </p>
+              {/* <p className="text-black text-sm ipromax:text-lg">
                 Augmentation <span className="font-bold">Avis Google</span>
-              </p>
+              </p> */}
               <p className="text-black text-sm ipromax:text-lg">
-                Partage du menu entre amis
+                Bouton partage du menu entre amis
               </p>
             </div>
             {/* <div className="bg-card-gold rounded-2xl px-2 py-2 ipromax:px-4 ipromax:py-3 mt-4 shadow-2xl shadow-white">

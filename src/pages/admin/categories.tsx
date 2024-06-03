@@ -46,49 +46,6 @@ export default function CategoriesComponent({ user, category }) {
   const [isOpenDialogDelete, setIsOpenDialogDelete] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
 
-  async function onSubmit() {
-    try {
-      setIsLoadingApp(true);
-
-      const newCategories = Array.from(categories);
-
-      const translatedArray = await translate(newCategories)
-
-      for (let i = 0; i < translatedArray.length; i++) {
-        if (translatedArray[i].hasOwnProperty("displayInput")) {
-          delete translatedArray[i].displayInput;
-        }
-
-        if (translatedArray[i].hasOwnProperty("need_translation")) {
-          delete translatedArray[i].need_translation;
-        }
-      }
-
-      const { data: dataUpdated, error } = await supabaseClient
-        .from("category")
-        .upsert(translatedArray, {
-          onConflict: "id",
-          merge: ["created_at", "name", "order"],
-        })
-        .select();
-
-      toast({
-        title: "Enregistrement réussi",
-        description: "Les informations ont été mises à jour.",
-        className: "bg-green-500 border-green-500 text-white",
-      });
-    } catch (error) {
-      console.error("Erreur:", error);
-      toast({
-        title: "Erreur",
-        description:
-          "Un problème est survenu lors de la mise à jour des informations.",
-        variant: "destructive",
-      });
-    }
-    setIsLoadingApp(false);
-  }
-
   return (
     <Layout withAuth fullHeight>
       <div className="pb-3 flex items-center">

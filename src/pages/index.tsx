@@ -25,23 +25,27 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex w-full justify-end items-center space-x-2">
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setDialogSubscribe(true)
-                setButtonId('loginButton')
-              }}
-            >Se connecter</Button>
+            <Link href={`/login`} legacyBehavior>
+              <Button
+                variant="ghost"
+              // onClick={() => {
+              //   setDialogSubscribe(true)
+              //   setButtonId('loginButton')
+              // }}
+              >Se connecter</Button>
+            </Link>
 
-            <a
-              className="text-white p-3 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
-              onClick={() => {
-                setDialogSubscribe(true)
-                setButtonId('trialNavbar')
-              }}
-            >
-              ✨&nbsp;Essai <span className="italic">GRATUIT</span>
-            </a>
+            <Link href={`/register`} legacyBehavior>
+              <a
+                className="text-white p-3 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
+              // onClick={() => {
+              //   setDialogSubscribe(true)
+              //   setButtonId('trialNavbar')
+              // }}
+              >
+                ✨&nbsp;Essai <span className="italic">GRATUIT</span>
+              </a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -78,25 +82,28 @@ export default function Home() {
             </span>
           </h2>
           <p className="text-slate-400 container md:max-w-2xl text-center font-semibold mt-1 md:mt-3 text-xs ipromax:text-sm md:text-base">
-            Avec Eatsup : <span className="text-slate-500">gagnez du temps</span> en salle, offrez un accès continu au
+            Avec Eatsup : <span className="text-slate-500">gagnez du temps</span> en salle, offrez un accès en continu au
             menu pour <span className="text-slate-500">stimuler les ventes</span>, et partagez <span className="text-slate-500">l&apos;excellence</span> de votre
             établissement.
           </p>
           <p className="text-slate-400 container md:max-w-2xl text-center font-semibold mt-1 text-xs ipromax:text-sm md:text-base">
+            <span className="text-slate-500">Distinguez-vous</span> dans le marché le plus compétitif.
+          </p>
+          {/* <p className="text-slate-400 container md:max-w-2xl text-center font-semibold mt-1 text-xs ipromax:text-sm md:text-base">
             <span className="text-slate-500">Propulsez vos avis Google</span> et <span className="text-slate-500">distinguez-vous</span> dans le marché le plus
             compétitif.
-          </p>
-          {/* <Link href={`/register`} legacyBehavior> */}
-          <a
-            className="text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-3 md:mt-6 cursor-pointer"
-            onClick={() => {
-              setDialogSubscribe(true)
-              setButtonId('trialHero')
-            }}
-          >
-            Essai <span className="italic">GRATUIT</span>
-          </a>
-          {/* </Link> */}
+          </p> */}
+          <Link href={`/register`} legacyBehavior>
+            <a
+              className="text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 mt-3 md:mt-6 cursor-pointer"
+            // onClick={() => {
+            //   setDialogSubscribe(true)
+            //   setButtonId('trialHero')
+            // }}
+            >
+              Essai <span className="italic">GRATUIT</span>
+            </a>
+          </Link>
           <p className="text-slate-500 max-w-2xl text-center font-semibold mt-1 text-xs ipromax:text-sm">
             Sans engagement.
           </p>
@@ -203,17 +210,17 @@ export default function Home() {
               </div> */}
                 </div>
 
-                {/* <Link href={`/register`} legacyBehavior> */}
-                <a
-                  className="hidden md:block text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
-                  onClick={() => {
-                    setDialogSubscribe(true)
-                    setButtonId('trialVisibility')
-                  }}
-                >
-                  Essai <span className="italic">GRATUIT</span>
-                </a>
-                {/* </Link> */}
+                <Link href={`/register`} legacyBehavior>
+                  <a
+                    className="hidden md:block text-white p-2 ipromax:p-3 rounded-lg md:rounded-xl text-xs ipromax:text-sm font-bold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
+                  // onClick={() => {
+                  //   setDialogSubscribe(true)
+                  //   setButtonId('trialVisibility')
+                  // }}
+                  >
+                    Essai <span className="italic">GRATUIT</span>
+                  </a>
+                </Link>
               </div>
 
               <div className="w-full space-y-4">
@@ -224,7 +231,7 @@ export default function Home() {
                   </div>
                   <div className="relative w-1/2 h-32 md:h-64 bg-cover bg-center rounded-lg flex justify-center items-center" style={{ backgroundImage: "url('/assets/images/visibility2.png')" }}>
                     <div className="absolute inset-0 bg-[radial-gradient(169.40%_89.55%_at_50.76%_50.29%,rgba(0,0,0,0.80)_0%,rgba(0,0,0,0.30)_100%)] bg-opacity-50 rounded-lg"></div>
-                    <p className="relative z-10 text-white text-sm px-3 md:text-2xl text-center md:px-10 font-bold drop-shadow-[2px_2px_2px_rgba(255,255,255,0.25)]">Plus besoin d’imprimer, <span className="font-bold md:font-bold text-primary tracking-tight">ni distribuer de flyer</span></p>
+                    <p className="relative z-10 text-white text-sm px-3 md:text-2xl text-center md:px-10 font-bold drop-shadow-[2px_2px_2px_rgba(255,255,255,0.25)]">Plus besoin d’imprimer, <span className="font-bold md:font-bold text-primary tracking-tight">ni distribuer de carte papier</span></p>
                   </div>
                 </div>
                 <div className="flex justify-between gap-4">
@@ -328,16 +335,16 @@ export default function Home() {
             </h2>
           </Fade>
           <div className="container flex flex-col md:flex-row md:w-[80vw] justify-between space-y-8 md:space-y-0 md:space-x-10 pt-10">
-            <PricingCard type="commis" setDialogSubscribe={setDialogSubscribe} setButtonId={setButtonId} />
+            {/* <PricingCard type="commis" setDialogSubscribe={setDialogSubscribe} setButtonId={setButtonId} /> */}
             <PricingCard type="cuisinier" setDialogSubscribe={setDialogSubscribe} setButtonId={setButtonId} />
-            <PricingCard type="chef" setDialogSubscribe={setDialogSubscribe} setButtonId={setButtonId} />
+            {/* <PricingCard type="chef" setDialogSubscribe={setDialogSubscribe} setButtonId={setButtonId} /> */}
           </div>
           {/* <Fade className="w-[80vw]" bottom cascade> */}
           <div className="w-[80vw]" id="faq">
             <h2 className="text-2xl ipromax:text-3xl md:text-4xl font-black text-center mt-14 leading-6">
               Questions fréquentes
             </h2>
-            <Accordion type="multiple" className="mt-10 mb-20 space-y-2">
+            <Accordion type="multiple" className="mt-10 mb-10 space-y-2">
 
               <AccordionItem value="item-1" className="w-full border rounded-xl shadow overflow-hidden">
                 <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">🤖&nbsp;&nbsp;C'est compliqué à installer si on n'y connaît rien en techno ?</AccordionTrigger>
@@ -346,37 +353,37 @@ export default function Home() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2" className="w-full border rounded-xl shadow overflow-hidden">
-                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💁‍♀️&nbsp;&nbsp;Pourquoi investir là-dedans plutôt que dans autre chose ?</AccordionTrigger>
+                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">🤔&nbsp;&nbsp;Pourquoi investir là-dedans plutôt que dans autre chose ?</AccordionTrigger>
                 <AccordionContent className="px-4 text-base md:text-lg">
                   Parce que ça peut directement augmenter vos revenus en rendant votre carte plus accessible et en attirant plus de clients.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3" className="w-full border rounded-xl shadow overflow-hidden">
-                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💁‍♀️&nbsp;&nbsp;On est déjà habitué avec la carte. Pourquoi changer ?</AccordionTrigger>
+                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">🗺️&nbsp;&nbsp;On est déjà habitué avec la carte. Pourquoi changer ?</AccordionTrigger>
                 <AccordionContent className="px-4 text-base md:text-lg">
                   Notre solution est peut-être plus adaptée à vos besoins spécifiques, avec des fonctionnalités uniques qui peuvent vraiment faire la différence.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4" className="w-full border rounded-xl shadow overflow-hidden">
-                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💁‍♀️&nbsp;&nbsp;On ne veut pas perdre le contact avec nos clients. C'est beaucoup trop important pour nous.</AccordionTrigger>
+                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💬&nbsp;&nbsp;On ne veut pas perdre le contact avec nos clients. C'est beaucoup trop important pour nous.</AccordionTrigger>
                 <AccordionContent className="px-4 text-base md:text-lg">
                   Oui ! Ça rend la commande plus facile pour eux et vous libère du temps pour un service encore plus personnalisé.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5" className="w-full border rounded-xl shadow overflow-hidden">
-                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💁‍♀️&nbsp;&nbsp;On a toujours fait comme ça. Pourquoi changer maintenant ?</AccordionTrigger>
+                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">🔄&nbsp;&nbsp;On a toujours fait comme ça. Pourquoi changer maintenant ?</AccordionTrigger>
                 <AccordionContent className="px-4 text-base md:text-lg">
                   Le monde change et les clients aussi. Notre outil peut vous aider à rester à jour et à attirer plus de monde.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-6" className="w-full border rounded-xl shadow overflow-hidden">
-                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💁‍♀️&nbsp;&nbsp;Ça va vraiment nous faire gagner plus ?</AccordionTrigger>
+                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💰&nbsp;&nbsp;Ça va vraiment nous faire gagner plus ?</AccordionTrigger>
                 <AccordionContent className="px-4 text-base md:text-lg">
                   Absolument. En rendant votre menu plus visible et accessible en ligne, vous pouvez attirer plus de clients et augmenter vos ventes.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-7" className="w-full border rounded-xl shadow overflow-hidden">
-                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">💁‍♀️&nbsp;&nbsp;Nos infos et celles de nos clients, c'est sécurisé ?</AccordionTrigger>
+                <AccordionTrigger className="px-4 w-full font-bold hover:no-underline text-base md:text-lg text-left">🔒&nbsp;&nbsp;Nos infos et celles de nos clients, c'est sécurisé ?</AccordionTrigger>
                 <AccordionContent className="px-4 text-base md:text-lg">
                   Tout à fait. La sécurité est notre priorité. Vos données et celles de vos clients sont protégées avec les dernières technologies.
                 </AccordionContent>
@@ -431,6 +438,25 @@ export default function Home() {
                 </AccordionContent>
               </AccordionItem> */}
             </Accordion>
+            <div className="flex flex-col mb-20 justify-center items-center">
+              <h3 className="mb-4 text-center text-2xl md:text-4xl font-black max-w-3xl bg-custom-gradient bg-clip-text text-transparent md:pb-2 drop-shadow-lg">
+                Allez, on se rejoint de l'autre côté avant que ce soit trop tard !
+              </h3>
+              <Link href={`/register`} legacyBehavior>
+                <a
+                  className="text-white w-fit p-3 rounded-lg md:rounded-xl text-xs font-extrabold shadow bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 hover:scale-105 transform transition duration-150 cursor-pointer"
+                // onClick={() => {
+                //   setDialogSubscribe(true)
+                //   setButtonId('trialNavbar')
+                // }}
+                >
+                  ✨&nbsp;Créer mon menu <span className="italic">GRATUITEMENT</span> dès maintenant !
+                </a>
+              </Link>
+              <p className="text-[9px] ipromax:text-xs text-center mt-1 mb-3 text-slate-400">
+                Aucune carte de crédit nécessaire - Sans engagement
+              </p>
+            </div>
           </div>
           {/* </Fade> */}
           <div className="w-full flex flex-col bg-card-feature px-5 py-4 md:px-24 md:pb-36 pb-24">
