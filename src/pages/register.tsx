@@ -48,7 +48,7 @@ export default function RegisterPage() {
         email: email,
         password: password,
         options: {
-          emailRedirectTo: "https://eatsup.vercel.app/",
+          emailRedirectTo: "https://www.eatsup.fr/",
         },
       });
 

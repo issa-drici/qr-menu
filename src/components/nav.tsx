@@ -174,7 +174,7 @@ const Nav = () => {
                                     <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50"
                                         onClick={() => {
                                             setIsOpenTooltipCopy(true)
-                                            navigator.clipboard.writeText(`https://eatsup.vercel.app/restaurant/${user?.id}/menu`)
+                                            navigator.clipboard.writeText(`https://www.eatsup.fr/restaurant/${user?.id}/menu`)
                                             setTimeout(() => {
                                                 setIsOpenTooltipCopy(false)
                                                 setIsOpenMenu(false)

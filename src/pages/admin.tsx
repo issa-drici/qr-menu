@@ -194,7 +194,7 @@ export default function CategoriesComponent({ profile }) {
                   onClick={() => {
                     if (currentStepOnboarding !== 4) {
                       setIsOpenTooltipCopy(true)
-                      navigator.clipboard.writeText(`https://eatsup.vercel.app/restaurant/${profile?.id}/menu`)
+                      navigator.clipboard.writeText(`https://www.eatsup.fr/restaurant/${profile?.id}/menu`)
                       setTimeout(() => {
                         setIsOpenTooltipCopy(false)
                       }, 2000);

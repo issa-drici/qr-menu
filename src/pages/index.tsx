@@ -48,7 +48,7 @@ export default function Home() {
       <div className="relative bg-white w-full h-full min-h-screen tracking-tighter max-w-screen overflow-x-hidden">
         <div className="absolute bg-circle-gradient w-1.5screen h-[110vh] md:h-1.5screen -translate-x-[27vw] -translate-y-1/4 z-0"></div>
         <div className="relative flex flex-col w-full h-full mt-20 md:mt-32 items-center z-10">
-          <a href="https://eatsup.vercel.app/restaurant/75414476-cdef-499c-8cf2-686f26713987/menu" target="_blank">
+          <a href="https://www.eatsup.fr/restaurant/75414476-cdef-499c-8cf2-686f26713987/menu" target="_blank">
             <div className="absolute right-6 md:right-6 lg:right-16 top-52 md:top-32 rotate-12 flex flex-col items-center">
               <div className="flex gap-1">
                 <p className="font-bold text-sm md:text-lg">Voir le menu</p>
@@ -446,7 +446,7 @@ export default function Home() {
                     Navigation
                   </h2>
                   <ul className="text-center md:text-left text-sm ipromax:text-base space-y-1 md:space-y-2">
-                    <li><a href="https://eatsup.vercel.app/restaurant/75414476-cdef-499c-8cf2-686f26713987/menu" target="_blank">Démo</a></li>
+                    <li><a href="https://www.eatsup.fr/restaurant/75414476-cdef-499c-8cf2-686f26713987/menu" target="_blank">Démo</a></li>
                     <li><a href="#pricing">Tarifs</a></li>
                     <li><a href="#faq">FAQ</a></li>
                   </ul>
