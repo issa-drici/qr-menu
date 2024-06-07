@@ -11,16 +11,16 @@ const Provider = ({ children }: { children: ReactNode }) => {
 
   const pushWithLoading = (path: string) => {
     console.log(path)
-    const handleRouteChange = () => {
-      setIsLoadingApp(false)
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
+    // const handleRouteChange = () => {
+    //   setIsLoadingApp(false)
+    //   router.events.off('routeChangeComplete', handleRouteChange);
+    // };
 
-    setIsLoadingApp(true)
-    setTimeout(() => {
-      router.events.on('routeChangeComplete', handleRouteChange);
+    // setIsLoadingApp(true)
+    // setTimeout(() => {
+    //   router.events.on('routeChangeComplete', handleRouteChange);
       router.push(path);
-    }, 1000);
+    // }, 1000);
 
   };
 

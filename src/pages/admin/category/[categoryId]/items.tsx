@@ -3,7 +3,6 @@ import Category from "@/components/category";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/database.types";
 import { GetServerSidePropsContext } from "next";
-import Items from "@/components/items";
 import { useRouter } from "next/router";
 import { Ellipsis, Plus, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Card } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { useLoadingContext } from "@/context/loading";
+import Items from "@/components/items";
 
 const FormSchema = z.object({
   name: z.string()
@@ -87,45 +87,8 @@ export default function CategoriesComponent({ category, items }) {
           de votre menu sur cette page.</p>
       </div>
 
+      <Items isMoving={isMoving} setIsMoving={setIsMoving} items={items} setIsOpenDialogMore={setIsOpenDialogMore} />
 
-
-      {items?.length === 0 ? <img src="/assets/images/background-menu.png" className="w-full object-contain mb-2" /> : (
-        <div className="flex flex-col gap-3 mb-14">
-          {items?.map((item) => {
-            return (
-              <Card className="overflow-hidden flex p-0" key={item?.id}>
-                {item?.image_url ? (
-                  <img src={item?.image_url} alt="imagePlat" className="w-2/5 object-cover" />
-                ) : null}
-                <div className="flex flex-1 p-4">
-                  <div className="flex flex-col flex-1 gap-1">
-                    <div>
-                      <p className="text-sm font-medium text-slate-900">{item?.name?.fr}</p>
-                    </div>
-                    <p className="text-sm text-[#64748B]">{item?.description?.fr.slice(0, item?.image_url ? 30 : 75) + '...'}</p>
-                    <p className="text-sm text-[#64748B]">{item?.price} €</p>
-                  </div>
-                  {!false ? (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsOpenDialogMore(item);
-                      }}
-                      className="text-slate-400 self-end hover:bg-transparent ml-2 w-fit h-fit"
-                    >
-                      <Ellipsis size={16} />
-                    </Button>
-                  ) : null}
-                </div>
-
-              </Card>
-            )
-          })}
-        </div>)
-      }
 
       {!isMoving ? (
         <Button
@@ -162,17 +125,17 @@ export default function CategoriesComponent({ category, items }) {
 
           <DialogTitle>Modifier</DialogTitle>
           <DialogDescription>Modifier “{isOpenDialogMore?.name?.fr}”</DialogDescription>
-          {/* <Separator className="m-0" />
-          <Button variant="ghost" className="justify-start"><Pencil className="mr-2 h-4 w-4" /> Renommer</Button>
-          <Separator /> 
+          <Separator className="m-0" />
+          {/* <Button variant="ghost" className="justify-start"><Pencil className="mr-2 h-4 w-4" /> Renommer</Button>
+          <Separator />  */}
           <Button variant="ghost" className="justify-start"
             onClick={() => {
               setIsOpenDialogMore(false)
               setIsMoving(true)
             }}
           ><RefreshCcw className="mr-2 h-4 w-4" /> Déplacer</Button>
-           <Separator />
-          <Button variant="ghost" className="justify-start"
+          {/* <Separator />
+           <Button variant="ghost" className="justify-start"
             onClick={() => {
               setIsOpenDialogDelete(isOpenDialogMore);
               setIsOpenDialogMore(false);

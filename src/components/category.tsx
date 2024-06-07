@@ -33,58 +33,17 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
   const inputRef = useRef(null);
   const router = useRouter()
 
-
-  async function translate(categories) {
-    const newCategories = categories;
-
-    // Créez un tableau de promesses pour stocker toutes les requêtes API
-    const translationPromises = newCategories.map(async (newCat, index) => {
-      if (newCat.need_translation) {
-
-        const result = await fetch('/api/gpt-prompt', {
-          method: 'POST',
-          body: JSON.stringify({ prompt: JSON.stringify({ fr: newCat?.name?.fr }) }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        const json = await result.json();
-
-        newCategories[index].name = JSON.parse(json.response);
-        newCategories[index].need_translation = false;
-      }
-    });
-
-    // Utilisez Promise.all pour attendre que toutes les promesses se résolvent
-    await Promise.all(translationPromises);
-
-    return newCategories;
-  }
-
   async function onSubmit() {
     try {
       // setIsloading(true);
 
       const newCategories = Array.from(categories);
 
-      const translatedArray = await translate(newCategories)
-
-      for (let i = 0; i < translatedArray.length; i++) {
-        if (translatedArray[i].hasOwnProperty("displayInput")) {
-          delete translatedArray[i].displayInput;
-        }
-
-        if (translatedArray[i].hasOwnProperty("need_translation")) {
-          delete translatedArray[i].need_translation;
-        }
-      }
-
       const { data: dataUpdated, error } = await supabaseClient
         .from("category")
-        .upsert(translatedArray, {
+        .upsert(newCategories, {
           onConflict: "id",
-          merge: ["created_at", "name", "order"],
+          merge: ["order"],
         })
         .select();
 
@@ -94,7 +53,6 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
         className: "bg-green-500 border-green-500 text-white",
       });
     } catch (error) {
-      console.error("Erreur:", error);
       toast({
         title: "Erreur",
         description:
