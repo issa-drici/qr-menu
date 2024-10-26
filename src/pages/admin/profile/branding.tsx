@@ -54,7 +54,7 @@ export default function ProfileBrandingPage({ }) {
           const path = await getFileWithPath(fileUpdated?.path);
 
           const newData = {
-            ...user,
+            ...user.db_profile,
             logo_url: path,
             logo_path: fileUpdated?.path
           }
@@ -72,7 +72,7 @@ export default function ProfileBrandingPage({ }) {
           const path = await getFileWithPath(fileUpdated?.path);
 
           const newData = {
-            ...user,
+            ...user.db_profile,
             logo_url: path,
             logo_path: fileUpdated?.path
           }
@@ -84,47 +84,47 @@ export default function ProfileBrandingPage({ }) {
         }
       }
 
-      if (banner) {
-        if (user?.banner_path) {
-          const { data: fileUpdated, error: fileError } =
-            await supabaseClient.storage
-              .from("images")
-              .update(user?.banner_path, banner, {
-                upsert: true,
-              });
+      // if (banner) {
+      //   if (user?.banner_path) {
+      //     const { data: fileUpdated, error: fileError } =
+      //       await supabaseClient.storage
+      //         .from("images")
+      //         .update(user?.banner_path, banner, {
+      //           upsert: true,
+      //         });
 
-          const path = await getFileWithPath(fileUpdated?.path);
+      //     const path = await getFileWithPath(fileUpdated?.path);
 
-          const newData = {
-            ...user,
-            banner_url: path,
-            banner_path: fileUpdated?.path
-          }
+      //     const newData = {
+      //       ...user,
+      //       banner_url: path,
+      //       banner_path: fileUpdated?.path
+      //     }
 
-          const { error } = await supabaseClient
-            .from("profile")
-            .update(newData)
-            .eq("id", user?.id);
-        } else {
-          const { data: fileUpdated, error: fileError } =
-            await supabaseClient.storage
-              .from("images")
-              .upload(`images_${Date.now()}.png`, banner);
+      //     const { error } = await supabaseClient
+      //       .from("profile")
+      //       .update(newData)
+      //       .eq("id", user?.id);
+      //   } else {
+      //     const { data: fileUpdated, error: fileError } =
+      //       await supabaseClient.storage
+      //         .from("images")
+      //         .upload(`images_${Date.now()}.png`, banner);
 
-          const path = await getFileWithPath(fileUpdated?.path);
+      //     const path = await getFileWithPath(fileUpdated?.path);
 
-          const newData = {
-            ...user,
-            banner_url: path,
-            banner_path: fileUpdated?.path
-          }
+      //     const newData = {
+      //       ...user,
+      //       banner_url: path,
+      //       banner_path: fileUpdated?.path
+      //     }
 
-          const { error } = await supabaseClient
-            .from("profile")
-            .update(newData)
-            .eq("id", user?.id);
-        }
-      }
+      //     const { error } = await supabaseClient
+      //       .from("profile")
+      //       .update(newData)
+      //       .eq("id", user?.id);
+      //   }
+      // }
 
 
       // const { data: dataUpdated, error } = await supabaseClient
@@ -142,6 +142,7 @@ export default function ProfileBrandingPage({ }) {
         className: "bg-green-500 border-green-500 text-white",
       });
     } catch (error) {
+      console.log(error)
       toast({
         title: "Erreur",
         description:
@@ -228,7 +229,7 @@ export default function ProfileBrandingPage({ }) {
 
       <Form {...form}>
         <form
-          // onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="w-full gap-2 flex flex-col h-full"
         >
           <FormItem className="w-full mb-20">
@@ -265,8 +266,6 @@ export default function ProfileBrandingPage({ }) {
               />
             </FormControl>
           </FormItem> */}
-        </form>
-      </Form>
           <div
             className="fixed left-0 bottom-0 w-full h-fit p-4 bg-white"
           >
@@ -280,6 +279,8 @@ export default function ProfileBrandingPage({ }) {
               Enregistrer
             </Button>
           </div>
+        </form>
+      </Form>
     </Layout>
   );
 }

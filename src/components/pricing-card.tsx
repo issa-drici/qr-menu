@@ -370,6 +370,9 @@ export const PricingCard = ({ type, noTrial, setDialogSubscribe, setButtonId }) 
               <p className="text-black text-sm ipromax:text-lg">
                 Bouton partage du menu entre amis
               </p>
+              <p className="text-black text-sm ipromax:text-lg">
+                Apparition dans les résultats Google
+              </p>
             </div>
             {/* <div className="bg-card-gold rounded-2xl px-2 py-2 ipromax:px-4 ipromax:py-3 mt-4 shadow-2xl shadow-white">
               <p className="text-black text-sm ipromax:text-lg font-extrabold">

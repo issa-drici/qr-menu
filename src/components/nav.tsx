@@ -169,7 +169,11 @@ const Nav = () => {
                             <ChefHat size={16} />
                             <p>Mon menu</p>
                         </div>
-                        <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50">
+                        <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50"
+                        onClick={() => {
+                            pushWithLoading('/admin/qr-code')
+                            setIsOpenMenu(false)
+                        }}>
                             <QrCode size={16} />
                             <p>Mon QR</p>
                         </div>

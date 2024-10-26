@@ -29,6 +29,9 @@ const Provider = ({ children }: { children: ReactNode }) => {
                 setUser({
                     ...session?.user,
                     ...profile,
+                    db_profile: {
+                        ...profile
+                    }
                 });
             }
         };
@@ -37,7 +40,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
         supabaseClient.auth.onAuthStateChange((event, session) => {
             if (("SIGNED_IN" === event || "INITIAL_SESSION" === event) && session) {
                 setTimeout(() => {
-                setInitializing(false);
+                    setInitializing(false);
                 }, 1000);
                 getUserProfile()
                 // router.push(`/restaurant/${session?.user?.id}/admin/restaurant`)

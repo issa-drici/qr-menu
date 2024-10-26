@@ -149,14 +149,14 @@ export default function CategoriesComponent({ profile }) {
           <PopoverTrigger className={cn(currentStepOnboarding === 3 ? 'z-20' : null)} asChild>
             <div className="h-fit bg-violet-100 rounded-md p-3 flex flex-col gap-3 cursor-pointer" onClick={() => {
               if (currentStepOnboarding !== 3) {
-                // pushWithLoading('/admin/categories')
+                pushWithLoading('/admin/qr-code')
               }
             }}>
               <QrCode size={16} className="text-slate-900" />
               <div className="flex flex-col">
 
                 <p className="text-sm text-slate-900 font-semibold">QR Code</p>
-                <p className="text-xs font-medium text-slate-600 leading-5">Télécharger</p>
+                <p className="text-xs font-medium text-slate-600 leading-5">Imprimer / Commander</p>
               </div>
             </div>
           </PopoverTrigger>

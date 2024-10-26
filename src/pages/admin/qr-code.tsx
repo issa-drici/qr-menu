@@ -1,234 +1,141 @@
-// @ts-ignore
-'use client'
+"use client";
 
-import dynamic from "next/dynamic"
-import React, { useEffect, useState } from "react"
-import Layout from "@/layout/layout"
-import { useUserContext } from "@/context/user"
-import { useRouter } from "next/router"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-import Image from "next/image"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Separator } from "@/components/ui/separator"
-import TableSketch from "@/components/table-sketch"
-import { v4 } from "uuid"
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import QRCode from 'qrcode'
+import Layout from "@/layout/layout";
+import Category from "@/components/category";
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/database.types";
+import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
+import { Pencil, Plus, RefreshCcw, XIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { useLoadingContext } from "@/context/loading";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import DialogAddCategory from "@/components/dialog/dialog-add-category";
+import DialogEditCategory from "@/components/dialog/dialog-edit-category";
+import { toast } from "@/components/ui/use-toast";
 
-
-function QrCodeComponent() {
-    const { user } = useUserContext();
-    const router = useRouter()
-    const [tablesOrder, setTablesOrder] = useState<Array<{ id: string, createdAt?: Date } | null>>([])
-    const [minTablesOrder, setMinTablesOrder] = useState(tablesOrder?.length ? tablesOrder?.length : 0)
-    // const [selectedMethod, setSelectedMethod] = useState<string>("order")
-    const [src, setSrc] = useState()
-
-    useEffect(() => {
-        QRCode.toDataURL('http://localhost:3000/admin/qr-code?selectedMethod=order').then(setSrc)
-    }, [])
-
-    console.log(src)
-
-    return (
-        // <Layout isLoading={false} withAuth>
-        <Layout isLoading={false}>
-            <div className="flex flex-col mt-8 w-full justify-center items-center">
-                <div className="flex flex-col w-full h-full items-center gap-5">
-                    <div className="flex gap-5">
-                        <Card className={cn("h-fit cursor-pointer hover:shadow-md p-10 flex gap-5 border border-blue-400")}>
-                            <Image src="/assets/images/print-qr.webp" width={150} height={150} className="rounded" />
-                            <div className="flex flex-col justify-center">
-                                <p className="text-2xl font-normal">J&apos;imprime moi même</p>
-                                <p className="text-2xl font-normal">mes QR code</p>
-                                <img src={src} />
-                            </div>
-                        </Card>
-                        <HoverCard>
-                            <HoverCardTrigger> <Card className={cn("h-fit cursor-pointer hover:shadow-md p-10 flex gap-5 opacity-30")}>
-                                <Image src="/assets/images/order_logos.png" width={150} height={150} className="rounded" />
-                                <div className="flex flex-col justify-center">
-                                    <p className="text-2xl font-bold">Je commande mon</p>
-                                    <div className="flex text-2xl font-bold">pack <Image src="/assets/images/logo/logo.png" width={100} height={100} /></div>
-                                </div>
-                            </Card></HoverCardTrigger>
-                            <HoverCardContent className="w-fit">
-                                <p>Pas encore disponible ⏳</p>
-                                <p className="text-sm font-medium">Vous pouvez cependant faire une demande à <a href="mailto:contact@eatsup.fr" className="text-blue-400">contact@eatsup.fr</a></p>
-                            </HoverCardContent>
-                        </HoverCard>
-
-                    </div>
-
-                    <Card className="w-full h-full p-10">
-                        <p>Choisir le nombre de qr code à générer</p>
-                        <p>Un qr code sera attribué à une table</p>
-                        <p>Ceci permettra à l&apos;avenir d&apos;ajouter la fonctionnalité de paiement en ligne</p>
-
-                    </Card>
-
-                </div>
-            </div>
-        </Layout>
-    )
-}
-
-const QrCode = dynamic(() => Promise.resolve(QrCodeComponent), {
-    ssr: false,
+const FormSchema = z.object({
+    name: z.string().min(2, {
+        message: "Le nom doit contenir minimum 2 caractères.",
+    })
 });
 
-export default QrCode;
+export default function QrCodePage({ user }) {
+    const router = useRouter()
+    const { pushWithLoading, setIsLoadingApp } = useLoadingContext()
 
+    const supabaseClient = useSupabaseClient<Database>();
 
-// // @ts-ignore
-// 'use client'
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+    });
 
-// import dynamic from "next/dynamic"
-// import React, { useState } from "react"
-// import Layout from "@/layout/layout"
-// import { useUserContext } from "@/context/user"
-// import { useRouter } from "next/router"
-// import { Button } from "@/components/ui/button"
-// import { Card } from "@/components/ui/card"
-// import { cn } from "@/lib/utils"
-// import Image from "next/image"
+    // const [categories, setCategories] = useState(category);
 
+    const handleGenerate = async () => {
+        try {
+            const response = await fetch('/api/generate-qr-codes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ numOfCodes: 4 }),
+            });
 
-// function QrCodeComponent() {
-//     const { user } = useUserContext();
-//     const router = useRouter()
-//     const [step, setStep] = useState(1)
-//     const [selectedMethod, setSelectedMethod] = useState<string | null>(null)
-
-//     const selectMethod = (method: string) => {
-//         if (selectedMethod) {
-//             setSelectedMethod(method)
-//         } else {
-//             setSelectedMethod(method)
-//             setStep(prev => prev + 1)
-//         }
-
-//     }
-
-//     const handlePrevButton = () => {
-//         if (step > 1) {
-//             setStep(prev => prev - 1)
-//         }
-//     }
-
-//     const handleNextButton = () => {
-//         if (step < 2) {
-//             setStep(prev => prev + 1)
-//         }
-//     }
-
-//     return (
-//         <Layout isLoading={false} withAuth>
-//             <div className="flex flex-col mt-12 w-full justify-center items-center">
-//                 <div className="flex w-full h-full justify-center items-center">
-//                     {step === 1 ? (
-//                         <div className="flex gap-5">
-//                             <Card className={cn("h-fit cursor-pointer hover:shadow-md p-10 flex gap-5", selectedMethod === "print" ? "border border-blue-400" : null)} onClick={() => selectMethod('print')}>
-//                                 <Image src="/assets/images/print-qr.webp" width={150} height={150} className="rounded" />
-//                                 <div className="flex flex-col justify-center">
-//                                     <p className="text-2xl font-normal">J'imprime moi même</p>
-//                                     <p className="text-2xl font-normal">mes QR code</p>
-//                                 </div>
-//                             </Card>
-//                             <Card className={cn("h-fit cursor-pointer hover:shadow-md p-10 flex gap-5", selectedMethod === "order" ? "border border-blue-400" : null)} onClick={() => selectMethod('order')}>
-//                                 <Image src="/assets/images/print-qr.webp" width={150} height={150} className="rounded" />
-//                                 <div className="flex flex-col justify-center">
-//                                     <p className="text-2xl font-bold">Je commande mon</p>
-//                                     <div className="flex text-2xl font-bold">pack <Image src="/assets/images/logo/logo.png" width={100} height={100} /></div>
-//                                 </div>
-//                             </Card>
-//                         </div>) : null}
-//                 </div>
-//                 <div className="flex w-1/2 justify-between items-center">
-//                     <Button variant="outline" onClick={handlePrevButton} className={step === 1 ? "opacity-0 hover:cursor-auto" : null} >Précédent</Button>
-//                     <div className="flex justify-center gap-1 py-3">
-//                         <div className={cn("w-4 h-4 rounded-full border border-blue-400", step === 1 ? 'bg-blue-400' : null)}></div>
-//                         <div className={cn("w-4 h-4 rounded-full border border-blue-400", step === 2 ? 'bg-blue-400' : null)}></div>
-//                     </div>
-//                     <Button onClick={handleNextButton}>Suivant</Button>
-//                 </div>
-//             </div>
-//         </Layout>
-//     )
-// }
-
-// const QrCode = dynamic(() => Promise.resolve(QrCodeComponent), {
-//     ssr: false,
-// });
-
-// export default QrCode;
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `qrcodes.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+        } catch (error) {
+            console.error('Error generating QR codes:', error);
+        }
+    };
 
 
 
+    return (
+        <Layout withAuth fullHeight>
+            <div className="pb-3 flex items-center">
+                <Breadcrumb >
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink className="cursor-pointer" onClick={() => pushWithLoading('/admin')}>Dashboard</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Qr Code</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </div>
 
-{/* <Layout isLoading={false}>
-<div className="flex flex-col mt-8 w-full justify-center items-center">
-    <div className="flex flex-col w-full h-full items-center gap-5">
-        <div className="flex gap-5">
-            <Card className={cn("h-fit cursor-pointer hover:shadow-md p-10 flex gap-5", selectedMethod === "print" ? "border border-blue-400" : null)} onClick={() => selectMethod('print')}>
-                <Image src="/assets/images/print-qr.webp" width={150} height={150} className="rounded" />
-                <div className="flex flex-col justify-center">
-                    <p className="text-2xl font-normal">J&apos;imprime moi même</p>
-                    <p className="text-2xl font-normal">mes QR code</p>
+            <div>
+                <h1 className="text-xl font-semibold">Génerez votre QR Code</h1>
+
+                <p className="text-xs mt-1 mb-4 text-slate-400">Selectionnez le nombre de QR Code que vous voulez.<br /> Chaque QR code est unique et est attribué à une table, nous intégrerons par la suite la commande à table.</p>
+
+                <Button onClick={handleGenerate}>Générer</Button>
+
+
+                <div className="w-96 border mt-10">
+                    <div className="w-full h-full p-5 flex flex-col justify-center items-center">
+                        <p className="font-bold uppercase">Table 1</p>
+                        {/*  QRCode, garder seulement le css et remplacer la div par le qr code */} <div className="w-full aspect-square my-5" />
+                        <p className="text-3xl font-bold">Scannez notre menu</p>
+                    </div>
                 </div>
-            </Card>
-            <Card className={cn("h-fit cursor-pointer hover:shadow-md p-10 flex gap-5", selectedMethod === "order" ? "border border-blue-400" : null)} onClick={() => selectMethod('order')}>
-                <Image src="/assets/images/order_logos.png" width={150} height={150} className="rounded" />
-                <div className="flex flex-col justify-center">
-                    <p className="text-2xl font-bold">Je commande mon</p>
-                    <div className="flex text-2xl font-bold">pack <Image src="/assets/images/logo/logo.png" width={100} height={100} /></div>
-                </div>
-            </Card>
-        </div>
+            </div>
 
-        {selectedMethod === "print" ? (
-            <Card className="w-full h-full p-10">
-                <p>Choisir le nombre de qr code à générer</p>
-                <p>Un qr code sera attribué à une table</p>
-                <p>Ceci permettra à l&apos;avenir d&apos;ajouter la fonctionnalité de paiement en ligne</p>
+        </Layout>
+    );
+}
 
-            </Card>
-        ) : null}
 
-        {selectedMethod === "order" ? (
-            <Card className="flex w-full h-full p-10 gap-5">
-                {/* <p>Choisir le nombre de qr code à commander</p>
-                <p>Un qr code sera attribué à une table</p>
-                <p>Ceci permettra à l&apos;avenir d&apos;ajouter la fonctionnalité de paiement en ligne</p>
-                <Input type="number" min={0} /> */}
-// <div className="flex flex-col flex-1 rounded border">
-//     <div className="h-full p-5">
-//         <p>Qr Code pour les tables</p>
-//         <div className="flex">
-//             <Input type="number" min={minTablesOrder} onChange={event => handleValueTablesOrder(event.target.value)} defaultValue={tablesOrder?.length} />
-//         </div>
-//     </div>
-//     <Separator />
-//     <div className="h-1/2 p-5 gap-x-3 gap-y-0 flex flex-wrap">
-//         {tablesOrder?.map((t) => <TableSketch ordered={t?.createdAt} />)}
-//     </div>
-// </div>
-{/* <div className="flex flex-1 rounded border">
-                    <p>Qr Code pour le comptoir / Extérieur</p>
-                </div>
-                <div className="flex flex-1 rounded border">
-                    <p>Qr Code pour le wifi</p>
-                </div> */}
-//             </Card>
-//         ) : null}
-//     </div>
-// </div>
-// </Layout> */}
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+
+    // Create authenticated Supabase Client
+    const supabaseServerClient = createServerSupabaseClient<Database>(ctx);
+
+    // Check if we have a session
+    const {
+        data: { session },
+    } = await supabaseServerClient.auth.getSession();
+
+    const { data: category } = await supabaseServerClient
+        .from("category")
+        .select("*")
+        .eq("profile_id", session?.user?.id)
+        .order('order', { ascending: true });
+
+    const { data: item } = await supabaseServerClient
+        .from("items")
+        .select("*")
+        .eq("profile_id", session?.user?.id);
+
+    if (!session) {
+        return {
+            props: {
+                category: [],
+                item: []
+            },
+        }
+    }
+
+    return {
+        props: {
+            category,
+            item,
+            initialSession: session,
+            user: session.user,
+        },
+    };
+};
