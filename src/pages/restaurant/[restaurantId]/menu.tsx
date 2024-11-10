@@ -202,7 +202,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
     }, []);
 
     return (
-        <div className="relative bg-slate-100 min-h-screen">
+        <div className="relative bg-slate-100 min-h-[100dvh]">
             {router?.query?.edition === '1' ? (
                 <div className="flex justify-between items-center p-2 sticky top-0 bg-slate-100" id="editionBar">
                     <Link href={`/admin/restaurant`} legacyBehavior>

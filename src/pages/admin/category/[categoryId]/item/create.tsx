@@ -121,11 +121,11 @@ export default function CreateItem({ category, nbItems }) {
       }
 
 
-      toast({
-        title: "Enregistrement réussi",
-        description: "Les informations ont été mises à jour.",
-        className: "bg-green-500 border-green-500 text-white",
-      });
+      // toast({
+      //   title: "Enregistrement réussi",
+      //   description: "Les informations ont été mises à jour.",
+      //   className: "bg-green-500 border-green-500 text-white",
+      // });
       setIsLoadingApp(false);
 
       pushWithLoading(`/admin/category/${router?.query?.categoryId}/items`)
