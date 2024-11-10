@@ -4,6 +4,8 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -20,13 +22,13 @@ import { v4 } from "uuid";
 import { useRouter } from "next/router";
 import { useLoadingContext } from "@/context/loading";
 
-function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMoving }) {
+function CategoryComponent({ category, setIsOpenDialogMore, setIsOpenDialogNew, isMoving, setIsMoving }) {
   const [categories, setCategories] = useState(category);
   const [isLoading, setIsloading] = useState(false);
 
   const { user } = useUserContext();
   const { pushWithLoading } = useLoadingContext();
-  
+
 
   const supabaseClient = useSupabaseClient<Database>();
 
@@ -47,11 +49,11 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
         })
         .select();
 
-      toast({
-        title: "Enregistrement réussi",
-        description: "Les informations ont été mises à jour.",
-        className: "bg-green-500 border-green-500 text-white",
-      });
+      // toast({
+      //   title: "Enregistrement réussi",
+      //   description: "Les informations ont été mises à jour.",
+      //   className: "bg-green-500 border-green-500 text-white",
+      // });
     } catch (error) {
       toast({
         title: "Erreur",
@@ -131,7 +133,7 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
 
   const handleCardClick = (e, category) => {
     if (!e.defaultPrevented && !isMoving) {
-      
+
       pushWithLoading(`/admin/category/${category?.id}/items`);
     }
   };
@@ -203,7 +205,26 @@ function CategoryComponent({ category, setIsOpenDialogMore, isMoving, setIsMovin
             )}
           </Droppable>
         ) : (
-          <img src="/assets/images/background-menu.png" className="w-full object-contain mb-2" />
+
+          <div className="relative">
+            <img src="/assets/images/background-menu.png" className="w-full object-contain mb-2" />
+            <Card
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  mb-2 border-slate-200 border-dashed w-80"
+            >
+              <CardHeader className="w-full">
+                <CardDescription className="text-center">
+                  Créez la première catégorie de votre menu
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-center items-center">
+                <Button
+                  onClick={() => setIsOpenDialogNew(true)}
+
+                >Créer une catégorie</Button>
+              </CardContent>
+            </Card>
+          </div>
+
         )}
       </div>
     </DragDropContext >

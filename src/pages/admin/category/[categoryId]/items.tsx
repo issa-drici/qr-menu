@@ -158,7 +158,7 @@ export default function CategoriesComponent({ category, items }) {
               setIsOpenDialogMore(false)
               setIsMoving(true)
             }}
-          ><RefreshCcw className="mr-2 h-4 w-4" /> Déplacer</Button>
+          ><RefreshCcw className="mr-2 h-4 w-4" /> Changer l'ordre</Button>
           <Separator />
           <Button variant="ghost" className="justify-start"
             onClick={() => {

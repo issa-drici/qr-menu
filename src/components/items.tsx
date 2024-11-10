@@ -4,6 +4,8 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -102,7 +104,7 @@ function ItemsComponent({ items, setIsOpenDialogMore, isMoving, setIsMoving }) {
                         {...provided.draggableProps}
                         {...(isMoving ? provided.dragHandleProps : {})}
                         className="overflow-hidden flex p-0"
-                        // onClick={(e) => handleCardClick(e, item)}
+                      // onClick={(e) => handleCardClick(e, item)}
                       >
                         {isMoving ? (
                           <div className="px-4 flex justify-center items-center">
@@ -152,7 +154,24 @@ function ItemsComponent({ items, setIsOpenDialogMore, isMoving, setIsMoving }) {
             )}
           </Droppable>
         ) : (
-          <img src="/assets/images/background-menu.png" className="w-full object-contain mb-2" />
+          <div className="relative">
+            <img src="/assets/images/background-menu.png" className="w-full object-contain mb-2" />
+            <Card
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  mb-2 border-slate-200 border-dashed w-80"
+            >
+              <CardHeader className="w-full">
+                <CardDescription className="text-center">
+                  Créez le premier élement de cette catégorie et remplissez votre menu
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-center items-center">
+                <Button
+                  onClick={() => pushWithLoading(`/admin/category/${router?.query?.categoryId}/item/create`)}
+
+                >Créer un élément</Button>
+              </CardContent>
+            </Card>
+          </div>
         )}
       </div>
     </DragDropContext>

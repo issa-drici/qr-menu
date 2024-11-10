@@ -202,7 +202,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
     }, []);
 
     return (
-        <div className="bg-slate-100 h-full">
+        <div className="relative bg-slate-100 min-h-screen">
             {router?.query?.edition === '1' ? (
                 <div className="flex justify-between items-center p-2 sticky top-0 bg-slate-100" id="editionBar">
                     <Link href={`/admin/restaurant`} legacyBehavior>
@@ -215,7 +215,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
                     </Button>
                 </div>
             ) : null}
-            <div className={cn("text-xs h-full", router?.query?.edition === '1' ? "bg-gray-100 pt-2 px-2" : null)}>
+            <div className={cn("text-xs h-full pb-5", router?.query?.edition === '1' ? "bg-gray-100 pt-2 px-2" : null)}>
                 <div className="flex justify-between items-center py-1 pl-2 pr-3 sticky top-0 z-50 bg-white" id="titleBar">
                     <div className="flex items-center gap-x-0.5">
                         <PreviewLogo />
@@ -285,7 +285,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
                                             </div>
                                             <div className="w-full h-px bg-slate-200 my-5"></div>
                                         </div>
-                                        {index === 0 && (
+                                        {/* {index === 0 && (
                                             <div>
                                                 <a href="http://search.google.com/local/writereview?placeid=ChIJeTi_d79v5kcR594Dps69mFw" target="_blank">
                                                     <Card className="px-5 py-2 flex justify-between items-center animate-smallBounce">
@@ -301,21 +301,22 @@ function MenuComponent({ profile, categoriesWithItems }) {
                                                 </a>
                                                 <div className="w-full h-px bg-slate-200 my-5"></div>
                                             </div>
-                                        )}
+                                        )} */}
                                     </div>
                                 )
                             })}
                         </div>
                     </>
                 ) : (
-                    <div className="flex flex-col h-[calc(100vh_-_88px)] justify-center items-center text-base">
-                        <p>Ce restaurant n'a pas encore configuré son menu</p>
-                        <p>Vous êtes le propriétaire ? <span className="text-violet-500 hover:text-violet-600 underline cursor-pointer" onClick={() => pushWithLoading('/login')}>Je remplis mon menu dès maintenant !</span></p>
+                    <div className="flex flex-col h-[calc(100vh_-_88px)] justify-center items-center text-base p-14 gap-3">
+                        <p className="text-center">Ce restaurant n'a pas encore configuré son menu.</p>
+                        <p className="text-center">Vous êtes le propriétaire ?</p>
+                        <Button className="" onClick={() => pushWithLoading('/login')}>Je remplis mon menu dès maintenant !</Button>
                     </div>
                 )}
 
             </div>
-            <div className="w-full bg-custom-gradient py-1 -space-x-1 flex items-center justify-center mt-5">
+            <div className="w-full bg-custom-gradient py-1 -space-x-1 flex items-center justify-center absolute bottom-0">
                 <p className="text-white text-xs">Menu propulsé par</p>
                 <Link href={`/`} legacyBehavior>
                     <a className="text-white no-underline hover:text-white hover:no-underline">

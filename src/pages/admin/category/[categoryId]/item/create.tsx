@@ -326,7 +326,7 @@ export default function CreateItem({ category, nbItems }) {
         </form>
       </Form>
       <div
-        className="fixed left-0 bottom-0 w-full h-fit p-4 bg-white"
+        className="fixed left-0 bottom-0 w-full h-fit p-4 bg-white shadow-[0px_-10px_30px_2px_#00000010]"
       >
         <Button
           onClick={() => onSubmit()}

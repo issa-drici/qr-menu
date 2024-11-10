@@ -20,6 +20,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import DialogAddCategory from "@/components/dialog/dialog-add-category";
 import DialogEditCategory from "@/components/dialog/dialog-edit-category";
 import { toast } from "@/components/ui/use-toast";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -79,8 +80,8 @@ export default function CategoriesComponent({ user, category }) {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-
-      <Category isMoving={isMoving} setIsMoving={setIsMoving} category={categories} setIsOpenDialogMore={setIsOpenDialogMore} />
+     
+      <Category isMoving={isMoving} setIsMoving={setIsMoving} category={categories} setIsOpenDialogMore={setIsOpenDialogMore} setIsOpenDialogNew={setIsOpenDialogNew} />
 
       {!isMoving ? (
         <Button
@@ -130,7 +131,7 @@ export default function CategoriesComponent({ user, category }) {
               setIsOpenDialogMore(false)
               setIsMoving(true)
             }}
-          ><RefreshCcw className="mr-2 h-4 w-4" /> Déplacer</Button>
+          ><RefreshCcw className="mr-2 h-4 w-4" /> Changer l'ordre</Button>
           <Separator />
           <Button variant="ghost" className="justify-start"
             onClick={() => {
