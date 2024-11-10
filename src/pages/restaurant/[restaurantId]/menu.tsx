@@ -269,7 +269,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
                                                     return (
                                                         <Card className="overflow-hidden flex p-0" key={item?.id}>
                                                             {item?.image_url ? (
-                                                                <img src={item?.image_url} alt="imagePlat" className="w-2/5 object-cover" />
+                                                                <img src={item?.image_url} alt="imagePlat" className="w-2/5 h-32 object-cover" />
                                                             ) : null}
                                                             <div className="flex flex-col p-4 gap-1">
                                                                 <div>
