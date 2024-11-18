@@ -44,6 +44,7 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "formidable": "^3.5.1",
+    "html-pdf-node": "^1.0.8",
     "lucide-react": "^0.368.0",
     "micro": "^10.0.1",
     "mime": "^4.0.1",
