@@ -19,7 +19,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
     setTimeout(() => {
       router.events.on('routeChangeComplete', handleRouteChange);
       router.push(path);
-    }, 1000);
+    }, 500);
   };
 
 

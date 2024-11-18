@@ -216,15 +216,15 @@ export default function ProfileBrandingPage({ }) {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Coordonnées</BreadcrumbPage>
+              <BreadcrumbPage>Identité Visuelle</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </div>
 
       <div>
-        <h1 className="text-xl font-semibold">Coordonnées</h1>
-        <p className="text-xs mt-1 mb-4 text-slate-400">Remplissez les informations essentielles de votre restaurant</p>
+        <h1 className="text-xl font-semibold">Identité Visuelle (Logo, etc.)</h1>
+        <p className="text-xs mt-1 mb-4 text-slate-400">Customisez votre menu avec votre image de marque</p>
       </div>
 
       <Form {...form}>

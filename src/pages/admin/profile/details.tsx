@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FieldInput from "@/components/field-input";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { toast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 const FormSchema = z.object({
   name: z.string(),
@@ -32,11 +33,11 @@ export default function ProfileDetailsPage({ }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: user?.name ?? null,
-      adress: user?.adress ?? null,
-      postal_code: user?.postal_code ?? null,
-      country: user?.country ?? null,
-      phone: user?.phone ?? null,
+      name: user?.name ?? "",
+      adress: user?.adress ?? "",
+      postal_code: user?.postal_code ?? "",
+      country: user?.country ?? "",
+      phone: user?.phone ?? "",
     },
   });
 
@@ -62,16 +63,16 @@ export default function ProfileDetailsPage({ }) {
       form?.reset(dataUpdated)
 
       toast({
-          title: "Enregistrement réussi",
-          description: "Les informations ont été mises à jour.",
-          className: "bg-green-500 border-green-500 text-white",
+        title: "Enregistrement réussi",
+        description: "Les informations ont été mises à jour.",
+        className: "bg-green-500 border-green-500 text-white",
       });
     } catch (error) {
       toast({
-          title: "Erreur",
-          description:
-              "Un problème est survenu lors de la mise à jour des informations.",
-          variant: "destructive",
+        title: "Erreur",
+        description:
+          "Un problème est survenu lors de la mise à jour des informations.",
+        variant: "destructive",
       });
     }
     setIsLoadingApp(false);
@@ -86,6 +87,19 @@ export default function ProfileDetailsPage({ }) {
   // Check if any field is dirty
   const isFormModified = Object.keys(dirtyFields).length > 0;
 
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        name: user.name ?? "",
+        adress: user.adress ?? "",
+        postal_code: user.postal_code ?? "",
+        country: user.country ?? "",
+        phone: user.phone ?? "",
+      });
+    }
+  }, [user, form]);
+
+  
   return (
     <Layout withAuth fullHeight>
       <div className="pb-3 flex items-center">

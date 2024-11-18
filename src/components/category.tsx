@@ -152,6 +152,7 @@ function CategoryComponent({ category, setIsOpenDialogMore, setIsOpenDialogNew, 
             {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 {categories?.map((category, index) => (
+
                   <Draggable
                     key={category.id}
                     draggableId={category.id}
@@ -200,6 +201,13 @@ function CategoryComponent({ category, setIsOpenDialogMore, setIsOpenDialogNew, 
                     )}
                   </Draggable>
                 ))}
+                {categories?.length === 1 && (
+                  <div className="relative mt-1">
+                    <div className="text-xs bg-primary text-white w-fit py-1 px-2 rounded-lg before:content-[''] before:absolute before:top-[-4px] before:left-24 before:border-l-[6px] before:border-l-transparent before:border-r-[6px] before:border-r-transparent before:border-b-[6px] before:border-b-primary">
+                      Cliquez pour ajouter un élément à cette catégorie
+                    </div>
+                  </div>
+                )}
                 {provided.placeholder}
               </div>
             )}

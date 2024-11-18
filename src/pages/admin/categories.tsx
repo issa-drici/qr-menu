@@ -51,6 +51,11 @@ export default function CategoriesComponent({ user, category }) {
         .from("category")
         .delete()
         .eq("id", cat?.id);
+
+      setCategories((prevCategories) =>
+        prevCategories.filter((category) => category.id !== cat.id)
+      );
+
     } catch (error) {
       toast({
         title: "Erreur",
@@ -79,7 +84,7 @@ export default function CategoriesComponent({ user, category }) {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-     
+
       <Category isMoving={isMoving} setIsMoving={setIsMoving} category={categories} setIsOpenDialogMore={setIsOpenDialogMore} setIsOpenDialogNew={setIsOpenDialogNew} />
 
       {!isMoving ? (
@@ -159,8 +164,9 @@ export default function CategoriesComponent({ user, category }) {
       }}>
         <DialogContent withoutButtonClose className="max-w-[328px] rounded-lg" >
 
-          <DialogTitle>Supprimer</DialogTitle>
-          <DialogDescription>Êtes-vous certain de vouloir supprimer “{isOpenDialogDelete?.name?.fr}” ?</DialogDescription>
+          <DialogTitle>Êtes-vous certain de vouloir supprimer “{isOpenDialogDelete?.name?.fr}” ?</DialogTitle>
+          <DialogDescription>Les éléments de menu liés à cette catégorie seront aussi supprimés</DialogDescription>
+          {console.log({isOpenDialogDelete})}
           <div className="flex flex-col justify-center items-center w-full gap-2">
             <Button variant="destructive" className="w-full" onClick={() => onDelete(isOpenDialogDelete)}>Supprimer</Button>
             <Button variant="outline" className="w-full" onClick={() => setIsOpenDialogDelete(false)}>Annuler</Button>
