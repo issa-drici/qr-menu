@@ -78,7 +78,8 @@ const Nav = () => {
     if (!!user) {
         return (
             <nav className="bg-white mt-0 w-full shadow">
-                <div className="md:container mx-auto flex flex-wrap items-center justify-between md:justify-start p-3">
+                {/* <div className="md:container mx-auto flex flex-wrap items-center justify-between md:justify-start p-3"> */}
+                <div className="mx-auto flex flex-wrap items-center justify-between p-3">
                     <div className="flex justify-start text-white font-extrabold">
                         <a className="text-white no-underline cursor-pointer hover:text-white hover:no-underline" onClick={() => pushWithLoading('/admin')}>
                             <img src="/assets/images/logo/logo.png" className=" h-8 md:h-12 object-contain" />
@@ -95,7 +96,8 @@ const Nav = () => {
                         </Button>
                     )}
 
-                    <div className="hidden md:flex flex-1 justify-between content-center">
+                    {/* <div className="hidden md:flex flex-1 justify-between content-center"> */}
+                    <div className="hidden flex-1 justify-between content-center">
                         <div className="pl-3 space-x-1">
                             {!!user && (
                                 <Link href={`/admin/restaurant`} legacyBehavior>
@@ -142,7 +144,8 @@ const Nav = () => {
                         </div>
                     </div>
                 </div>
-                <div className={cn("bg-white absolute z-20 flex flex-col max-h-screen w-full transition-all duration-500 delay-0 rounded-b-lg overflow-hidden", !isOpenMenu ? 'max-h-0' : null)}>
+                <div className={cn("bg-white absolute z-20 flex flex-col max-h-screen w-full transition-all duration-500 delay-0 rounded-b-lg md:max-w-[430px] overflow-hidden", !isOpenMenu ? 'max-h-0' : null)}>
+
                     <div className="text-slate-700 text-sm font-medium">
                         <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50"
                             onClick={() => {
@@ -232,7 +235,7 @@ const Nav = () => {
                         </div>
                     </div>
                 </div>
-                <div className={`absolute h-[calc(100vh_-_56px)] w-screen bg-black ${isOpenMenu ? 'opacity-80 z-10 transition-opacity duration-700' : 'opacity-0 -z-10'}`} onClick={() => setIsOpenMenu(false)}></div>
+                <div className={`absolute h-[calc(100vh_-_56px)] w-screen md:w-[430px] md:h-[calc(730px-_70px)] bg-black ${isOpenMenu ? 'opacity-80 z-10 transition-opacity duration-700' : 'opacity-0 -z-10'}`} onClick={() => setIsOpenMenu(false)}></div>
 
                 {/* {isOpenMenu ? (
                     <div className={`absolute z-10 h-[calc(100vh_-_56px)] w-screen bg-black transition-opacity duration-700 ${isOpenMenu ? 'opacity-80' : 'opacity-0'}`} onClick={() => setIsOpenMenu(false)}></div>

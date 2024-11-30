@@ -10,14 +10,20 @@ import { Input } from "@/components/ui/input";
 import { useForm, useFormState } from "react-hook-form";
 import { useUserContext } from "@/context/user";
 import * as z from "zod";
+import dynamic from "next/dynamic";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FieldInput from "@/components/field-input";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { toast } from "@/components/ui/use-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropzone from "@/components/dropzone";
 
-export default function ProfileBrandingPage({ }) {
+const FormSchema = z.object({
+  logo: z
+    .any()
+});
+
+function BrandingComponent({ }) {
   const { pushWithLoading, setIsLoadingApp } = useLoadingContext()
   const { user } = useUserContext()
   const supabaseClient = useSupabaseClient<Database>();
@@ -35,12 +41,17 @@ export default function ProfileBrandingPage({ }) {
     return data?.publicUrl;
   }
 
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      logo: null
+    },
+  });
 
-  const form = useForm();
 
-  async function onSubmit() {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoadingApp(true);
     try {
-      setIsLoadingApp(true);
 
       if (logo) {
         if (user?.logo_path) {
@@ -63,6 +74,7 @@ export default function ProfileBrandingPage({ }) {
             .from("profile")
             .update(newData)
             .eq("id", user?.id);
+
         } else {
           const { data: fileUpdated, error: fileError } =
             await supabaseClient.storage
@@ -81,6 +93,7 @@ export default function ProfileBrandingPage({ }) {
             .from("profile")
             .update(newData)
             .eq("id", user?.id);
+
         }
       }
 
@@ -136,11 +149,12 @@ export default function ProfileBrandingPage({ }) {
 
       // form?.reset(dataUpdated)
 
-      toast({
-        title: "Enregistrement réussi",
-        description: "Les informations ont été mises à jour.",
-        className: "bg-green-500 border-green-500 text-white",
-      });
+      // toast({
+      //   title: "Enregistrement réussi",
+      //   description: "Les informations ont été mises à jour.",
+      //   className: "bg-green-500 border-green-500 text-white",
+      // });
+
     } catch (error) {
       console.log(error)
       toast({
@@ -149,8 +163,12 @@ export default function ProfileBrandingPage({ }) {
           "Un problème est survenu lors de la mise à jour des informations.",
         variant: "destructive",
       });
+    } finally {
+      // setIsLoadingApp(false);
+
     }
     setIsLoadingApp(false);
+
   }
 
 
@@ -158,7 +176,6 @@ export default function ProfileBrandingPage({ }) {
   // const isFormModified = Object.keys(dirtyFields).length > 0;
 
   const onLogoChange = (event) => {
-    console.log(event)
     if (event.target.files && event.target.files[0]) {
       setLogoUrl(URL.createObjectURL(event.target.files[0]));
       setLogo(event.target.files[0]);
@@ -186,7 +203,6 @@ export default function ProfileBrandingPage({ }) {
     if (!!!logo && logoUrl) {
       return `${logoUrl}?v=${new Date()}`
     }
-
     return null
   }
 
@@ -201,6 +217,11 @@ export default function ProfileBrandingPage({ }) {
 
     return null
   }
+
+  useEffect(() => {
+    setLogoUrl(user?.logo_url)
+  }, [user])
+
 
   return (
     <Layout withAuth fullHeight>
@@ -224,7 +245,7 @@ export default function ProfileBrandingPage({ }) {
 
       <div>
         <h1 className="text-xl font-semibold">Identité Visuelle (Logo, etc.)</h1>
-        <p className="text-xs mt-1 mb-4 text-slate-400">Customisez votre menu avec votre image de marque</p>
+        <p className="text-xs mt-1 mb-4 text-slate-400">Téléchargez votre logo et votre bannière ici.<br />Favorisez des images en bonne qualité en format jpg ou png.<br />Visualisez votre personnalisation en direct.</p>
       </div>
 
       <Form {...form}>
@@ -232,7 +253,7 @@ export default function ProfileBrandingPage({ }) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full gap-2 flex flex-col h-full"
         >
-          <FormItem className="w-full mb-20">
+          <FormItem className="w-full mb-3">
             <FormControl>
               <FieldInput
                 form={form}
@@ -249,23 +270,23 @@ export default function ProfileBrandingPage({ }) {
               />
             </FormControl>
           </FormItem>
-          {/* <FormItem className="w-full mb-20">
-            <FormLabel>Télécharger une image</FormLabel>
+          <FormItem className="w-full mb-3">
+            <FormLabel>Bannière du menu (offre promo, photo du restaurant)</FormLabel>
             <FormControl>
               <FieldInput
                 form={form}
                 type="file"
                 accept="image/*"
                 name="banner"
-                // label={<Dropzone
-                //   fileSrc={displayPreviewBanner()}
-                //   className="w-full h-44 object-cover mt-1"
-                // />
-                // }
+                label={<Dropzone
+                  fileSrc={displayPreviewBanner()}
+                  className="w-full h-44 object-cover mt-1"
+                />
+                }
                 onChange={(e) => onBannerChange(e)}
               />
             </FormControl>
-          </FormItem> */}
+          </FormItem>
           <div
             className="fixed left-0 bottom-0 w-full h-fit p-4 bg-white"
           >
@@ -274,7 +295,7 @@ export default function ProfileBrandingPage({ }) {
               variant="ghost"
               size="icon"
               className="text-white hover:text-white bg-violet-600 hover:bg-violet-700 active:bg-violet-700 focus:bg-violet-700 w-full h-fit p-2 text-sm leading-6 font-medium"
-              // disabled={!isFormModified}
+            // disabled={!isFormModified}
             >
               Enregistrer
             </Button>
@@ -285,28 +306,35 @@ export default function ProfileBrandingPage({ }) {
   );
 }
 
+const Branding = dynamic(() => Promise.resolve(BrandingComponent), {
+  ssr: false,
+});
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export default Branding;
 
-  // Create authenticated Supabase Client
-  const supabaseServerClient = createServerSupabaseClient<Database>(ctx);
 
-  // Check if we have a session
-  const {
-    data: { session },
-  } = await supabaseServerClient.auth.getSession();
 
-  if (!session) {
-    return {
-      props: {
-      },
-    }
-  }
+// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
-  return {
-    props: {
-      initialSession: session,
-      user: session.user,
-    },
-  };
-};
+//   // Create authenticated Supabase Client
+//   const supabaseServerClient = createServerSupabaseClient<Database>(ctx);
+
+//   // Check if we have a session
+//   const {
+//     data: { session },
+//   } = await supabaseServerClient.auth.getSession();
+
+//   if (!session) {
+//     return {
+//       props: {
+//       },
+//     }
+//   }
+
+//   return {
+//     props: {
+//       initialSession: session,
+//       user: session.user,
+//     },
+//   };
+// };
