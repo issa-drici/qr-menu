@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { Pencil1Icon, Share2Icon } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
 import { useLoadingContext } from "@/context/loading";
+import AdSense from "@/components/adsense";
 
 const labels = {
     share: {
@@ -251,6 +252,9 @@ function MenuComponent({ profile, categoriesWithItems }) {
                 </div>
                 {/* Image Marketing Restaurant */}
                 <PreviewBanner />
+                <div className="w-full h-[30vh]">
+                    <AdSense />
+                </div>
                 {categoriesWithItems?.length > 0 ? (
                     <>
                         <div className="flex px-3 py-3 gap-x-1 sticky top-56 z-40 bg-slate-100 shadow-md mb-3 overflow-x-scroll" id="categoryBar">
