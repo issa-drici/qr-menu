@@ -55,6 +55,35 @@ export default function EditItem({ category, item }) {
   async function translate(item) {
     let newItem = { ...item };
 
+
+
+    if (true) {
+      newItem.name = {
+        fr: name,
+        en: "",
+        es: "",
+        ar: "",
+        de: "",
+        it: "",
+        pt: "",
+        ru: "",
+      };
+
+      newItem.description = {
+        fr: description,
+        en: "",
+        es: "",
+        ar: "",
+        de: "",
+        it: "",
+        pt: "",
+        ru: "",
+      };
+
+      return newItem;
+    }
+
+
     if (newItem?.need_name_translation) {
       const resultName = await fetch('/api/gpt-prompt', {
         method: 'POST',
@@ -88,7 +117,8 @@ export default function EditItem({ category, item }) {
   async function onSubmit() {
     try {
       setIsLoadingApp(true);
-      let newItem = { ...item };
+      let newItem = { ...item, price };
+      console.log({newItem})
 
       if (newItem && newItem.name) {
         if (item?.name?.fr !== name) {

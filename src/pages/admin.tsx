@@ -46,13 +46,13 @@ export default function CategoriesComponent({ profile }) {
           <p className="text-xl font-semibold">Hello {profile?.name}</p>
           <p className="text-sm">Bienvenue sur Eatsup</p>
         </div>
-        {profile?.logo_url ? (
+        {/* {profile?.logo_url ? (
           <img
             src={profile?.logo_url}
             alt="language"
             className="object-cover w-11 rounded-full"
           />
-        ) : null}
+        ) : null} */}
       </div>
     );
   }
@@ -96,7 +96,7 @@ export default function CategoriesComponent({ profile }) {
           <PopoverTrigger className={cn(currentStepOnboarding === 1 ? 'z-20' : null)} asChild>
             <div className="h-fit bg-violet-100 rounded-md p-3 flex flex-col gap-3 cursor-pointer" onClick={() => {
               if (currentStepOnboarding !== 1) {
-                pushWithLoading('/admin/profile')
+                pushWithLoading('/admin/profile/details')
               }
             }}>
               <User size={16} className="text-slate-900" />

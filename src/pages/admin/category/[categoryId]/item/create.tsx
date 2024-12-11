@@ -55,6 +55,32 @@ export default function CreateItem({ category, nbItems }) {
   async function translate(item) {
     let newItem = item;
 
+    if (true) {
+      newItem.name = {
+        fr: name,
+        en: "",
+        es: "",
+        ar: "",
+        de: "",
+        it: "",
+        pt: "",
+        ru: "",
+      };
+
+      newItem.description = {
+        fr: description,
+        en: "",
+        es: "",
+        ar: "",
+        de: "",
+        it: "",
+        pt: "",
+        ru: "",
+      };
+
+      return newItem;
+    }
+
     const resultName = await fetch('/api/gpt-prompt', {
       method: 'POST',
       body: JSON.stringify({ prompt: JSON.stringify({ fr: name }) }),

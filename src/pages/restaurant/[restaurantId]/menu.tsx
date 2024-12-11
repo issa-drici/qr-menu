@@ -204,7 +204,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
 
     return (
         <div className="relative bg-slate-100 min-h-[100dvh]">
-            {router?.query?.edition === '1' ? (
+            {/* {router?.query?.edition === '1' ? (
                 <div className="flex justify-between items-center p-2 sticky top-0 bg-slate-100" id="editionBar">
                     <Link href={`/admin/restaurant`} legacyBehavior>
                         <a className="text-white no-underline hover:text-white hover:no-underline">
@@ -215,11 +215,11 @@ function MenuComponent({ profile, categoriesWithItems }) {
                         <Pencil1Icon className="h-4 w-4 mr-2" /> Retour à l&apos;édition
                     </Button>
                 </div>
-            ) : null}
+            ) : null} */}
             <div className={cn("text-xs h-full pb-5", router?.query?.edition === '1' ? "bg-gray-100 pt-2 px-2" : null)}>
-                <div className="flex justify-between items-center py-1 pl-2 pr-3 sticky top-0 z-50 bg-white" id="titleBar">
+                <div className="flex justify-between items-center py-1 pl-3 pr-3 sticky top-0 z-50 bg-white" id="titleBar">
                     <div className="flex items-center gap-x-0.5">
-                        <PreviewLogo />
+                        {/* <PreviewLogo /> */}
                         {!profile?.hideName ? <p className="text-lg font-semibold">{profile?.name ? profile?.name : "Mon restaurant"}</p> : null}
                     </div>
                     <div className="flex items-center">
@@ -230,7 +230,13 @@ function MenuComponent({ profile, categoriesWithItems }) {
                                 </Button>
                             </a>
                         ) : null}
-                        <Popover open={isOpenLanguageSelect} onOpenChange={(isOp) => {
+                        {/* SWITCH DE LANGUAGE */}
+                        {/* SWITCH DE LANGUAGE */}
+                        {/* SWITCH DE LANGUAGE */}
+                        {/* SWITCH DE LANGUAGE */}
+                        {/* SWITCH DE LANGUAGE */}
+                        {/* SWITCH DE LANGUAGE */}
+                        {/* <Popover open={isOpenLanguageSelect} onOpenChange={(isOp) => {
                             if (isOp === true) return;
                             setIsOpenLanguageSelect(false);
                         }}>
@@ -246,15 +252,15 @@ function MenuComponent({ profile, categoriesWithItems }) {
                                     </CommandList>
                                 </Command>
                             </PopoverContent>
-                        </Popover>
+                        </Popover> */}
                     </div>
 
                 </div>
                 {/* Image Marketing Restaurant */}
                 <PreviewBanner />
-                <div className="w-full h-[30vh]">
+                {/* <div className="w-full h-[30vh]">
                     <AdSense />
-                </div>
+                </div> */}
                 {categoriesWithItems?.length > 0 ? (
                     <>
                         <div className="flex px-3 py-3 gap-x-1 sticky top-56 z-40 bg-slate-100 shadow-md mb-3 overflow-x-scroll" id="categoryBar">
@@ -273,7 +279,7 @@ function MenuComponent({ profile, categoriesWithItems }) {
                                                     return (
                                                         <Card className="overflow-hidden flex p-0" key={item?.id}>
                                                             {item?.image_url ? (
-                                                                <img src={item?.image_url} alt="imagePlat" className="w-2/5 h-32 object-cover" />
+                                                                <img src={item?.image_url} alt="imagePlat" className="w-32 h-32 object-cover" />
                                                             ) : null}
                                                             <div className="flex flex-col p-4 gap-1">
                                                                 <div>

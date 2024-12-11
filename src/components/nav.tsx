@@ -157,7 +157,7 @@ const Nav = () => {
                         </div>
                         <div className="flex gap-2 px-3 py-[6px] items-center cursor-pointer hover:bg-slate-50"
                             onClick={() => {
-                                router.push(`/admin/profile`)
+                                router.push(`/admin/profile/details`)
                                 setIsOpenMenu(false)
                             }}
                         >
